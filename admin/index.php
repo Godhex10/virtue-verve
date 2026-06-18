@@ -1,3 +1,8 @@
+<?php
+include './includes/auth.php';
+requireAdmin();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +29,7 @@
     <div class="sidebar-section">
       <div class="sidebar-section-label">Overview</div>
       <a class="nav-item active" href="./index.html"><span class="nav-icon"><i class="fa-solid fa-grip"></i></span><span class="nav-label">Dashboard</span></a>
-      <a class="nav-item" href="./admin-categories.html"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span><span class="nav-label">Categories</span></a>
+      <a class="nav-item" href="./categories.php"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span><span class="nav-label">Categories</span></a>
       <a class="nav-item" href="./admin-products.html"><span class="nav-icon"><i class="fa-solid fa-box"></i></span><span class="nav-label">Products</span></a>
       <a class="nav-item" href="./admin-orders.html"><span class="nav-icon"><i class="fa-solid fa-cart-shopping"></i></span><span class="nav-label">Orders</span><span class="nav-badge red">12</span></a>
       <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-people-group"></i></span><span class="nav-label">Customers</span></a>
