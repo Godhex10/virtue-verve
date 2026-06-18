@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account – Virtue & Verve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/login.css">
+  
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <span class="close-nav" id="closeNav">✕</span>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html">Cart</a>
+    <a href="signup.html" style="color:var(--primary)">Sign Up</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">Virtue &amp; <span>Verve</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><a href="signup.html" class="nav-cta">Sign Up</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE WRAP -->
+  <div class="page-wrap">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="left-bg-img"></div>
+
+      <!-- Floating decorative bags -->
+      <span class="float-bag fb1">👜</span>
+      <span class="float-bag fb2">👛</span>
+      <span class="float-bag fb3">🛍️</span>
+
+      <!-- Orbs -->
+      <div class="panel-orb orb1"></div>
+      <div class="panel-orb orb2"></div>
+      <div class="panel-orb orb3"></div>
+
+      <div class="panel-content">
+        <div class="panel-badge">✦ <span>Virtue & Verve</span> Membership</div>
+
+        <h2 class="panel-title">Join the <em>Verve</em><br>Community</h2>
+
+        <p class="panel-desc">
+          Create your free account and unlock a world of curated luxury bags, exclusive member deals, and a seamless shopping experience — tailored just for you.
+        </p>
+
+        <div class="panel-perks">
+          <div class="perk">
+            <div class="perk-icon">📦</div>
+            <span>Track all your orders in one place</span>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🏷️</div>
+            <span>Exclusive member discounts & early access</span>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">♡</div>
+            <span>Save your favourite bags to a wishlist</span>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">🚚</div>
+            <span>Faster checkout with saved addresses</span>
+          </div>
+        </div>
+
+        <div class="panel-testi">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">"Signing up was the best decision — I never miss a sale and tracking my orders is so easy. Virtue & Verve is simply the best!"</p>
+          <div class="testi-author">
+            <span class="testi-avatar">👩🏾</span>
+            <div>
+              <div class="testi-name">Adaeze Okafor</div>
+              <div class="testi-loc">Lagos, Nigeria · Member since 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL (FORM) -->
+    <div class="right-panel">
+      <div class="form-wrap">
+
+        <!-- <p class="form-eyebrow">New Account</p> -->
+        <h1 class="form-title">Sign in into your <em>Account</em></h1>
+        <p class="form-sub">Already have an account? <a href="#">Sign in here</a></p>
+
+        <!-- Social signup -->
+        <!-- <div class="social-signup">
+          <button class="social-btn-signup" onclick="showToast('Google sign-up coming soon!')">
+            <span class="social-icon">🇬</span> Continue with Google
+          </button>
+          <button class="social-btn-signup" onclick="showToast('Facebook sign-up coming soon!')">
+            <span class="social-icon">📘</span> Facebook
+          </button>
+        </div> -->
+
+        <!-- <div class="divider-row">
+          <div class="divider-line"></div>
+          <span class="divider-text">or sign up with email</span>
+          <div class="divider-line"></div>
+        </div> -->
+
+        <!-- FORM -->
+        <form id="signupForm" novalidate>
+
+          <!-- Email -->
+          <div class="field-group" id="fg-email">
+            <label class="field-label" for="email">Email Address</label>
+            <div class="field-wrap">
+              <span class="field-icon">✉️</span>
+              <input class="field-input" id="email" type="email" placeholder="ada@example.com" autocomplete="email"/>
+              <span class="field-check" id="chk-email"></span>
+            </div>
+            <span class="field-error" id="err-email">Please enter a valid email address</span>
+          </div>
+
+
+          <!-- Password -->
+          <div class="field-group" id="fg-password">
+            <label class="field-label" for="password">Password</label>
+            <div class="field-wrap">
+              <span class="field-icon">🔒</span>
+              <input class="field-input" id="password" type="password" placeholder="Min. 8 characters" autocomplete="new-password" style="padding-right:44px"/>
+              <button type="button" class="pw-toggle" id="pwToggle" tabindex="-1">👁</button>
+            </div>
+            <div class="pw-strength-wrap" id="pwStrengthWrap" style="display:none">
+              <div class="pw-strength-bars">
+                <div class="pw-bar" id="bar1"></div>
+                <div class="pw-bar" id="bar2"></div>
+                <div class="pw-bar" id="bar3"></div>
+                <div class="pw-bar" id="bar4"></div>
+              </div>
+              <span class="pw-strength-label" id="pwStrengthLabel">Weak</span>
+            </div>
+            <span class="field-error" id="err-password">Password must be at least 8 characters</span>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span class="btn-text">Login</span>
+            <div class="btn-spinner"></div>
+          </button>
+
+          <p class="signin-link">Not a member? <a href="#">Sign in to your account →</a></p>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS OVERLAY -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-box">
+      <div class="success-check">✓</div>
+      <h2 class="success-title">Welcome to <em>Verve</em>!</h2>
+      <p class="success-sub">
+        Your account has been created successfully, <strong id="successName">Ada</strong>!<br/>
+        You can now track orders, save favourites, and enjoy exclusive member perks.
+      </p>
+      <div class="success-actions">
+        <a href="shop.html" class="success-btn-primary">Start Shopping</a>
+        <a href="index.html" class="success-btn-ghost">Go to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span>✨</span>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    // ── CURSOR ──────────────────────────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+      setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+    });
+    document.querySelectorAll('a, button, label, input, select').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(2)'; cursor.style.background='var(--gold)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.background='var(--primary)'; });
+    });
+
+    // ── MOBILE NAV ──────────────────────────────────────────────────
+    document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+    document.getElementById('closeNav').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+
+    // ── CUSTOM CHECKBOXES ───────────────────────────────────────────
+    ['terms','newsletter'].forEach(id => {
+      const cb  = document.getElementById(id + 'Check');
+      const box = document.getElementById(id + 'Box');
+      cb.addEventListener('change', () => {
+        box.style.background    = cb.checked ? 'var(--primary)' : '';
+        box.style.borderColor   = cb.checked ? 'var(--primary)' : '';
+        box.style.color         = cb.checked ? 'white' : 'transparent';
+      });
+      // init
+      box.style.color = cb.checked ? 'white' : 'transparent';
+      if (cb.checked) { box.style.background = 'var(--primary)'; box.style.borderColor = 'var(--primary)'; }
+    });
+
+    // ── PASSWORD TOGGLE ─────────────────────────────────────────────
+    function makePwToggle(inputId, btnId) {
+      const inp = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      btn.addEventListener('click', () => {
+        const show = inp.type === 'password';
+        inp.type   = show ? 'text' : 'password';
+        btn.textContent = show ? '🙈' : '👁';
+      });
+    }
+    makePwToggle('password', 'pwToggle');
+    makePwToggle('confirm',  'confirmToggle');
+
+    // ── PASSWORD STRENGTH ───────────────────────────────────────────
+    document.getElementById('password').addEventListener('input', function() {
+      const val  = this.value;
+      const wrap = document.getElementById('pwStrengthWrap');
+      const lbl  = document.getElementById('pwStrengthLabel');
+      const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3'), document.getElementById('bar4')];
+
+      if (!val) { wrap.style.display = 'none'; bars.forEach(b => { b.className = 'pw-bar'; }); return; }
+      wrap.style.display = 'block';
+
+      let score = 0;
+      if (val.length >= 8)               score++;
+      if (/[A-Z]/.test(val))             score++;
+      if (/[0-9]/.test(val))             score++;
+      if (/[^A-Za-z0-9]/.test(val))      score++;
+
+      const levels = ['weak','fair','good','strong'];
+      const labels = ['Too Weak','Fair','Good','Strong 🔒'];
+      const colors = ['weak','fair','good','strong'];
+
+      bars.forEach((b, i) => {
+        b.className = 'pw-bar' + (i < score ? ' ' + colors[score - 1] : '');
+      });
+      lbl.textContent = labels[score - 1] || 'Too Weak';
+      lbl.style.color = score >= 3 ? 'var(--primary)' : score === 2 ? '#e0993d' : 'var(--danger)';
+    });
+
+    // ── VALIDATION HELPERS ──────────────────────────────────────────
+    function setValid(id) {
+      const inp = document.getElementById(id);
+      const chk = document.getElementById('chk-' + id);
+      const fg  = document.getElementById('fg-' + id);
+      inp.classList.remove('invalid'); inp.classList.add('valid');
+      if (chk) chk.textContent = '✓';
+      if (fg)  fg.classList.remove('has-error');
+    }
+    function setInvalid(id, msg) {
+      const inp = document.getElementById(id);
+      const chk = document.getElementById('chk-' + id);
+      const fg  = document.getElementById('fg-' + id);
+      const err = document.getElementById('err-' + id);
+      inp.classList.remove('valid'); inp.classList.add('invalid');
+      if (chk) chk.textContent = '✕';
+      if (fg)  { fg.classList.remove('has-error'); void fg.offsetWidth; fg.classList.add('has-error'); }
+      if (err && msg) err.textContent = msg;
+    }
+    function clearState(id) {
+      const inp = document.getElementById(id);
+      const chk = document.getElementById('chk-' + id);
+      const fg  = document.getElementById('fg-' + id);
+      inp.classList.remove('valid','invalid');
+      if (chk) chk.textContent = '';
+      if (fg)  fg.classList.remove('has-error');
+    }
+
+    // ── LIVE VALIDATION ─────────────────────────────────────────────
+    function onBlur(id, validator) {
+      document.getElementById(id).addEventListener('blur', function() {
+        if (!this.value) { clearState(id); return; }
+        if (validator(this.value)) setValid(id); else setInvalid(id);
+      });
+    }
+    onBlur('firstname', v => v.trim().length >= 2);
+    onBlur('lastname',  v => v.trim().length >= 2);
+    onBlur('email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    onBlur('phone',     v => /^\d{7,15}$/.test(v.replace(/[\s\-()]/g,'')));
+    onBlur('password',  v => v.length >= 8);
+    document.getElementById('confirm').addEventListener('blur', function() {
+      if (!this.value) { clearState('confirm'); return; }
+      const pw = document.getElementById('password').value;
+      if (this.value === pw && pw.length >= 8) setValid('confirm');
+      else setInvalid('confirm', this.value !== pw ? 'Passwords do not match' : 'Password must be at least 8 characters');
+    });
+
+    // ── FORM SUBMIT ─────────────────────────────────────────────────
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const firstname = document.getElementById('firstname').value.trim();
+      const lastname  = document.getElementById('lastname').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const phone     = document.getElementById('phone').value.trim();
+      const password  = document.getElementById('password').value;
+      const confirm   = document.getElementById('confirm').value;
+      const terms     = document.getElementById('termsCheck').checked;
+
+      let valid = true;
+
+      if (firstname.length < 2)  { setInvalid('firstname', 'Please enter your first name'); valid = false; }
+      else setValid('firstname');
+
+      if (lastname.length < 2)   { setInvalid('lastname', 'Please enter your last name'); valid = false; }
+      else setValid('lastname');
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setInvalid('email', 'Please enter a valid email address'); valid = false; }
+      else setValid('email');
+
+      const cleanPhone = phone.replace(/[\s\-()]/g,'');
+      if (!/^\d{7,15}$/.test(cleanPhone)) { setInvalid('phone', 'Please enter a valid phone number'); valid = false; }
+
+      if (password.length < 8)   { setInvalid('password', 'Password must be at least 8 characters'); valid = false; }
+      else setValid('password');
+
+      if (confirm !== password)  { setInvalid('confirm', 'Passwords do not match'); valid = false; }
+      else if (password.length >= 8) setValid('confirm');
+
+      if (!terms) {
+        showToast('⚠️ Please accept our Terms & Conditions to continue');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Loading state
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading');
+
+      // Simulate API call
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        document.getElementById('successName').textContent = firstname;
+        showSuccessOverlay();
+      }, 1800);
+    });
+
+    // ── SUCCESS ─────────────────────────────────────────────────────
+    function showSuccessOverlay() {
+      const overlay = document.getElementById('successOverlay');
+      overlay.classList.add('show');
+      spawnConfetti();
+    }
+
+    function spawnConfetti() {
+      const colors = ['#088178','#c9a96e','#0aac9f','#e07b3d','#ffffff','#055e57'];
+      for (let i = 0; i < 40; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'confetti-dot';
+        dot.style.cssText = `
+          left:${Math.random()*100}vw;
+          top:0;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          width:${6+Math.random()*8}px;
+          height:${6+Math.random()*8}px;
+          animation-delay:${Math.random()*1.2}s;
+          animation-duration:${1.5+Math.random()*1.2}s;
+          border-radius:${Math.random()>0.5?'50%':'2px'};
+        `;
+        document.getElementById('successOverlay').appendChild(dot);
+        setTimeout(() => dot.remove(), 3000);
+      }
+    }
+
+    // ── TOAST ────────────────────────────────────────────────────────
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>

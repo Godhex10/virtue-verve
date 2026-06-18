@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Products – Virtue & Verve Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/admin-products.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="dim-overlay" id="dimOverlay"></div>
+
+<!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a class="logo-mark" href="index.html">Virtue &amp; <span>Verve</span></a>
+      <div class="logo-sub">Admin Dashboard</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Overview</div>
+      <a class="nav-item" href="./index.html"><span class="nav-icon"><i class="fa-solid fa-grip"></i></span><span class="nav-label">Dashboard</span></a>
+      <a class="nav-item" href="./admin-categories.html"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span><span class="nav-label">Categories</span></a>
+      <a class="nav-item active" href="./admin-products.html"><span class="nav-icon"><i class="fa-solid fa-box"></i></span><span class="nav-label">Products</span></a>
+      <a class="nav-item" href="./admin-orders.html"><span class="nav-icon"><i class="fa-solid fa-cart-shopping"></i></span><span class="nav-label">Orders</span><span class="nav-badge red">12</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-people-group"></i></span><span class="nav-label">Customers</span></a>
+      
+    </div>
+
+    <!-- <div class="sidebar-section">
+      <div class="sidebar-section-label">Finance</div>
+      <a class="nav-item" href="#"><span class="nav-icon">💰</span><span class="nav-label">Revenue</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🧾</span><span class="nav-label">Invoices</span><span class="nav-badge">3</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🏷️</span><span class="nav-label">Discounts</span></a>
+    </div> -->
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Store</div>
+      <a class="nav-item" href="shop.html" target="_blank"><span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-label">View Store</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span class="nav-label">Reviews</span><span class="nav-badge">7</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span><span class="nav-label">Settings</span></a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="admin-profile" onclick="showToast('Profile settings coming soon!')">
+        <div class="admin-avatar">VV</div>
+        <div>
+          <div class="admin-name">Virtue &amp; Verve</div>
+          <div class="admin-role">Store Administrator</div>
+        </div>
+        <div class="admin-more">⋯</div>
+      </div>
+    </div>
+  </aside>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h1 class="page-heading">All <span>Products</span></h1>
+    </div>
+    <div class="topbar-right">
+      <div class="search-bar">
+        <span style="color:var(--light);font-size:0.9rem"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input type="text" id="topSearch" placeholder="Search products…"/>
+      </div>
+        <div class="icon-btn" id="notifBtn" title="Notifications">
+          <i class="fa-solid fa-bell"></i> <span class="notif-dot"></span>
+        </div>
+      
+      <button class="add-btn" id="openAddModal">+ Add Product</button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-mini" style="animation-delay:0.05s">
+        <div class="kpi-mini-icon" style="background:var(--primary-faint)">🛍️</div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiTotal">24</div>
+          <div class="kpi-mini-label">Total Products</div>
+        </div>
+        <div class="kpi-mini-trend trend-up">↑ +3 this week</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.1s">
+        <div class="kpi-mini-icon" style="background:var(--success-light)">✅</div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiActive">18</div>
+          <div class="kpi-mini-label">Active Listings</div>
+        </div>
+        <div class="kpi-mini-trend trend-up">↑ 75%</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.15s">
+        <div class="kpi-mini-icon" style="background:var(--warning-light)">⚠️</div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiLow">4</div>
+          <div class="kpi-mini-label">Low Stock</div>
+        </div>
+        <div class="kpi-mini-trend trend-warn">Reorder soon</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.2s">
+        <div class="kpi-mini-icon" style="background:var(--danger-light)">❌</div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiOut">2</div>
+          <div class="kpi-mini-label">Out of Stock</div>
+        </div>
+        <div class="kpi-mini-trend trend-down">Needs restocking</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="products-toolbar">
+      <div class="toolbar-left">
+        <button class="filter-pill active" data-cat="all">All <span class="pill-count">(24)</span></button>
+        <button class="filter-pill" data-cat="handbag">Handbags <span class="pill-count">(8)</span></button>
+        <button class="filter-pill" data-cat="tote">Tote Bags <span class="pill-count">(5)</span></button>
+        <button class="filter-pill" data-cat="clutch">Clutches <span class="pill-count">(4)</span></button>
+        <button class="filter-pill" data-cat="backpack">Backpacks <span class="pill-count">(4)</span></button>
+        <button class="filter-pill" data-cat="crossbody">Crossbody <span class="pill-count">(3)</span></button>
+      </div>
+      <div class="toolbar-right">
+        <select class="sort-select" id="sortSelect">
+          <option value="default">Sort: Default</option>
+          <option value="name">Name A–Z</option>
+          <option value="price-asc">Price ↑</option>
+          <option value="price-desc">Price ↓</option>
+          <option value="stock-asc">Stock ↑</option>
+          <option value="new">Newest First</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vbtn active" id="tableViewBtn" title="Table view">☰</button>
+          <button class="vbtn" id="gridViewBtn" title="Grid view">⊞</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE VIEW -->
+    <div class="products-table-wrap" id="tableWrap">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th class="th-check"><div class="custom-cb" id="selectAll" title="Select all">✓</div></th>
+            <th>Product</th>
+            <th class="th-sort" data-col="category">Category <span class="sort-arrow">↕</span></th>
+            <th class="th-sort" data-col="price">Price <span class="sort-arrow">↕</span></th>
+            <th class="th-sort" data-col="stock">Stock <span class="sort-arrow">↕</span></th>
+            <th>Status</th>
+            <th>Rating</th>
+            <th>Sales</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="productsTableBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <h3 class="empty-title">No <em>products</em> found</h3>
+        <p class="empty-sub">Try a different search or filter</p>
+      </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div class="products-grid-view" id="gridWrap"></div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-bar" id="paginationBar">
+      <div class="page-info">Showing <strong id="showingRange">1–24</strong> of <strong id="showingTotal">24</strong> products</div>
+      <div class="page-btns">
+        <button class="pg-btn nav">← Prev</button>
+        <button class="pg-btn active">1</button>
+        <button class="pg-btn">2</button>
+        <button class="pg-btn nav">Next →</button>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- BULK ACTION BAR -->
+<div class="bulk-bar" id="bulkBar">
+  <span class="bulk-count"><strong id="bulkCount">0</strong> selected</span>
+  <div class="bulk-actions">
+    <button class="bulk-btn" onclick="showToast('✅ Products activated!')">Activate</button>
+    <button class="bulk-btn" onclick="showToast('📋 Products set to draft')">Draft</button>
+    <button class="bulk-btn danger" onclick="openConfirm('bulk')">Delete</button>
+  </div>
+  <button class="bulk-close" id="bulkClear">✕</button>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal-overlay" id="addModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 class="modal-title">Add New <em>Product</em></h2>
+      <button class="modal-close" id="closeAddModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="field-group modal-full">
+          <label class="field-label">Product Name</label>
+          <input class="field-input" id="newName" type="text" placeholder="e.g. Milano Structured Bag"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Category</label>
+          <select class="field-select" id="newCat">
+            <option value="handbag">Handbag</option>
+            <option value="tote">Tote Bag</option>
+            <option value="clutch">Clutch</option>
+            <option value="backpack">Backpack</option>
+            <option value="crossbody">Crossbody</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Price (₦)</label>
+          <input class="field-input" id="newPrice" type="number" placeholder="45000"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Compare Price (₦)</label>
+          <input class="field-input" id="newOldPrice" type="number" placeholder="Optional"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Stock Quantity</label>
+          <input class="field-input" id="newStock" type="number" placeholder="50"/>
+        </div>
+        <div class="field-group modal-full">
+          <label class="field-label">Description</label>
+          <textarea class="field-textarea" id="newDesc" placeholder="Write a short product description…"></textarea>
+        </div>
+        <div class="field-group modal-full">
+          <label class="field-label">Product Image</label>
+          <div class="img-upload-zone" onclick="showToast('Image upload ready!')">
+            <div class="img-upload-icon">🖼️</div>
+            <div class="img-upload-text">Click to upload or drag & drop</div>
+            <div class="img-upload-sub">PNG, JPG, WEBP — max 5MB</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Status</label>
+          <select class="field-select" id="newStatus">
+            <option value="active">Active</option>
+            <option value="draft">Draft</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Badge</label>
+          <select class="field-select" id="newBadge">
+            <option value="">None</option>
+            <option value="new">New</option>
+            <option value="sale">Sale</option>
+            <option value="trending">Trending</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-draft" onclick="saveProduct('draft')">Save as Draft</button>
+      <button class="btn-cancel" id="cancelAdd">Cancel</button>
+      <button class="btn-save" onclick="saveProduct('active')">Publish Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmOverlay">
+  <div class="confirm-modal">
+    <div class="confirm-icon">🗑️</div>
+    <h3 class="confirm-title">Delete Product?</h3>
+    <p class="confirm-sub" id="confirmMsg">Are you sure you want to delete this product? This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="cancelConfirm">Cancel</button>
+      <button class="btn-confirm-del" id="confirmDel">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span>✨</span><span id="toastMsg">Done!</span></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+let products = [
+  { id:1,  name:'Milano Structured Bag',  cat:'handbag',   catLabel:'Handbag',   price:45000, oldPrice:null,  stock:14, status:'active',  badge:'new',      rating:4.9, reviews:62, sales:18, sku:'VV-HB-001', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70' },
+  { id:2,  name:'Canvas Weekend Tote',    cat:'tote',      catLabel:'Tote Bag',  price:16500, oldPrice:22000, stock:31, status:'active',  badge:'sale',     rating:4.7, reviews:38, sales:42, sku:'VV-TB-001', img:'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=300&q=70' },
+  { id:3,  name:'Velvet Night Clutch',    cat:'clutch',    catLabel:'Clutch',    price:18000, oldPrice:null,  stock:9,  status:'active',  badge:'trending', rating:4.9, reviews:45, sales:27, sku:'VV-CL-001', img:'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=300&q=70' },
+  { id:4,  name:'Cognac Leather Satchel', cat:'handbag',   catLabel:'Handbag',   price:62000, oldPrice:null,  stock:7,  status:'active',  badge:'new',      rating:5.0, reviews:29, sales:12, sku:'VV-HB-002', img:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=70' },
+  { id:5,  name:'City Crossbody',         cat:'crossbody', catLabel:'Crossbody', price:21000, oldPrice:28000, stock:22, status:'active',  badge:'sale',     rating:4.6, reviews:71, sales:34, sku:'VV-CB-001', img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=300&q=70' },
+  { id:6,  name:'Minimal Leather Tote',   cat:'tote',      catLabel:'Tote Bag',  price:38000, oldPrice:null,  stock:16, status:'active',  badge:null,       rating:5.0, reviews:54, sales:21, sku:'VV-TB-002', img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70' },
+  { id:7,  name:'Urban Backpack',         cat:'backpack',  catLabel:'Backpack',  price:29000, oldPrice:null,  stock:19, status:'active',  badge:'new',      rating:4.5, reviews:33, sales:15, sku:'VV-BP-001', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=70' },
+  { id:8,  name:'Bamboo Handle Bag',      cat:'handbag',   catLabel:'Handbag',   price:24000, oldPrice:null,  stock:3,  status:'active',  badge:'trending', rating:5.0, reviews:19, sales:9,  sku:'VV-HB-003', img:'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=300&q=70' },
+  { id:9,  name:'Pearl Mini Clutch',      cat:'clutch',    catLabel:'Clutch',    price:14000, oldPrice:null,  stock:28, status:'active',  badge:null,       rating:4.4, reviews:27, sales:18, sku:'VV-CL-002', img:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&q=70' },
+  { id:10, name:'Laptop Work Tote',       cat:'tote',      catLabel:'Tote Bag',  price:33000, oldPrice:40000, stock:11, status:'active',  badge:'sale',     rating:5.0, reviews:88, sales:52, sku:'VV-TB-003', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=70' },
+  { id:11, name:'Croc-Effect Mini Bag',   cat:'handbag',   catLabel:'Handbag',   price:19000, oldPrice:null,  stock:0,  status:'active',  badge:'trending', rating:4.3, reviews:41, sales:31, sku:'VV-HB-004', img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=300&q=70' },
+  { id:12, name:'Vintage Flap Bag',       cat:'handbag',   catLabel:'Handbag',   price:52000, oldPrice:null,  stock:5,  status:'active',  badge:'new',      rating:5.0, reviews:36, sales:8,  sku:'VV-HB-005', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70' },
+  { id:13, name:'Straw Beach Tote',       cat:'tote',      catLabel:'Tote Bag',  price:12000, oldPrice:null,  stock:40, status:'active',  badge:null,       rating:4.2, reviews:22, sales:24, sku:'VV-TB-004', img:'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=300&q=70' },
+  { id:14, name:'Evening Satin Clutch',   cat:'clutch',    catLabel:'Clutch',    price:16000, oldPrice:20000, stock:0,  status:'active',  badge:'sale',     rating:4.8, reviews:48, sales:35, sku:'VV-CL-003', img:'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=300&q=70' },
+  { id:15, name:'Hiker Pro Backpack',     cat:'backpack',  catLabel:'Backpack',  price:35000, oldPrice:null,  stock:13, status:'draft',   badge:null,       rating:4.3, reviews:15, sales:6,  sku:'VV-BP-002', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=70' },
+  { id:16, name:'Chain Crossbody',        cat:'crossbody', catLabel:'Crossbody', price:27000, oldPrice:null,  stock:17, status:'active',  badge:'trending', rating:5.0, reviews:57, sales:29, sku:'VV-CB-002', img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=300&q=70' },
+  { id:17, name:'Shopper Canvas Bag',     cat:'tote',      catLabel:'Tote Bag',  price:9500,  oldPrice:null,  stock:52, status:'active',  badge:null,       rating:4.1, reviews:34, sales:48, sku:'VV-TB-005', img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70' },
+  { id:18, name:'Gold Clutch Minaudière', cat:'clutch',    catLabel:'Clutch',    price:22000, oldPrice:null,  stock:4,  status:'active',  badge:'new',      rating:5.0, reviews:31, sales:11, sku:'VV-CL-004', img:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&q=70' },
+  { id:19, name:'Mini Backpack',          cat:'backpack',  catLabel:'Backpack',  price:18500, oldPrice:25000, stock:26, status:'active',  badge:'sale',     rating:4.4, reviews:44, sales:22, sku:'VV-BP-003', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=70' },
+  { id:20, name:'Tan Shoulder Bag',       cat:'handbag',   catLabel:'Handbag',   price:31000, oldPrice:null,  stock:8,  status:'active',  badge:null,       rating:5.0, reviews:60, sales:19, sku:'VV-HB-006', img:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=70' },
+  { id:21, name:'Wristlet Phone Bag',     cat:'crossbody', catLabel:'Crossbody', price:8500,  oldPrice:12000, stock:61, status:'active',  badge:'sale',     rating:4.3, reviews:79, sales:67, sku:'VV-CB-003', img:'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=300&q=70' },
+  { id:22, name:'Luxury Croc Tote',       cat:'tote',      catLabel:'Tote Bag',  price:75000, oldPrice:null,  stock:2,  status:'active',  badge:'new',      rating:5.0, reviews:18, sales:5,  sku:'VV-TB-006', img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70' },
+  { id:23, name:'Raffia Basket Bag',      cat:'handbag',   catLabel:'Handbag',   price:13000, oldPrice:null,  stock:35, status:'active',  badge:'trending', rating:4.2, reviews:26, sales:30, sku:'VV-HB-007', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70' },
+  { id:24, name:'Sport Crossbody',        cat:'crossbody', catLabel:'Crossbody', price:15500, oldPrice:null,  stock:44, status:'draft',   badge:null,       rating:4.1, reviews:37, sales:20, sku:'VV-CB-004', img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=300&q=70' },
+];
+
+let filtered = [...products];
+let selected = new Set();
+let activeCategory = 'all';
+let searchQ = '';
+let sortKey = 'default';
+let nextId = 25;
+let deleteTarget = null;
+let isGridView = false;
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+const fmt = n => '₦' + n.toLocaleString('en-NG');
+
+function getStatus(p) {
+  if (p.stock === 0) return { cls:'pill-out',   label:'Out of Stock' };
+  if (p.stock <= 5)  return { cls:'pill-low',   label:'Low Stock' };
+  if (p.status==='draft') return { cls:'pill-draft', label:'Draft' };
+  return { cls:'pill-active', label:'Active' };
+}
+
+function stockColor(p) {
+  if (p.stock === 0) return 'var(--danger)';
+  if (p.stock <= 5)  return 'var(--warning)';
+  return 'var(--primary)';
+}
+
+function stockPct(p) {
+  return Math.min((p.stock / 70) * 100, 100);
+}
+
+function badgeMap(b) {
+  const m = { new:'#088178', sale:'#e07b3d', trending:'#c9a96e' };
+  const l = { new:'New', sale:'Sale', trending:'Trending' };
+  return b ? { color: m[b], label: l[b] } : null;
+}
+
+// ─── FILTER + SORT ───────────────────────────────────────────────────────────
+function applyFilters() {
+  filtered = products.filter(p => {
+    const matchCat = activeCategory === 'all' || p.cat === activeCategory;
+    const matchQ   = !searchQ || p.name.toLowerCase().includes(searchQ) || p.sku.toLowerCase().includes(searchQ);
+    return matchCat && matchQ;
+  });
+
+  if (sortKey === 'name')       filtered.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sortKey === 'price-asc')  filtered.sort((a,b) => a.price - b.price);
+  else if (sortKey === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+  else if (sortKey === 'stock-asc')  filtered.sort((a,b) => a.stock - b.stock);
+  else if (sortKey === 'new')        filtered.sort((a,b) => b.id - a.id);
+
+  updateKPIs();
+  renderTable();
+  renderGrid();
+  updatePagination();
+}
+
+// ─── UPDATE KPIS ─────────────────────────────────────────────────────────────
+function updateKPIs() {
+  document.getElementById('kpiTotal').textContent = products.length;
+  document.getElementById('kpiActive').textContent = products.filter(p => p.status === 'active' && p.stock > 0).length;
+  document.getElementById('kpiLow').textContent    = products.filter(p => p.stock > 0 && p.stock <= 5).length;
+  document.getElementById('kpiOut').textContent    = products.filter(p => p.stock === 0).length;
+}
+
+// ─── TABLE RENDER ─────────────────────────────────────────────────────────────
+function renderTable() {
+  const body = document.getElementById('productsTableBody');
+  const empty = document.getElementById('emptyState');
+
+  if (filtered.length === 0) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const s = getStatus; // alias
+  body.innerHTML = filtered.map((p, i) => {
+    const st = getStatus(p);
+    const bd = badgeMap(p.badge);
+    const isSel = selected.has(p.id);
+    return `
+    <tr id="row-${p.id}" class="${isSel ? 'selected' : ''}" style="animation-delay:${i*0.03}s">
+      <td><div class="custom-cb ${isSel ? 'checked' : ''}" onclick="toggleRow(${p.id},this)">✓</div></td>
+      <td>
+        <div class="prod-cell">
+          <div class="prod-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"/></div>
+          <div class="prod-info">
+            <div class="prod-name">${p.name}${bd ? ` <span style="background:${bd.color};color:white;font-size:0.58rem;padding:2px 8px;border-radius:100px;margin-left:6px;font-weight:600">${bd.label}</span>` : ''}</div>
+            <div class="prod-sku">${p.sku}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="cat-pill">${p.catLabel}</span></td>
+      <td class="price-cell">
+        ${p.oldPrice ? `<span class="price-old">${fmt(p.oldPrice)}</span>` : ''}
+        ${fmt(p.price)}
+      </td>
+      <td>
+        <div class="stock-cell">
+          <div class="stock-num">${p.stock} units</div>
+          <div class="stock-bar-track">
+            <div class="stock-bar-fill" style="width:${stockPct(p)}%;background:${stockColor(p)}"></div>
+          </div>
+        </div>
+      </td>
+      <td><span class="status-pill ${st.cls}"><span class="sdot"></span>${st.label}</span></td>
+      <td>
+        <div class="rating-cell">
+          <span class="stars-small">★</span>
+          <span class="rating-num">${p.rating.toFixed(1)}</span>
+          <span class="rating-cnt">(${p.reviews})</span>
+        </div>
+      </td>
+      <td style="font-weight:500;color:var(--dark)">${p.sales} sold</td>
+      <td>
+        <div class="row-actions">
+          <div class="row-btn" title="Edit" onclick="openEdit(${p.id})">✏️</div>
+          <div class="row-btn" title="View" onclick="showToast('Viewing ${p.name} on store…')">👁</div>
+          <div class="row-btn del" title="Delete" onclick="openConfirm(${p.id})">🗑️</div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Animate stock bars
+  setTimeout(() => {
+    document.querySelectorAll('.stock-bar-fill').forEach(b => {
+      const w = b.style.width; b.style.width = '0'; requestAnimationFrame(() => { b.style.width = w; });
+    });
+  }, 50);
+}
+
+// ─── GRID RENDER ─────────────────────────────────────────────────────────────
+function renderGrid() {
+  const wrap = document.getElementById('gridWrap');
+  if (filtered.length === 0) { wrap.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><h3 class="empty-title">No <em>products</em> found</h3></div>'; return; }
+
+  wrap.innerHTML = filtered.map((p, i) => {
+    const st = getStatus(p);
+    const bd = badgeMap(p.badge);
+    const isSel = selected.has(p.id);
+    return `
+    <div class="grid-card ${isSel ? 'selected' : ''}" id="gc-${p.id}" style="animation-delay:${i*0.04}s">
+      <div class="grid-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+        <div class="grid-status"><span class="status-pill ${st.cls}"><span class="sdot"></span>${st.label}</span></div>
+        <div class="grid-cb"><div class="custom-cb ${isSel ? 'checked' : ''}" onclick="toggleRow(${p.id},this)" style="background:white;border-color:var(--border)">✓</div></div>
+        <div class="grid-acts">
+          <button class="grid-act-btn" onclick="openEdit(${p.id})" title="Edit">✏️</button>
+          <button class="grid-act-btn" onclick="openConfirm(${p.id})" title="Delete">🗑️</button>
+        </div>
+      </div>
+      <div class="grid-info">
+        <div class="grid-cat">${p.catLabel}</div>
+        <div class="grid-name">${p.name}</div>
+        <div class="grid-row">
+          <span class="grid-price">${fmt(p.price)}</span>
+          <span class="grid-stock" style="color:${stockColor(p)}">${p.stock} units</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── SELECTION ───────────────────────────────────────────────────────────────
+function toggleRow(id, cbEl) {
+  if (selected.has(id)) { selected.delete(id); cbEl.classList.remove('checked'); document.getElementById('row-'+id)?.classList.remove('selected'); document.getElementById('gc-'+id)?.classList.remove('selected'); }
+  else                  { selected.add(id);    cbEl.classList.add('checked');    document.getElementById('row-'+id)?.classList.add('selected');    document.getElementById('gc-'+id)?.classList.add('selected'); }
+  updateBulkBar();
+}
+
+document.getElementById('selectAll').addEventListener('click', function() {
+  if (selected.size === filtered.length) {
+    selected.clear(); this.classList.remove('checked');
+  } else {
+    filtered.forEach(p => selected.add(p.id)); this.classList.add('checked');
+  }
+  renderTable(); renderGrid(); updateBulkBar();
+});
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  document.getElementById('bulkCount').textContent = selected.size;
+  bar.classList.toggle('visible', selected.size > 0);
+}
+document.getElementById('bulkClear').addEventListener('click', () => {
+  selected.clear(); renderTable(); renderGrid(); updateBulkBar();
+});
+
+// ─── VIEW TOGGLE ─────────────────────────────────────────────────────────────
+document.getElementById('tableViewBtn').addEventListener('click', () => {
+  isGridView = false;
+  document.getElementById('tableViewBtn').classList.add('active');
+  document.getElementById('gridViewBtn').classList.remove('active');
+  document.getElementById('tableWrap').classList.remove('hidden');
+  document.getElementById('gridWrap').classList.remove('active');
+});
+document.getElementById('gridViewBtn').addEventListener('click', () => {
+  isGridView = true;
+  document.getElementById('gridViewBtn').classList.add('active');
+  document.getElementById('tableViewBtn').classList.remove('active');
+  document.getElementById('tableWrap').classList.add('hidden');
+  document.getElementById('gridWrap').classList.add('active');
+});
+
+// ─── FILTERS ─────────────────────────────────────────────────────────────────
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategory = btn.dataset.cat;
+    applyFilters();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  sortKey = e.target.value; applyFilters();
+});
+
+// Search (topbar)
+document.getElementById('topSearch').addEventListener('input', e => {
+  searchQ = e.target.value.trim().toLowerCase(); applyFilters();
+});
+
+// Sort headers
+document.querySelectorAll('.th-sort').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    document.querySelectorAll('.th-sort').forEach(t => t.classList.remove('sorted'));
+    th.classList.add('sorted');
+    if (col === 'category') { sortKey = 'name'; document.getElementById('sortSelect').value = 'name'; }
+    else if (col === 'price') { sortKey = sortKey === 'price-asc' ? 'price-desc' : 'price-asc'; }
+    else if (col === 'stock') { sortKey = 'stock-asc'; }
+    applyFilters();
+  });
+});
+
+// ─── PAGINATION DISPLAY ───────────────────────────────────────────────────────
+function updatePagination() {
+  document.getElementById('showingRange').textContent = filtered.length === 0 ? '0' : `1–${Math.min(filtered.length, 24)}`;
+  document.getElementById('showingTotal').textContent = filtered.length;
+}
+
+// ─── ADD PRODUCT MODAL ────────────────────────────────────────────────────────
+document.getElementById('openAddModal').addEventListener('click', () => openModal('addModalOverlay'));
+document.getElementById('closeAddModal').addEventListener('click', () => closeModal('addModalOverlay'));
+document.getElementById('cancelAdd').addEventListener('click', () => closeModal('addModalOverlay'));
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.getElementById('dimOverlay').classList.add('visible');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.getElementById('dimOverlay').classList.remove('visible');
+}
+document.getElementById('dimOverlay').addEventListener('click', () => {
+  closeModal('addModalOverlay'); closeModal('confirmOverlay');
+  document.getElementById('sidebar').classList.remove('open');
+});
+
+function saveProduct(status) {
+  const name  = document.getElementById('newName').value.trim();
+  const price = parseInt(document.getElementById('newPrice').value) || 0;
+  const stock = parseInt(document.getElementById('newStock').value) || 0;
+  const cat   = document.getElementById('newCat').value;
+  const badge = document.getElementById('newBadge').value || null;
+  const oldP  = parseInt(document.getElementById('newOldPrice').value) || null;
+  const catMap = { handbag:'Handbag', tote:'Tote Bag', clutch:'Clutch', backpack:'Backpack', crossbody:'Crossbody' };
+
+  if (!name) { showToast('⚠️ Please enter a product name'); return; }
+  if (!price) { showToast('⚠️ Please enter a price'); return; }
+
+  const imgs = [
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70',
+    'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=70',
+    'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70',
+  ];
+
+  products.unshift({
+    id: nextId++, name, cat, catLabel: catMap[cat] || cat,
+    price, oldPrice: oldP, stock, status,
+    badge, rating: 0, reviews: 0, sales: 0,
+    sku: `VV-${cat.toUpperCase().slice(0,2)}-${String(nextId).padStart(3,'0')}`,
+    img: imgs[Math.floor(Math.random()*imgs.length)]
+  });
+
+  filtered = [...products];
+  applyFilters();
+  closeModal('addModalOverlay');
+  showToast(`✅ "${name}" ${status === 'draft' ? 'saved as draft' : 'published successfully'}!`);
+
+  // Reset form
+  ['newName','newPrice','newOldPrice','newStock','newDesc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('newBadge').value = '';
+  document.getElementById('newStatus').value = 'active';
+}
+
+// ─── EDIT PRODUCT ─────────────────────────────────────────────────────────────
+function openEdit(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('newName').value    = p.name;
+  document.getElementById('newPrice').value   = p.price;
+  document.getElementById('newOldPrice').value = p.oldPrice || '';
+  document.getElementById('newStock').value   = p.stock;
+  document.getElementById('newCat').value     = p.cat;
+  document.getElementById('newBadge').value   = p.badge || '';
+  document.getElementById('newStatus').value  = p.status;
+  document.querySelector('.modal-title').innerHTML = `Edit <em>Product</em>`;
+  openModal('addModalOverlay');
+}
+
+// ─── DELETE ───────────────────────────────────────────────────────────────────
+function openConfirm(id) {
+  deleteTarget = id;
+  const msg = id === 'bulk'
+    ? `You are about to delete <strong>${selected.size} products</strong>. This cannot be undone.`
+    : `You are about to delete <strong>"${products.find(p=>p.id===id)?.name}"</strong>. This cannot be undone.`;
+  document.getElementById('confirmMsg').innerHTML = msg;
+  openModal('confirmOverlay');
+}
+document.getElementById('cancelConfirm').addEventListener('click', () => closeModal('confirmOverlay'));
+document.getElementById('confirmDel').addEventListener('click', () => {
+  if (deleteTarget === 'bulk') {
+    products = products.filter(p => !selected.has(p.id));
+    const n = selected.size;
+    selected.clear();
+    showToast(`🗑️ ${n} products deleted`);
+  } else {
+    const p = products.find(x => x.id === deleteTarget);
+    products = products.filter(x => x.id !== deleteTarget);
+    selected.delete(deleteTarget);
+    showToast(`🗑️ "${p?.name}" deleted`);
+  }
+  filtered = [...products];
+  applyFilters();
+  updateBulkBar();
+  closeModal('confirmOverlay');
+});
+
+// ─── CURSOR ───────────────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+});
+document.querySelectorAll('a,button,.nav-item,.kpi-mini,.grid-card,.row-btn,.custom-cb').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(1.8)'; cursor.style.background='var(--gold)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.background='var(--primary)'; });
+});
+
+// ─── MOBILE SIDEBAR ───────────────────────────────────────────────────────────
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('dimOverlay').classList.toggle('visible');
+});
+
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+applyFilters();
+</script>
+</body>
+</html>

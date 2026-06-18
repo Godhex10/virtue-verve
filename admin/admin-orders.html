@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders – Virtue & Verve Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/admin-orders.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="dim-overlay" id="dimOverlay"></div>
+
+<!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a class="logo-mark" href="index.html">Virtue &amp; <span>Verve</span></a>
+      <div class="logo-sub">Admin Dashboard</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Overview</div>
+      <a class="nav-item" href="./index.html"><span class="nav-icon"><i class="fa-solid fa-grip"></i></span><span class="nav-label">Dashboard</span></a>
+      <a class="nav-item" href="./admin-categories.html"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span><span class="nav-label">Categories</span></a>
+      <a class="nav-item" href="./admin-products.html"><span class="nav-icon"><i class="fa-solid fa-box"></i></span><span class="nav-label">Products</span></a>
+      <a class="nav-item active" href="./admin-orders.html"><span class="nav-icon"><i class="fa-solid fa-cart-shopping"></i></span><span class="nav-label">Orders</span><span class="nav-badge red">12</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-people-group"></i></span><span class="nav-label">Customers</span></a>
+      
+    </div>
+
+    <!-- <div class="sidebar-section">
+      <div class="sidebar-section-label">Finance</div>
+      <a class="nav-item" href="#"><span class="nav-icon">💰</span><span class="nav-label">Revenue</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🧾</span><span class="nav-label">Invoices</span><span class="nav-badge">3</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🏷️</span><span class="nav-label">Discounts</span></a>
+    </div> -->
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Store</div>
+      <a class="nav-item" href="shop.html" target="_blank"><span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-label">View Store</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span class="nav-label">Reviews</span><span class="nav-badge">7</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span><span class="nav-label">Settings</span></a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="admin-profile" onclick="showToast('Profile settings coming soon!')">
+        <div class="admin-avatar">VV</div>
+        <div>
+          <div class="admin-name">Virtue &amp; Verve</div>
+          <div class="admin-role">Store Administrator</div>
+        </div>
+        <div class="admin-more">⋯</div>
+      </div>
+    </div>
+  </aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h1 class="page-heading">All <span>Orders</span></h1>
+    </div>
+    <div class="topbar-right">
+      <div class="search-bar">
+        <span style="color:var(--light);font-size:.9rem">🔍</span>
+        <input type="text" id="topSearch" placeholder="Search by order ID, customer…"/>
+      </div>
+      <div class="icon-btn" title="Notifications"><span>🔔</span><span class="notif-dot"></span></div>
+      <button class="export-btn" onclick="showToast('📥 Exporting orders as CSV…')">📥 Export</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card" style="--kpi-c:var(--primary);animation-delay:.05s">
+        <div class="kpi-head">
+          <div class="kpi-icon" style="background:var(--primary-faint)">📦</div>
+          <span class="kpi-trend trend-up">↑ 24%</span>
+        </div>
+        <div class="kpi-val" id="kpiTotal">0</div>
+        <div class="kpi-label">Total Orders</div>
+      </div>
+      <div class="kpi-card" style="--kpi-c:var(--warning);animation-delay:.1s">
+        <div class="kpi-head">
+          <div class="kpi-icon" style="background:var(--warning-light)">⏳</div>
+          <span class="kpi-trend trend-warn">Needs action</span>
+        </div>
+        <div class="kpi-val" id="kpiPending">0</div>
+        <div class="kpi-label">Pending</div>
+      </div>
+      <div class="kpi-card" style="--kpi-c:var(--info);animation-delay:.15s">
+        <div class="kpi-head">
+          <div class="kpi-icon" style="background:var(--info-light)">🔄</div>
+          <span class="kpi-trend trend-up">Active</span>
+        </div>
+        <div class="kpi-val" id="kpiProcessing">0</div>
+        <div class="kpi-label">Processing</div>
+      </div>
+      <div class="kpi-card" style="--kpi-c:var(--success);animation-delay:.2s">
+        <div class="kpi-head">
+          <div class="kpi-icon" style="background:var(--success-light)">✅</div>
+          <span class="kpi-trend trend-up">↑ 18%</span>
+        </div>
+        <div class="kpi-val" id="kpiDelivered">0</div>
+        <div class="kpi-label">Delivered</div>
+      </div>
+      <div class="kpi-card" style="--kpi-c:var(--danger);animation-delay:.25s">
+        <div class="kpi-head">
+          <div class="kpi-icon" style="background:var(--danger-light)">❌</div>
+          <span class="kpi-trend trend-down">↓ 3%</span>
+        </div>
+        <div class="kpi-val" id="kpiCancelled">0</div>
+        <div class="kpi-label">Cancelled</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-bar">
+      <button class="tab active" data-status="all">All Orders <span class="tab-count" id="tc-all">0</span></button>
+      <button class="tab" data-status="pending">Pending <span class="tab-count" id="tc-pending">0</span></button>
+      <button class="tab" data-status="processing">Processing <span class="tab-count" id="tc-processing">0</span></button>
+      <button class="tab" data-status="shipped">Shipped <span class="tab-count" id="tc-shipped">0</span></button>
+      <button class="tab" data-status="delivered">Delivered <span class="tab-count" id="tc-delivered">0</span></button>
+      <button class="tab" data-status="cancelled">Cancelled <span class="tab-count" id="tc-cancelled">0</span></button>
+      <button class="tab" data-status="refunded">Refunded <span class="tab-count" id="tc-refunded">0</span></button>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <select class="filter-select" id="payFilter">
+          <option value="all">All Payments</option>
+          <option value="paid">Paid</option>
+          <option value="pending">Unpaid</option>
+          <option value="refunded">Refunded</option>
+        </select>
+        <select class="filter-select" id="cityFilter">
+          <option value="all">All Cities</option>
+          <option value="Lagos">Lagos</option>
+          <option value="Abuja">Abuja</option>
+          <option value="Port Harcourt">Port Harcourt</option>
+          <option value="Ibadan">Ibadan</option>
+          <option value="Kano">Kano</option>
+        </select>
+        <input class="date-input" type="date" id="dateFrom" title="From date"/>
+        <input class="date-input" type="date" id="dateTo" title="To date"/>
+      </div>
+      <div class="toolbar-right">
+        <select class="sort-select" id="sortSel">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="amount-desc">Amount ↓</option>
+          <option value="amount-asc">Amount ↑</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th class="th-check"><div class="custom-cb" id="selectAll">✓</div></th>
+            <th class="th-sort" data-col="id">Order ID ↕</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th class="th-sort" data-col="amount">Amount ↕</th>
+            <th>Status</th>
+            <th>Payment</th>
+            <th class="th-sort" data-col="date">Date ↕</th>
+            <th>City</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-icon">📭</div>
+        <h3 class="empty-title">No <em>orders</em> found</h3>
+        <p class="empty-sub">Try adjusting your filters or search query</p>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-bar">
+      <div class="page-info">Showing <strong id="showRange">0</strong> of <strong id="showTotal">0</strong> orders</div>
+      <div class="page-btns" id="pageBtns"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BULK BAR -->
+<div class="bulk-bar" id="bulkBar">
+  <span class="bulk-count"><strong id="bulkCount">0</strong> selected</span>
+  <div class="bulk-actions">
+    <button class="bulk-btn" onclick="bulkStatus('processing')">Mark Processing</button>
+    <button class="bulk-btn" onclick="bulkStatus('shipped')">Mark Shipped</button>
+    <button class="bulk-btn" onclick="bulkStatus('delivered')">Mark Delivered</button>
+    <button class="bulk-btn danger" onclick="bulkStatus('cancelled')">Cancel</button>
+  </div>
+  <button class="bulk-close" id="bulkClose">✕</button>
+</div>
+
+<!-- ORDER DETAIL DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay">
+  <div class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div>
+        <div class="drawer-title">Order <em id="drawerOID">#VV-1042</em></div>
+        <div style="font-size:.72rem;color:var(--light);margin-top:4px" id="drawerDate"></div>
+      </div>
+      <button class="drawer-close" id="drawerClose">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+    <div class="drawer-footer">
+      <div class="status-select-wrap">
+        <select class="status-select" id="drawerStatusSel">
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="refunded">Refunded</option>
+        </select>
+        <button class="btn-update" id="drawerUpdateBtn">Update</button>
+      </div>
+      <button class="btn-print" onclick="showToast('🖨️ Opening print view…')">Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmOverlay">
+  <div class="confirm-modal">
+    <div class="confirm-icon">⚠️</div>
+    <h3 class="confirm-title">Cancel Order?</h3>
+    <p class="confirm-sub" id="confirmMsg">Are you sure you want to cancel this order? The customer will be notified.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="cancelBtn">Go Back</button>
+      <button class="btn-del" id="confirmBtn">Yes, Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span>✨</span><span id="toastMsg">Done!</span></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const IMGS = [
+  'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=100&q=60',
+  'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=100&q=60',
+  'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=100&q=60',
+  'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=100&q=60',
+  'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100&q=60',
+  'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=100&q=60',
+];
+
+const PRODUCTS = [
+  'Milano Structured Bag','Canvas Weekend Tote','Velvet Night Clutch',
+  'Cognac Leather Satchel','City Crossbody','Minimal Leather Tote',
+  'Urban Backpack','Bamboo Handle Bag','Pearl Mini Clutch','Luxury Croc Tote',
+];
+const PRICES = [45000,16500,18000,62000,21000,38000,29000,24000,14000,75000];
+const CUSTOMERS = [
+  {name:'Adaeze Okafor', email:'ada@email.com',    av:'👩🏾'},
+  {name:'Fatima Aliyu',  email:'fatima@email.com', av:'👩🏽'},
+  {name:'Blessing Eze',  email:'blessing@email.com',av:'👩🏿'},
+  {name:'Chisom Nwosu',  email:'chisom@email.com', av:'👩🏾'},
+  {name:'Amaka Dike',    email:'amaka@email.com',  av:'👩🏽'},
+  {name:'Ngozi Eze',     email:'ngozi@email.com',  av:'👩🏿'},
+  {name:'Sade Okonkwo',  email:'sade@email.com',   av:'👩🏾'},
+  {name:'Temi Adeola',   email:'temi@email.com',   av:'👩🏽'},
+  {name:'Zara Uche',     email:'zara@email.com',   av:'👩🏿'},
+  {name:'Kemi Bello',    email:'kemi@email.com',   av:'👩🏾'},
+];
+const CITIES   = ['Lagos','Abuja','Port Harcourt','Ibadan','Kano','Enugu','Benin City'];
+const STATUSES = ['delivered','delivered','delivered','processing','processing','pending','shipped','delivered','cancelled','refunded'];
+const PAYMENTS = ['paid','paid','paid','paid','pending','paid','paid','refunded','paid','failed'];
+const METHODS  = ['Paystack','Bank Transfer','Flutterwave','Paystack','Bank Transfer','Paystack','Flutterwave','Paystack','Bank Transfer','Paystack'];
+
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+
+// Generate 48 orders
+let orders = Array.from({length:48},(_,i)=>{
+  const ci = rnd(0,9), pi = rnd(0,9), qty = rnd(1,3);
+  const price = PRICES[pi]*qty;
+  const day = String(rnd(1,14)).padStart(2,'0');
+  const mo  = ['Jan','Feb','Mar','Apr','May'][rnd(0,4)];
+  const si  = rnd(0,9), pmi = rnd(0,9);
+  const items = Array.from({length:rnd(1,3)},()=>{
+    const k=rnd(0,9);return{name:PRODUCTS[k],img:IMGS[rnd(0,5)],price:PRICES[k],qty:rnd(1,2),color:['Black','Brown','Tan','Teal'][rnd(0,3)]};
+  });
+  return {
+    id: 1090-i,
+    oid: `#VV-${1090-i}`,
+    customer: CUSTOMERS[ci],
+    items,
+    amount: items.reduce((s,it)=>s+it.price*it.qty,0),
+    status: STATUSES[si],
+    payment: PAYMENTS[pmi],
+    method: METHODS[pmi],
+    date: `${mo} ${day}, 2025`,
+    rawDate: new Date(2025,rnd(0,4),+day),
+    city: CITIES[rnd(0,6)],
+    address: `${rnd(1,99)} ${['Lekki Phase 1','Wuse 2','GRA','Victoria Island','Ikoyi'][rnd(0,4)]}, ${CITIES[rnd(0,6)]}`,
+    note: rnd(0,1)?'Please deliver before 5pm.':'',
+    tracking: `VVT${String(rnd(100000,999999))}`,
+  };
+});
+
+let filtered = [...orders];
+let selected = new Set();
+let activeStatus = 'all';
+let searchQ = '';
+let payFilter = 'all';
+let cityFilter = 'all';
+let sortKey = 'newest';
+let currentPage = 1;
+const PER_PAGE = 12;
+let drawerOrderId = null;
+let confirmAction = null;
+
+const fmt = n => '₦'+n.toLocaleString('en-NG');
+
+// ── STATUS CONFIG ─────────────────────────────────────────────────────────────
+const STATUS_CFG = {
+  delivered:  {cls:'pill-delivered',  label:'Delivered',  icon:'✅', bg:'var(--success-light)'},
+  processing: {cls:'pill-processing', label:'Processing', icon:'🔄', bg:'var(--primary-faint)'},
+  pending:    {cls:'pill-pending',    label:'Pending',    icon:'⏳', bg:'var(--warning-light)'},
+  shipped:    {cls:'pill-shipped',    label:'Shipped',    icon:'🚚', bg:'var(--info-light)'},
+  cancelled:  {cls:'pill-cancelled',  label:'Cancelled',  icon:'❌', bg:'var(--danger-light)'},
+  refunded:   {cls:'pill-refunded',   label:'Refunded',   icon:'↩️', bg:'#f5f0ff'},
+};
+const PAY_CFG = {
+  paid:     {cls:'pay-paid',     label:'Paid'},
+  pending:  {cls:'pay-pending',  label:'Unpaid'},
+  failed:   {cls:'pay-failed',   label:'Failed'},
+  refunded: {cls:'pay-refunded', label:'Refunded'},
+};
+
+// ── FILTER + SORT ─────────────────────────────────────────────────────────────
+function applyFilters(){
+  filtered = orders.filter(o=>{
+    const matchStatus = activeStatus==='all' || o.status===activeStatus;
+    const matchPay    = payFilter==='all' || o.payment===payFilter;
+    const matchCity   = cityFilter==='all' || o.city===cityFilter;
+    const matchQ      = !searchQ || o.oid.toLowerCase().includes(searchQ) || o.customer.name.toLowerCase().includes(searchQ) || o.customer.email.includes(searchQ);
+    return matchStatus && matchPay && matchCity && matchQ;
+  });
+  if(sortKey==='oldest')      filtered.sort((a,b)=>a.rawDate-b.rawDate);
+  else if(sortKey==='amount-desc') filtered.sort((a,b)=>b.amount-a.amount);
+  else if(sortKey==='amount-asc')  filtered.sort((a,b)=>a.amount-b.amount);
+  else                        filtered.sort((a,b)=>b.id-a.id);
+
+  currentPage=1;
+  updateKPIs();
+  updateTabCounts();
+  renderTable();
+  renderPagination();
+}
+
+// ── KPIs ─────────────────────────────────────────────────────────────────────
+function animateNum(el,target){
+  const dur=900,start=performance.now();
+  const step=ts=>{const p=Math.min((ts-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);
+}
+function updateKPIs(){
+  animateNum(document.getElementById('kpiTotal'),    orders.length);
+  animateNum(document.getElementById('kpiPending'),  orders.filter(o=>o.status==='pending').length);
+  animateNum(document.getElementById('kpiProcessing'),orders.filter(o=>o.status==='processing').length);
+  animateNum(document.getElementById('kpiDelivered'),orders.filter(o=>o.status==='delivered').length);
+  animateNum(document.getElementById('kpiCancelled'),orders.filter(o=>o.status==='cancelled').length);
+}
+
+// ── TAB COUNTS ────────────────────────────────────────────────────────────────
+function updateTabCounts(){
+  const statuses=['all','pending','processing','shipped','delivered','cancelled','refunded'];
+  statuses.forEach(s=>{
+    const count = s==='all' ? orders.length : orders.filter(o=>o.status===s).length;
+    document.getElementById('tc-'+s).textContent = count;
+  });
+}
+
+// ── TABLE RENDER ──────────────────────────────────────────────────────────────
+function renderTable(){
+  const body=document.getElementById('ordersBody');
+  const empty=document.getElementById('emptyState');
+  const start=(currentPage-1)*PER_PAGE, end=Math.min(start+PER_PAGE,filtered.length);
+  const page=filtered.slice(start,end);
+
+  document.getElementById('showRange').textContent = filtered.length ? `${start+1}–${end}` : '0';
+  document.getElementById('showTotal').textContent = filtered.length;
+
+  if(!page.length){body.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  body.innerHTML=page.map((o,i)=>{
+    const sc=STATUS_CFG[o.status]||STATUS_CFG.pending;
+    const pc=PAY_CFG[o.payment]||PAY_CFG.pending;
+    const isSel=selected.has(o.id);
+    const thumbs=o.items.slice(0,2).map(it=>`<div class="item-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy"/></div>`).join('');
+    const extra=o.items.length>2?`<div class="item-more">+${o.items.length-2}</div>`:'';
+    return `
+    <tr id="row-${o.id}" class="${isSel?'selected':''}" style="animation-delay:${i*.04}s">
+      <td><div class="custom-cb ${isSel?'checked':''}" onclick="toggleRow(${o.id},this)">✓</div></td>
+      <td>
+        <div class="order-id-cell">
+          <div class="oid">${o.oid}</div>
+          <div class="odate">${o.date}</div>
+        </div>
+      </td>
+      <td>
+        <div class="cust-cell">
+          <div class="cust-av">${o.customer.av}</div>
+          <div>
+            <div class="cust-name">${o.customer.name}</div>
+            <div class="cust-email">${o.customer.email}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="items-cell" style="display:flex;align-items:center">
+          ${thumbs}${extra}
+          <span style="font-size:.72rem;color:var(--light);margin-left:10px">${o.items.length} item${o.items.length>1?'s':''}</span>
+        </div>
+      </td>
+      <td>
+        <div class="amt-cell">
+          <div class="amt">${fmt(o.amount)}</div>
+        </div>
+      </td>
+      <td><span class="status-pill ${sc.cls}"><span class="sdot"></span>${sc.label}</span></td>
+      <td><span class="pay-pill ${pc.cls}">${pc.label}</span></td>
+      <td style="white-space:nowrap;font-size:.8rem">${o.date}</td>
+      <td style="font-size:.8rem">${o.city}</td>
+      <td>
+        <div class="row-actions">
+          <div class="row-btn" title="View" onclick="openDrawer(${o.id})">👁</div>
+          <div class="row-btn" title="Print Invoice" onclick="showToast('🖨️ Printing invoice for ${o.oid}…')">🖨️</div>
+          <div class="row-btn danger" title="Cancel" onclick="openConfirm(${o.id})">❌</div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── PAGINATION ────────────────────────────────────────────────────────────────
+function renderPagination(){
+  const totalPages=Math.ceil(filtered.length/PER_PAGE)||1;
+  const btns=document.getElementById('pageBtns');
+  let html=`<button class="pg-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled style="opacity:.4"':''}>← Prev</button>`;
+  for(let p=1;p<=totalPages;p++){
+    if(p===1||p===totalPages||Math.abs(p-currentPage)<=1){
+      html+=`<button class="pg-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+    } else if(Math.abs(p-currentPage)===2){
+      html+=`<button class="pg-btn" style="pointer-events:none">…</button>`;
+    }
+  }
+  html+=`<button class="pg-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled style="opacity:.4"':''}>Next →</button>`;
+  btns.innerHTML=html;
+}
+function goPage(p){
+  const totalPages=Math.ceil(filtered.length/PER_PAGE)||1;
+  if(p<1||p>totalPages) return;
+  currentPage=p; renderTable(); renderPagination();
+  window.scrollTo({top:document.querySelector('.tabs-bar').offsetTop-80,behavior:'smooth'});
+}
+
+// ── SELECTION ─────────────────────────────────────────────────────────────────
+function toggleRow(id,cbEl){
+  if(selected.has(id)){selected.delete(id);cbEl.classList.remove('checked');document.getElementById('row-'+id)?.classList.remove('selected');}
+  else{selected.add(id);cbEl.classList.add('checked');document.getElementById('row-'+id)?.classList.add('selected');}
+  updateBulkBar();
+}
+document.getElementById('selectAll').addEventListener('click',function(){
+  const page=filtered.slice((currentPage-1)*PER_PAGE,currentPage*PER_PAGE);
+  const allSel=page.every(o=>selected.has(o.id));
+  page.forEach(o=>{
+    if(allSel){selected.delete(o.id);document.getElementById('row-'+o.id)?.classList.remove('selected');}
+    else{selected.add(o.id);document.getElementById('row-'+o.id)?.classList.add('selected');}
+  });
+  this.classList.toggle('checked',!allSel);
+  renderTable(); updateBulkBar();
+});
+function updateBulkBar(){
+  document.getElementById('bulkCount').textContent=selected.size;
+  document.getElementById('bulkBar').classList.toggle('visible',selected.size>0);
+}
+document.getElementById('bulkClose').addEventListener('click',()=>{
+  selected.clear(); renderTable(); updateBulkBar();
+});
+function bulkStatus(status){
+  selected.forEach(id=>{const o=orders.find(x=>x.id===id);if(o)o.status=status;});
+  const n=selected.size; selected.clear();
+  applyFilters(); updateBulkBar();
+  showToast(`✅ ${n} orders marked as ${STATUS_CFG[status].label}`);
+}
+
+// ── DRAWER ───────────────────────────────────────────────────────────────────
+function openDrawer(id){
+  const o=orders.find(x=>x.id===id); if(!o) return;
+  drawerOrderId=id;
+  document.getElementById('drawerOID').textContent=o.oid;
+  document.getElementById('drawerDate').textContent=`Placed on ${o.date} · ${o.city}`;
+  document.getElementById('drawerStatusSel').value=o.status;
+
+  const sc=STATUS_CFG[o.status]||STATUS_CFG.pending;
+  const pc=PAY_CFG[o.payment]||PAY_CFG.pending;
+
+  const timeline=[
+    {event:'Order Placed',time:o.date+', 10:00 AM',icon:'📝',bg:'var(--primary-faint)',done:true},
+    {event:'Payment Confirmed',time:o.date+', 10:02 AM',icon:'💳',bg:'var(--success-light)',done:o.payment==='paid'},
+    {event:'Processing',time:o.date+', 11:30 AM',icon:'🔄',bg:'var(--info-light)',done:['processing','shipped','delivered'].includes(o.status)},
+    {event:'Shipped',time:o.date+', 2:00 PM',icon:'🚚',bg:'#eff6ff',done:['shipped','delivered'].includes(o.status)},
+    {event:'Delivered',time:o.date+', 5:30 PM',icon:'✅',bg:'var(--success-light)',done:o.status==='delivered'},
+  ];
+
+  document.getElementById('drawerBody').innerHTML=`
+    <!-- Status banner -->
+    <div style="background:${sc.bg};border-radius:8px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.3rem">${sc.icon}</span>
+        <div>
+          <div style="font-weight:600;color:var(--dark);font-size:.9rem">${sc.label}</div>
+          <div style="font-size:.7rem;color:var(--light)">Order Status</div>
+        </div>
+      </div>
+      <span class="pay-pill ${pc.cls}">${pc.label} · ${o.method}</span>
+    </div>
+
+    <!-- Customer -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Customer Details</div>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="dl">Name</div><div class="dv">${o.customer.av} ${o.customer.name}</div></div>
+        <div class="detail-item"><div class="dl">Email</div><div class="dv">${o.customer.email}</div></div>
+        <div class="detail-item"><div class="dl">City</div><div class="dv">${o.city}</div></div>
+        <div class="detail-item"><div class="dl">Tracking No.</div><div class="dv" style="font-family:monospace;font-size:.78rem">${o.tracking}</div></div>
+        <div class="detail-item" style="grid-column:1/-1"><div class="dl">Delivery Address</div><div class="dv">${o.address}</div></div>
+        ${o.note?`<div class="detail-item" style="grid-column:1/-1"><div class="dl">Note from Customer</div><div class="dv" style="background:var(--warning-light);padding:8px 12px;border-radius:4px;font-size:.82rem;color:var(--mid)">"${o.note}"</div></div>`:''}
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Order Items</div>
+      <div>
+        ${o.items.map(it=>`
+        <div class="order-item-row">
+          <div class="oi-thumb"><img src="${it.img}" alt="${it.name}" loading="lazy"/></div>
+          <div class="oi-info">
+            <div class="oi-name">${it.name}</div>
+            <div class="oi-meta">Qty ${it.qty} · Color: ${it.color}</div>
+          </div>
+          <div class="oi-price">${fmt(it.price*it.qty)}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- Totals -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Order Summary</div>
+      <div class="order-totals">
+        <div class="total-row"><span>Subtotal</span><span>${fmt(o.amount)}</span></div>
+        <div class="total-row"><span>Delivery Fee</span><span>${o.amount>=20000?'<span style="color:var(--primary);font-weight:500">FREE</span>':fmt(2500)}</span></div>
+        <div class="total-row"><span>Tax (7.5%)</span><span>${fmt(Math.round(o.amount*.075))}</span></div>
+        <div class="total-row grand"><span class="total-val" style="color:var(--dark)">Total</span><span class="total-val">${fmt(o.amount+Math.round(o.amount*.075)+(o.amount>=20000?0:2500))}</span></div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">Order Timeline</div>
+      <div class="timeline">
+        ${timeline.map((t,i)=>`
+        <div class="tl-item">
+          <div class="tl-dot-wrap">
+            <div class="tl-dot" style="background:${t.done?t.bg:'var(--bg)'};opacity:${t.done?1:.4}">${t.icon}</div>
+            ${i<timeline.length-1?'<div class="tl-line"></div>':''}
+          </div>
+          <div class="tl-content" style="opacity:${t.done?1:.35}">
+            <div class="tl-event">${t.event}</div>
+            <div class="tl-time">${t.done?t.time:'Pending'}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('dimOverlay').classList.add('visible');
+}
+
+function closeDrawer(){
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('dimOverlay').classList.remove('visible');
+  drawerOrderId=null;
+}
+document.getElementById('drawerClose').addEventListener('click',closeDrawer);
+document.getElementById('drawerOverlay').addEventListener('click',e=>{
+  if(e.target===document.getElementById('drawerOverlay')) closeDrawer();
+});
+
+document.getElementById('drawerUpdateBtn').addEventListener('click',()=>{
+  if(!drawerOrderId) return;
+  const o=orders.find(x=>x.id===drawerOrderId); if(!o) return;
+  const newStatus=document.getElementById('drawerStatusSel').value;
+  o.status=newStatus;
+  closeDrawer(); applyFilters();
+  showToast(`✅ Order ${o.oid} updated to ${STATUS_CFG[newStatus].label}`);
+});
+
+// ── CONFIRM ───────────────────────────────────────────────────────────────────
+function openConfirm(id){
+  const o=orders.find(x=>x.id===id); if(!o) return;
+  confirmAction={type:'cancel',id};
+  document.getElementById('confirmMsg').innerHTML=`Are you sure you want to cancel order <strong>${o.oid}</strong> for <strong>${o.customer.name}</strong>? This cannot be undone.`;
+  document.getElementById('confirmOverlay').classList.add('open');
+  document.getElementById('dimOverlay').classList.add('visible');
+}
+document.getElementById('cancelBtn').addEventListener('click',closeConfirm);
+function closeConfirm(){
+  document.getElementById('confirmOverlay').classList.remove('open');
+  document.getElementById('dimOverlay').classList.remove('visible');
+}
+document.getElementById('confirmBtn').addEventListener('click',()=>{
+  if(confirmAction?.type==='cancel'){
+    const o=orders.find(x=>x.id===confirmAction.id);
+    if(o){o.status='cancelled';showToast(`❌ Order ${o.oid} cancelled`);}
+  }
+  closeConfirm(); applyFilters();
+});
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    activeStatus=tab.dataset.status;
+    applyFilters();
+  });
+});
+
+// ── FILTERS ───────────────────────────────────────────────────────────────────
+document.getElementById('topSearch').addEventListener('input',e=>{searchQ=e.target.value.trim().toLowerCase();applyFilters();});
+document.getElementById('payFilter').addEventListener('change',e=>{payFilter=e.target.value;applyFilters();});
+document.getElementById('cityFilter').addEventListener('change',e=>{cityFilter=e.target.value;applyFilters();});
+document.getElementById('sortSel').addEventListener('change',e=>{sortKey=e.target.value;applyFilters();});
+
+// ── MOBILE SIDEBAR ────────────────────────────────────────────────────────────
+document.getElementById('menuToggle').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('dimOverlay').classList.toggle('visible');
+});
+document.getElementById('dimOverlay').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.remove('open');
+  closeDrawer(); closeConfirm();
+  document.getElementById('dimOverlay').classList.remove('visible');
+});
+
+// ── CURSOR ────────────────────────────────────────────────────────────────────
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{
+  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
+  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},80);
+});
+document.querySelectorAll('a,button,.nav-item,.kpi-card,.row-btn,.custom-cb,.tab,.pg-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='translate(-50%,-50%) scale(1.8)';cursor.style.background='var(--gold)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';cursor.style.background='var(--primary)';});
+});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+applyFilters();
+</script>
+</body>
+</html>

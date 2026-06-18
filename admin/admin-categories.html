@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Categories – Virtue & Verve Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/admin-categories.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="dim-overlay" id="dimOverlay"></div>
+
+<!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a class="logo-mark" href="index.html">Virtue &amp; <span>Verve</span></a>
+      <div class="logo-sub">Admin Dashboard</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Overview</div>
+      <a class="nav-item" href="./index.html"><span class="nav-icon"><i class="fa-solid fa-grip"></i></span><span class="nav-label">Dashboard</span></a>
+      <a class="nav-item  active" href="./admin-categories.html"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span><span class="nav-label">Categories</span></a>
+      <a class="nav-item" href="./admin-products.html"><span class="nav-icon"><i class="fa-solid fa-box"></i></span><span class="nav-label">Products</span></a>
+      <a class="nav-item" href="./admin-orders.html"><span class="nav-icon"><i class="fa-solid fa-cart-shopping"></i></span><span class="nav-label">Orders</span><span class="nav-badge red">12</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-people-group"></i></span><span class="nav-label">Customers</span></a>
+      
+    </div>
+
+    <!-- <div class="sidebar-section">
+      <div class="sidebar-section-label">Finance</div>
+      <a class="nav-item" href="#"><span class="nav-icon">💰</span><span class="nav-label">Revenue</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🧾</span><span class="nav-label">Invoices</span><span class="nav-badge">3</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">🏷️</span><span class="nav-label">Discounts</span></a>
+    </div> -->
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Store</div>
+      <a class="nav-item" href="shop.html" target="_blank"><span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-label">View Store</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span class="nav-label">Reviews</span><span class="nav-badge">7</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span><span class="nav-label">Settings</span></a>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="admin-profile" onclick="showToast('Profile settings coming soon!')">
+        <div class="admin-avatar">VV</div>
+        <div>
+          <div class="admin-name">Virtue &amp; Verve</div>
+          <div class="admin-role">Store Administrator</div>
+        </div>
+        <div class="admin-more">⋯</div>
+      </div>
+    </div>
+  </aside>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <h1 class="page-heading">All <span>Categories</span></h1>
+    </div>
+    <div class="topbar-right">
+      <div class="search-bar">
+        <span style="color:var(--light);font-size:0.9rem"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input type="text" id="topSearch" placeholder="Search categories…"/>
+      </div>
+      <div class="icon-btn" title="Notifications"><span><i class="fa-solid fa-bell" style="color: #088178;"></i></span><span class="notif-dot"></span></div>
+      <button class="add-btn" id="openAddModal">+ Add Category</button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-mini" style="animation-delay:0.05s">
+        <div class="kpi-mini-icon" style="background: #e6f5f4"><i class="fa-solid fa-folder-open"></i></div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiTotal">8</div>
+          <div class="kpi-mini-label">Total Categories</div>
+        </div>
+        <div class="kpi-mini-trend trend-up">↑ +1 this month</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.1s">
+        <div class="kpi-mini-icon" style="background: #e6f5f4"><i class="fa-solid fa-check"></i></div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiActive">6</div>
+          <div class="kpi-mini-label">Active Categories</div>
+        </div>
+        <div class="kpi-mini-trend trend-up">↑ 75%</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.15s">
+        <div class="kpi-mini-icon" style="background: #e6f5f4"><i class="fa-solid fa-box"></i></div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiProducts">24</div>
+          <div class="kpi-mini-label">Total Products</div>
+        </div>
+        <div class="kpi-mini-trend trend-up">↑ +3 this week</div>
+      </div>
+      <div class="kpi-mini" style="animation-delay:0.2s">
+        <div class="kpi-mini-icon" style="background: #e6f5f4"><i class="fa-solid fa-eye"></i></div>
+        <div class="kpi-mini-info">
+          <div class="kpi-mini-val" id="kpiHidden">2</div>
+          <div class="kpi-mini-label">Hidden</div>
+        </div>
+        <div class="kpi-mini-trend trend-down">Not visible</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="categories-toolbar">
+      <div class="toolbar-left">
+        <button class="filter-pill active" data-filter="all">All <span class="pill-count">(8)</span></button>
+        <button class="filter-pill" data-filter="active">Active <span class="pill-count">(6)</span></button>
+        <button class="filter-pill" data-filter="hidden">Hidden <span class="pill-count">(2)</span></button>
+        <button class="filter-pill" data-filter="nav">In Nav <span class="pill-count">(5)</span></button>
+      </div>
+      <div class="toolbar-right">
+        <select class="sort-select" id="sortSelect">
+          <option value="default">Sort: Default</option>
+          <option value="name">Name A–Z</option>
+          <option value="products-desc">Most Products</option>
+          <option value="products-asc">Fewest Products</option>
+          <option value="sales-desc">Top Sales</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vbtn active" id="tableViewBtn" title="Table view">☰</button>
+          <button class="vbtn" id="gridViewBtn" title="Grid view">⊞</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE VIEW -->
+    <div class="categories-table-wrap" id="tableWrap">
+      <table class="categories-table">
+        <thead>
+          <tr>
+            <th class="th-check"><div class="custom-cb" id="selectAll" title="Select all">✓</div></th>
+            <th>Category</th>
+            <th class="th-sort" data-col="type">Type <span class="sort-arrow">↕</span></th>
+            <th class="th-sort" data-col="products">Products <span class="sort-arrow">↕</span></th>
+            <th class="th-sort" data-col="sales">Sales <span class="sort-arrow">↕</span></th>
+            <th>Revenue</th>
+            <th>Status</th>
+            <th>Navigation</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="categoriesTableBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <h3 class="empty-title">No <em>categories</em> found</h3>
+        <p class="empty-sub">Try a different search or filter</p>
+      </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div class="categories-grid-view" id="gridWrap"></div>
+
+    <!-- PAGINATION -->
+    <div class="pagination-bar" id="paginationBar">
+      <div class="page-info">Showing <strong id="showingRange">1–8</strong> of <strong id="showingTotal">8</strong> categories</div>
+      <div class="page-btns">
+        <button class="pg-btn nav">← Prev</button>
+        <button class="pg-btn active">1</button>
+        <button class="pg-btn nav">Next →</button>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- BULK ACTION BAR -->
+<div class="bulk-bar" id="bulkBar">
+  <span class="bulk-count"><strong id="bulkCount">0</strong> selected</span>
+  <div class="bulk-actions">
+    <button class="bulk-btn" onclick="showToast('✅ Categories set to active!')">Activate</button>
+    <button class="bulk-btn" onclick="showToast('👁 Categories hidden from store')">Hide</button>
+    <button class="bulk-btn danger" onclick="openConfirm('bulk')">Delete</button>
+  </div>
+  <button class="bulk-close" id="bulkClear">✕</button>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div class="modal-overlay" id="addModalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 class="modal-title">Add New <em>Category</em></h2>
+      <button class="modal-close" id="closeAddModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="field-group modal-full">
+          <label class="field-label">Category Name</label>
+          <input class="field-input" id="newName" type="text" placeholder="e.g. Evening Bags"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Slug / URL</label>
+          <input class="field-input" id="newSlug" type="text" placeholder="evening-bags"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Type / Label</label>
+          <select class="field-select" id="newType">
+            <option value="Everyday">Everyday</option>
+            <option value="Occasion">Special Occasion</option>
+            <option value="Luxury">Luxury</option>
+            <option value="Work">Work & Travel</option>
+            <option value="Sale">Sale</option>
+          </select>
+        </div>
+        <div class="field-group modal-full">
+          <label class="field-label">Description</label>
+          <textarea class="field-textarea" id="newDesc" placeholder="Write a short category description…"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Icon / Emoji</label>
+          <div class="emoji-grid" id="emojiPicker">
+            <button class="emoji-btn active" data-emoji="👜">👜</button>
+            <button class="emoji-btn" data-emoji="👛">👛</button>
+            <button class="emoji-btn" data-emoji="🎒">🎒</button>
+            <button class="emoji-btn" data-emoji="💼">💼</button>
+            <button class="emoji-btn" data-emoji="🛍️">🛍️</button>
+            <button class="emoji-btn" data-emoji="💎">💎</button>
+            <button class="emoji-btn" data-emoji="✨">✨</button>
+            <button class="emoji-btn" data-emoji="🏷️">🏷️</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Display Order</label>
+          <input class="field-input" id="newOrder" type="number" placeholder="e.g. 1"/>
+        </div>
+        <div class="field-group modal-full">
+          <label class="field-label">Category Image</label>
+          <div class="img-upload-zone" onclick="showToast('Image upload ready!')">
+            <div class="img-upload-icon">🖼️</div>
+            <div class="img-upload-text">Click to upload or drag & drop</div>
+            <div class="img-upload-sub">PNG, JPG, WEBP — max 5MB</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Visibility</label>
+          <select class="field-select" id="newStatus">
+            <option value="active">Active (Visible)</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Show in Navigation</label>
+          <select class="field-select" id="newNav">
+            <option value="yes">Yes — Show in menu</option>
+            <option value="no">No — Hide from menu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-draft" onclick="saveCategory('hidden')">Save as Hidden</button>
+      <button class="btn-cancel" id="cancelAdd">Cancel</button>
+      <button class="btn-save" onclick="saveCategory('active')">Publish Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmOverlay">
+  <div class="confirm-modal">
+    <div class="confirm-icon">🗑️</div>
+    <h3 class="confirm-title">Delete Category?</h3>
+    <p class="confirm-sub" id="confirmMsg">Are you sure you want to delete this category? Products inside it will become uncategorized.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" id="cancelConfirm">Cancel</button>
+      <button class="btn-confirm-del" id="confirmDel">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span>✨</span><span id="toastMsg">Done!</span></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+let categories = [
+  { id:1, name:'Handbags',       slug:'handbags',       type:'Everyday',  icon:'👜', desc:'Structured and unstructured handbags for every occasion.',   products:8,  sales:146, revenue:2740000, status:'active', order:1, nav:'yes', img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70' },
+  { id:2, name:'Tote Bags',      slug:'tote-bags',      type:'Everyday',  icon:'🛍️', desc:'Spacious and stylish totes perfect for everyday use.',        products:5,  sales:112, revenue:1485000, status:'active', order:2, nav:'yes', img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70' },
+  { id:3, name:'Clutches',       slug:'clutches',       type:'Occasion',  icon:'👛', desc:'Elegant clutches and evening bags for special occasions.',     products:4,  sales:78,  revenue:1134000, status:'active', order:3, nav:'yes', img:'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=300&q=70' },
+  { id:4, name:'Backpacks',      slug:'backpacks',      type:'Work',      icon:'🎒', desc:'Chic and functional backpacks for the modern woman.',          products:4,  sales:63,  revenue:982000,  status:'active', order:4, nav:'yes', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=70' },
+  { id:5, name:'Crossbody Bags', slug:'crossbody-bags', type:'Everyday',  icon:'💼', desc:'Compact crossbody styles for hands-free convenience.',         products:3,  sales:82,  revenue:874000,  status:'active', order:5, nav:'yes', img:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=300&q=70' },
+  { id:6, name:'Mini Bags',      slug:'mini-bags',      type:'Occasion',  icon:'✨', desc:'Tiny but mighty — our mini bag collection.',                   products:2,  sales:44,  revenue:520000,  status:'active', order:6, nav:'no',  img:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&q=70' },
+  { id:7, name:'Luxury',         slug:'luxury',         type:'Luxury',    icon:'💎', desc:'Our premium collection of high-end designer-inspired bags.',   products:4,  sales:38,  revenue:1860000, status:'hidden', order:7, nav:'no',  img:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=70' },
+  { id:8, name:'Sale Items',     slug:'sale-items',     type:'Sale',      icon:'🏷️', desc:'Discounted products — limited time offers!',                   products:6,  sales:198, revenue:890000,  status:'hidden', order:8, nav:'no',  img:'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=300&q=70' },
+];
+
+let filtered = [...categories];
+let selected = new Set();
+let activeFilter = 'all';
+let searchQ = '';
+let sortKey = 'default';
+let nextId = 9;
+let deleteTarget = null;
+let isGridView = false;
+let selectedEmoji = '👜';
+
+const fmt = n => '₦' + n.toLocaleString('en-NG');
+
+// ─── FILTER + SORT ────────────────────────────────────────────────────────────
+function applyFilters() {
+  filtered = categories.filter(c => {
+    const matchFilter =
+      activeFilter === 'all'    ? true :
+      activeFilter === 'active' ? c.status === 'active' :
+      activeFilter === 'hidden' ? c.status === 'hidden' :
+      activeFilter === 'nav'    ? c.nav === 'yes' : true;
+    const matchQ = !searchQ || c.name.toLowerCase().includes(searchQ) || c.slug.includes(searchQ);
+    return matchFilter && matchQ;
+  });
+
+  if (sortKey === 'name')           filtered.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sortKey === 'products-desc') filtered.sort((a,b) => b.products - a.products);
+  else if (sortKey === 'products-asc')  filtered.sort((a,b) => a.products - b.products);
+  else if (sortKey === 'sales-desc')    filtered.sort((a,b) => b.sales - a.sales);
+  else                              filtered.sort((a,b) => a.order - b.order);
+
+  updateKPIs();
+  renderTable();
+  renderGrid();
+  updatePagination();
+}
+
+// ─── UPDATE KPIS ─────────────────────────────────────────────────────────────
+function updateKPIs() {
+  document.getElementById('kpiTotal').textContent    = categories.length;
+  document.getElementById('kpiActive').textContent   = categories.filter(c => c.status === 'active').length;
+  document.getElementById('kpiProducts').textContent = categories.reduce((s,c) => s + c.products, 0);
+  document.getElementById('kpiHidden').textContent   = categories.filter(c => c.status === 'hidden').length;
+}
+
+// ─── TABLE RENDER ─────────────────────────────────────────────────────────────
+function renderTable() {
+  const body  = document.getElementById('categoriesTableBody');
+  const empty = document.getElementById('emptyState');
+  const maxProds = Math.max(...categories.map(c => c.products));
+
+  if (!filtered.length) { body.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  body.innerHTML = filtered.map((c, i) => {
+    const isHidden = c.status === 'hidden';
+    const isSel    = selected.has(c.id);
+    const pct      = Math.round((c.products / maxProds) * 100);
+    return `
+    <tr id="row-${c.id}" class="${isSel ? 'selected' : ''}" style="animation-delay:${i*0.03}s">
+      <td><div class="custom-cb ${isSel ? 'checked' : ''}" onclick="toggleRow(${c.id},this)">✓</div></td>
+      <td>
+        <div class="cat-cell">
+          ${c.img
+            ? `<div class="cat-thumb"><img src="${c.img}" alt="${c.name}" loading="lazy"/></div>`
+            : `<div class="cat-thumb-icon" style="background:var(--primary-faint)">${c.icon}</div>`
+          }
+          <div class="cat-info">
+            <div class="cat-name">${c.icon} ${c.name}</div>
+            <div class="cat-slug">/categories/${c.slug}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="type-pill">${c.type}</span></td>
+      <td>
+        <div class="count-cell">
+          <div class="count-num">${c.products} products</div>
+          <div class="count-bar-track">
+            <div class="count-bar-fill" style="width:${pct}%"></div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="sales-cell">
+          <span class="sales-num">${c.sales}</span>
+          <span class="sales-sub">sold</span>
+        </div>
+      </td>
+      <td style="font-weight:500;color:var(--primary)">${fmt(c.revenue)}</td>
+      <td>
+        <span class="status-pill ${isHidden ? 'pill-hidden' : 'pill-active'}">
+          <span class="sdot"></span>${isHidden ? 'Hidden' : 'Active'}
+        </span>
+      </td>
+      <td style="font-size:0.8rem;color:${c.nav==='yes'?'var(--primary)':'var(--light)'}">
+        ${c.nav === 'yes' ? '✓ In Menu' : '— Hidden'}
+      </td>
+      <td>
+        <div class="row-actions">
+          <div class="row-btn" title="Edit" onclick="openEdit(${c.id})">✏️</div>
+          <div class="row-btn" title="View on store" onclick="showToast('Viewing ${c.name} on store…')">👁</div>
+          <div class="row-btn del" title="Delete" onclick="openConfirm(${c.id})">🗑️</div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Animate count bars
+  setTimeout(() => {
+    document.querySelectorAll('.count-bar-fill').forEach(b => {
+      const w = b.style.width; b.style.width = '0'; requestAnimationFrame(() => { b.style.width = w; });
+    });
+  }, 50);
+}
+
+// ─── GRID RENDER ─────────────────────────────────────────────────────────────
+function renderGrid() {
+  const wrap = document.getElementById('gridWrap');
+  if (!filtered.length) { wrap.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><h3 class="empty-title">No <em>categories</em> found</h3></div>'; return; }
+
+  wrap.innerHTML = filtered.map((c, i) => {
+    const isHidden = c.status === 'hidden';
+    const isSel    = selected.has(c.id);
+    return `
+    <div class="cat-grid-card ${isSel ? 'selected' : ''}" id="gc-${c.id}" style="animation-delay:${i*0.04}s">
+      <div class="cat-grid-img">
+        ${c.img
+          ? `<img src="${c.img}" alt="${c.name}" loading="lazy"/>`
+          : `<div class="cat-grid-img-icon" style="background:var(--primary-faint)">${c.icon}</div>`
+        }
+        <div class="cat-grid-status">
+          <span class="status-pill ${isHidden ? 'pill-hidden' : 'pill-active'}">
+            <span class="sdot"></span>${isHidden ? 'Hidden' : 'Active'}
+          </span>
+        </div>
+        <div class="cat-grid-cb">
+          <div class="custom-cb ${isSel ? 'checked' : ''}" onclick="toggleRow(${c.id},this)" style="background:white;border-color:var(--border)">✓</div>
+        </div>
+        <div class="cat-grid-acts">
+          <button class="cat-grid-act-btn" onclick="openEdit(${c.id})" title="Edit">✏️</button>
+          <button class="cat-grid-act-btn" onclick="openConfirm(${c.id})" title="Delete">🗑️</button>
+        </div>
+      </div>
+      <div class="cat-grid-info">
+        <div class="cat-grid-type">${c.type}</div>
+        <div class="cat-grid-name">${c.icon} ${c.name}</div>
+        <div class="cat-grid-row">
+          <span class="cat-grid-count">${c.products} products</span>
+          <span class="cat-grid-sales">${c.sales} sold</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── SELECTION ────────────────────────────────────────────────────────────────
+function toggleRow(id, cbEl) {
+  if (selected.has(id)) { selected.delete(id); cbEl.classList.remove('checked'); document.getElementById('row-'+id)?.classList.remove('selected'); document.getElementById('gc-'+id)?.classList.remove('selected'); }
+  else                  { selected.add(id);    cbEl.classList.add('checked');    document.getElementById('row-'+id)?.classList.add('selected');    document.getElementById('gc-'+id)?.classList.add('selected'); }
+  updateBulkBar();
+}
+
+document.getElementById('selectAll').addEventListener('click', function() {
+  if (selected.size === filtered.length) {
+    selected.clear(); this.classList.remove('checked');
+  } else {
+    filtered.forEach(c => selected.add(c.id)); this.classList.add('checked');
+  }
+  renderTable(); renderGrid(); updateBulkBar();
+});
+
+function updateBulkBar() {
+  document.getElementById('bulkCount').textContent = selected.size;
+  document.getElementById('bulkBar').classList.toggle('visible', selected.size > 0);
+}
+document.getElementById('bulkClear').addEventListener('click', () => {
+  selected.clear(); renderTable(); renderGrid(); updateBulkBar();
+});
+
+// ─── VIEW TOGGLE ─────────────────────────────────────────────────────────────
+document.getElementById('tableViewBtn').addEventListener('click', () => {
+  isGridView = false;
+  document.getElementById('tableViewBtn').classList.add('active');
+  document.getElementById('gridViewBtn').classList.remove('active');
+  document.getElementById('tableWrap').classList.remove('hidden');
+  document.getElementById('gridWrap').classList.remove('active');
+});
+document.getElementById('gridViewBtn').addEventListener('click', () => {
+  isGridView = true;
+  document.getElementById('gridViewBtn').classList.add('active');
+  document.getElementById('tableViewBtn').classList.remove('active');
+  document.getElementById('tableWrap').classList.add('hidden');
+  document.getElementById('gridWrap').classList.add('active');
+});
+
+// ─── FILTERS ─────────────────────────────────────────────────────────────────
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  sortKey = e.target.value; applyFilters();
+});
+
+document.getElementById('topSearch').addEventListener('input', e => {
+  searchQ = e.target.value.trim().toLowerCase(); applyFilters();
+});
+
+document.querySelectorAll('.th-sort').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    document.querySelectorAll('.th-sort').forEach(t => t.classList.remove('sorted'));
+    th.classList.add('sorted');
+    if (col === 'type')     { sortKey = 'name'; document.getElementById('sortSelect').value = 'name'; }
+    else if (col === 'products') { sortKey = sortKey === 'products-desc' ? 'products-asc' : 'products-desc'; }
+    else if (col === 'sales')    { sortKey = 'sales-desc'; }
+    applyFilters();
+  });
+});
+
+// ─── PAGINATION DISPLAY ───────────────────────────────────────────────────────
+function updatePagination() {
+  document.getElementById('showingRange').textContent = filtered.length === 0 ? '0' : `1–${filtered.length}`;
+  document.getElementById('showingTotal').textContent = filtered.length;
+}
+
+// ─── EMOJI PICKER ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.emoji-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedEmoji = btn.dataset.emoji;
+  });
+});
+
+// Auto-generate slug from name
+document.getElementById('newName').addEventListener('input', function() {
+  const slugField = document.getElementById('newSlug');
+  if (!slugField.dataset.edited) {
+    slugField.value = this.value.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+  }
+});
+document.getElementById('newSlug').addEventListener('input', function() {
+  this.dataset.edited = 'true';
+});
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+document.getElementById('openAddModal').addEventListener('click', () => openModal('addModalOverlay'));
+document.getElementById('closeAddModal').addEventListener('click', () => closeModal('addModalOverlay'));
+document.getElementById('cancelAdd').addEventListener('click', () => closeModal('addModalOverlay'));
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.getElementById('dimOverlay').classList.add('visible');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.getElementById('dimOverlay').classList.remove('visible');
+}
+document.getElementById('dimOverlay').addEventListener('click', () => {
+  closeModal('addModalOverlay'); closeModal('confirmOverlay');
+  document.getElementById('sidebar').classList.remove('open');
+});
+
+function saveCategory(status) {
+  const name  = document.getElementById('newName').value.trim();
+  const slug  = document.getElementById('newSlug').value.trim() || name.toLowerCase().replace(/\s+/g,'-');
+  const type  = document.getElementById('newType').value;
+  const nav   = document.getElementById('newNav').value;
+  const order = parseInt(document.getElementById('newOrder').value) || categories.length + 1;
+
+  if (!name) { showToast('⚠️ Please enter a category name'); return; }
+
+  const imgs = [
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70',
+    'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=70',
+    'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&q=70',
+  ];
+
+  categories.unshift({
+    id: nextId++, name, slug, type, icon: selectedEmoji,
+    desc: document.getElementById('newDesc').value.trim(),
+    products: 0, sales: 0, revenue: 0,
+    status, order, nav,
+    img: imgs[Math.floor(Math.random() * imgs.length)]
+  });
+
+  filtered = [...categories];
+  applyFilters();
+  closeModal('addModalOverlay');
+  showToast(`✅ "${name}" ${status === 'hidden' ? 'saved as hidden' : 'published successfully'}!`);
+
+  // Reset form
+  ['newName','newSlug','newDesc','newOrder'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('newStatus').value = 'active';
+  document.getElementById('newNav').value = 'yes';
+  document.getElementById('newSlug').removeAttribute('data-edited');
+  selectedEmoji = '👜';
+  document.querySelectorAll('.emoji-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+}
+
+// ─── EDIT CATEGORY ────────────────────────────────────────────────────────────
+function openEdit(id) {
+  const c = categories.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('newName').value   = c.name;
+  document.getElementById('newSlug').value   = c.slug;
+  document.getElementById('newDesc').value   = c.desc;
+  document.getElementById('newType').value   = c.type;
+  document.getElementById('newStatus').value = c.status;
+  document.getElementById('newNav').value    = c.nav;
+  document.getElementById('newOrder').value  = c.order;
+  selectedEmoji = c.icon;
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.toggle('active', b.dataset.emoji === c.icon));
+  document.querySelector('.modal-title').innerHTML = `Edit <em>Category</em>`;
+  openModal('addModalOverlay');
+}
+
+// ─── DELETE ───────────────────────────────────────────────────────────────────
+function openConfirm(id) {
+  deleteTarget = id;
+  const msg = id === 'bulk'
+    ? `You are about to delete <strong>${selected.size} categories</strong>. Products inside will become uncategorized.`
+    : `You are about to delete <strong>"${categories.find(c=>c.id===id)?.name}"</strong>. This cannot be undone.`;
+  document.getElementById('confirmMsg').innerHTML = msg;
+  openModal('confirmOverlay');
+}
+document.getElementById('cancelConfirm').addEventListener('click', () => closeModal('confirmOverlay'));
+document.getElementById('confirmDel').addEventListener('click', () => {
+  if (deleteTarget === 'bulk') {
+    categories = categories.filter(c => !selected.has(c.id));
+    const n = selected.size; selected.clear();
+    showToast(`🗑️ ${n} categories deleted`);
+  } else {
+    const c = categories.find(x => x.id === deleteTarget);
+    categories = categories.filter(x => x.id !== deleteTarget);
+    selected.delete(deleteTarget);
+    showToast(`🗑️ "${c?.name}" deleted`);
+  }
+  filtered = [...categories];
+  applyFilters(); updateBulkBar();
+  closeModal('confirmOverlay');
+});
+
+// ─── CURSOR ───────────────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+});
+document.querySelectorAll('a,button,.nav-item,.kpi-mini,.cat-grid-card,.row-btn,.custom-cb,.emoji-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(1.8)'; cursor.style.background='var(--gold)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.background='var(--primary)'; });
+});
+
+// ─── MOBILE SIDEBAR ───────────────────────────────────────────────────────────
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('dimOverlay').classList.toggle('visible');
+});
+
+
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+applyFilters();
+</script>
+</body>
+</html>

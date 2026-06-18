@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart – Virtue & Verve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/cart.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <span class="close-nav" id="closeNav">✕</span>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="cart.html" style="color:var(--primary)">Cart</a>
+    <a href="#">About</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">Virtue &amp; <span>Verve</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="cart.html" class="nav-cta active">My Cart</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-icon-wrap" id="navCartBtn">
+        🛍️ <span class="cart-badge" id="navCartCount">3</span>
+      </button>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <nav class="breadcrumb">
+          <a href="index.html">Home</a><span>/</span>
+          <a href="shop.html">Shop</a><span>/</span>
+          <span>Cart</span>
+        </nav>
+        <h1 class="page-title">Your <em>Cart</em></h1>
+        <p class="cart-meta"><strong id="itemCountLabel">3 items</strong> ready for checkout</p>
+      </div>
+      <div class="hero-right">
+        <a href="shop.html" class="continue-link">← Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT STEPS -->
+  <div class="checkout-steps">
+    <div class="step active done">
+      <div class="step-circle">✓</div>
+      <span class="step-label">Cart</span>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step active">
+      <div class="step-circle">2</div>
+      <span class="step-label">Details</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle">3</div>
+      <span class="step-label">Payment</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle">4</div>
+      <span class="step-label">Confirm</span>
+    </div>
+  </div>
+
+  <!-- CART LAYOUT -->
+  <div class="cart-layout">
+
+    <!-- LEFT: ITEMS -->
+    <div class="cart-items-section">
+      <div class="cart-header">
+        <span>Product</span>
+        <span>Price</span>
+        <span>Quantity</span>
+        <span>Total</span>
+        <span></span>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList"></div>
+
+      <!-- Empty state -->
+      <div class="empty-cart" id="emptyCart">
+        <div class="empty-icon-wrap">🛍️</div>
+        <h2 class="empty-title">Your cart is <em>empty</em></h2>
+        <p class="empty-sub">Looks like you haven't added anything yet. Start exploring our beautiful collection!</p>
+        <a href="shop.html" class="empty-cta">Browse Collection</a>
+      </div>
+
+      <!-- Undo bar -->
+      <div class="undo-bar" id="undoBar">
+        <span id="undoMsg">Item removed from cart</span>
+        <button class="undo-btn" id="undoBtn">Undo</button>
+      </div>
+
+      <!-- Actions -->
+      <div class="cart-actions" id="cartActions">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="promo-form" id="promoForm">
+            <input class="promo-input" id="promoInput" type="text" placeholder="Promo code…"/>
+            <button class="promo-btn" id="promoApply">Apply</button>
+          </div>
+          <div class="promo-tag" id="promoTag">
+            <span>🏷 <strong id="promoCode">VERVE10</strong> — 10% off</span>
+            <span class="promo-remove" id="promoRemove">✕</span>
+          </div>
+        </div>
+        <button class="update-btn" id="updateCart">↺ Update Cart</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: SUMMARY -->
+    <aside class="order-summary" id="orderSummary">
+      <div class="summary-head">
+        <h3>Order Summary</h3>
+        <span id="summaryCount">3 items</span>
+      </div>
+      <div class="summary-body">
+        <div class="summary-row">
+          <span class="label">Subtotal</span>
+          <span class="value" id="subtotalVal">₦0</span>
+        </div>
+        <div class="summary-row" id="discountRow" style="display:none">
+          <span class="label">Discount (10%)</span>
+          <span class="value green" id="discountVal">-₦0</span>
+        </div>
+        <div class="summary-row">
+          <span class="label">Delivery</span>
+          <span class="value" id="deliveryVal">₦2,500</span>
+        </div>
+        <div class="summary-row" style="border:none;padding-bottom:0">
+          <span class="label">Estimated Tax</span>
+          <span class="value" id="taxVal">₦0</span>
+        </div>
+
+        <div class="shipping-note" id="shippingNote">
+          🚚 <span id="shippingMsg">Add ₦5,500 more for FREE delivery!</span>
+          <div class="shipping-progress" style="margin-top:0;flex:1">
+            <div class="shipping-fill" id="shippingFill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="summary-row total">
+          <span class="label">Total</span>
+          <span class="value" id="totalVal">₦0</span>
+        </div>
+
+        <button class="checkout-btn" id="checkoutBtn">
+          Proceed to Checkout →
+        </button>
+
+        <div class="pay-icons">
+          <span class="pay-icon">Visa</span>
+          <span class="pay-icon">Mastercard</span>
+          <span class="pay-icon">Paystack</span>
+          <span class="pay-icon">Flutterwave</span>
+          <span class="pay-icon">Bank Transfer</span>
+        </div>
+        <p class="secure-note">🔒 Secure & encrypted checkout</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- RECOMMENDED -->
+  <section class="recommended-section">
+    <p class="section-eyebrow">You Might Love</p>
+    <h2 class="section-title">Complete Your <em>Look</em></h2>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-img"><img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&q=80" alt="Bamboo Bag"/></div>
+        <div class="rec-info">
+          <p class="rec-cat">Handbag</p>
+          <h3 class="rec-name">Bamboo Handle Bag</h3>
+          <div class="rec-footer">
+            <span class="rec-price">₦24,000</span>
+            <button class="rec-add" onclick="addRecommended('Bamboo Handle Bag', 24000, 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=200&q=70', 'Handbag')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-img"><img src="https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=400&q=80" alt="Velvet Clutch"/></div>
+        <div class="rec-info">
+          <p class="rec-cat">Clutch</p>
+          <h3 class="rec-name">Velvet Night Clutch</h3>
+          <div class="rec-footer">
+            <span class="rec-price">₦18,000</span>
+            <button class="rec-add" onclick="addRecommended('Velvet Night Clutch', 18000, 'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=200&q=70', 'Clutch')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-img"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80" alt="Urban Backpack"/></div>
+        <div class="rec-info">
+          <p class="rec-cat">Backpack</p>
+          <h3 class="rec-name">Urban Backpack</h3>
+          <div class="rec-footer">
+            <span class="rec-price">₦29,000</span>
+            <button class="rec-add" onclick="addRecommended('Urban Backpack', 29000, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&q=70', 'Backpack')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-img"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80" alt="Leather Tote"/></div>
+        <div class="rec-info">
+          <p class="rec-cat">Tote Bag</p>
+          <h3 class="rec-name">Minimal Leather Tote</h3>
+          <div class="rec-footer">
+            <span class="rec-price">₦38,000</span>
+            <button class="rec-add" onclick="addRecommended('Minimal Leather Tote', 38000, 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=200&q=70', 'Tote Bag')">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span>🛍️</span>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Virtue &amp; <span>Verve</span></div>
+        <p class="footer-desc">Your go-to destination for premium, stylish bags at unbeatable prices. Fashion that speaks for itself.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#">📘</a>
+          <a class="social-btn" href="#">📸</a>
+          <a class="social-btn" href="#">🐦</a>
+          <a class="social-btn" href="#">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Handbags</a></li>
+          <li><a href="#">Tote Bags</a></li>
+          <li><a href="#">Clutches</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="font-size:0.83rem;margin-bottom:16px;line-height:1.7">Exclusive deals & style tips in your inbox.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="your@email.com"/>
+          <button>→</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Virtue & Verve. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // ─── INITIAL CART DATA ───────────────────────────────────────────
+  let cartItems = [
+    {
+      id: 1,
+      name: 'Milano Structured Bag',
+      category: 'Handbag',
+      price: 45000,
+      oldPrice: null,
+      color: '#1a1a1a',
+      colorName: 'Black',
+      qty: 1,
+      img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&q=70'
+    },
+    {
+      id: 2,
+      name: 'Canvas Weekend Tote',
+      category: 'Tote Bag',
+      price: 16500,
+      oldPrice: 22000,
+      color: '#c9a96e',
+      colorName: 'Tan',
+      qty: 2,
+      img: 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=200&q=70'
+    },
+    {
+      id: 3,
+      name: 'Velvet Night Clutch',
+      category: 'Clutch',
+      price: 18000,
+      oldPrice: null,
+      color: '#8B0000',
+      colorName: 'Burgundy',
+      qty: 1,
+      img: 'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=200&q=70'
+    }
+  ];
+
+  let nextId = 10;
+  let promoActive = false;
+  let lastRemoved = null;
+  let undoTimer = null;
+  const FREE_DELIVERY_THRESHOLD = 50000;
+  const DELIVERY_FEE = 2500;
+  const TAX_RATE = 0.075;
+
+  // ─── RENDER ─────────────────────────────────────────────────────
+  function fmt(n) { return '₦' + Math.round(n).toLocaleString('en-NG'); }
+
+  function renderCart() {
+    const list = document.getElementById('cartItemsList');
+    const empty = document.getElementById('emptyCart');
+    const actions = document.getElementById('cartActions');
+    const summary = document.getElementById('orderSummary');
+
+    if (cartItems.length === 0) {
+      list.innerHTML = '';
+      empty.classList.add('visible');
+      actions.style.display = 'none';
+      summary.style.opacity = '0.4';
+      summary.style.pointerEvents = 'none';
+      updateCountLabels();
+      return;
+    }
+
+    empty.classList.remove('visible');
+    actions.style.display = 'flex';
+    summary.style.opacity = '1';
+    summary.style.pointerEvents = 'all';
+
+    list.innerHTML = cartItems.map((item, i) => `
+      <div class="cart-item" id="item-${item.id}" style="animation-delay:${i * 0.08}s">
+        <div class="item-product">
+          <div class="item-img-wrap">
+            <img src="${item.img}" alt="${item.name}"/>
+          </div>
+          <div class="item-details">
+            <p class="item-category">${item.category}</p>
+            <h3 class="item-name">${item.name}</h3>
+            <div class="item-attrs">
+              <span class="item-attr">
+                <span class="color-dot" style="background:${item.color}"></span>
+                ${item.colorName}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="item-price">
+          ${item.oldPrice ? `<span class="old-price">${fmt(item.oldPrice)}</span>` : ''}
+          ${fmt(item.price)}
+        </div>
+        <div class="item-qty">
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <div class="qty-display">${item.qty}</div>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <div class="item-total">${fmt(item.price * item.qty)}</div>
+        <button class="item-remove" onclick="removeItem(${item.id})" title="Remove">✕</button>
+      </div>
+    `).join('');
+
+    updateSummary();
+    updateCountLabels();
+  }
+
+  function updateCountLabels() {
+    const total = cartItems.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('itemCountLabel').textContent = `${total} item${total !== 1 ? 's' : ''}`;
+    document.getElementById('summaryCount').textContent = `${total} item${total !== 1 ? 's' : ''}`;
+    document.getElementById('navCartCount').textContent = total;
+  }
+
+  function updateSummary() {
+    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+    const discount = promoActive ? subtotal * 0.1 : 0;
+    const afterDiscount = subtotal - discount;
+    const delivery = afterDiscount >= FREE_DELIVERY_THRESHOLD ? 0 : DELIVERY_FEE;
+    const tax = afterDiscount * TAX_RATE;
+    const total = afterDiscount + delivery + tax;
+
+    document.getElementById('subtotalVal').textContent = fmt(subtotal);
+    document.getElementById('taxVal').textContent = fmt(tax);
+    document.getElementById('totalVal').textContent = fmt(total);
+
+    // Discount row
+    const discRow = document.getElementById('discountRow');
+    if (promoActive) {
+      discRow.style.display = 'flex';
+      document.getElementById('discountVal').textContent = `-${fmt(discount)}`;
+    } else {
+      discRow.style.display = 'none';
+    }
+
+    // Delivery
+    document.getElementById('deliveryVal').textContent = delivery === 0 ? 'FREE 🎉' : fmt(delivery);
+
+    // Shipping progress bar
+    const progress = Math.min((subtotal / FREE_DELIVERY_THRESHOLD) * 100, 100);
+    document.getElementById('shippingFill').style.width = progress + '%';
+    const remaining = FREE_DELIVERY_THRESHOLD - subtotal;
+    const shippingMsg = document.getElementById('shippingMsg');
+    const shippingNote = document.getElementById('shippingNote');
+    if (delivery === 0) {
+      shippingNote.style.background = 'rgba(8,129,120,0.12)';
+      shippingMsg.textContent = '🎉 You unlocked FREE delivery!';
+    } else {
+      shippingNote.style.background = '';
+      shippingMsg.textContent = `Add ${fmt(remaining)} more for FREE delivery!`;
+    }
+  }
+
+  // ─── QTY ────────────────────────────────────────────────────────
+  function changeQty(id, delta) {
+    const item = cartItems.find(i => i.id === id);
+    if (!item) return;
+    const newQty = item.qty + delta;
+    if (newQty < 1) { removeItem(id); return; }
+    if (newQty > 10) return;
+    item.qty = newQty;
+
+    // Animate the qty display
+    const el = document.getElementById(`item-${id}`);
+    if (el) {
+      const qd = el.querySelector('.qty-display');
+      qd.textContent = newQty;
+      qd.style.transform = 'scale(1.3)';
+      qd.style.color = 'var(--primary)';
+      setTimeout(() => { qd.style.transform = 'scale(1)'; qd.style.color = ''; }, 250);
+      el.querySelector('.item-total').textContent = fmt(item.price * newQty);
+    }
+    updateSummary();
+    updateCountLabels();
+
+    // Bounce nav badge
+    const badge = document.getElementById('navCartCount');
+    badge.style.animation = 'none';
+    setTimeout(() => { badge.style.animation = 'bounce 0.4s ease'; }, 10);
+  }
+
+  // ─── REMOVE ─────────────────────────────────────────────────────
+  function removeItem(id) {
+    const item = cartItems.find(i => i.id === id);
+    if (!item) return;
+    lastRemoved = { ...item, index: cartItems.indexOf(item) };
+
+    const el = document.getElementById(`item-${id}`);
+    if (el) {
+      el.classList.add('removing');
+      setTimeout(() => {
+        cartItems = cartItems.filter(i => i.id !== id);
+        renderCart();
+        showUndoBar(`"${item.name}" removed from cart`);
+      }, 380);
+    }
+  }
+
+  // ─── UNDO ────────────────────────────────────────────────────────
+  function showUndoBar(msg) {
+    const bar = document.getElementById('undoBar');
+    document.getElementById('undoMsg').textContent = msg;
+    bar.classList.add('visible');
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(() => { bar.classList.remove('visible'); lastRemoved = null; }, 5000);
+  }
+
+  document.getElementById('undoBtn').addEventListener('click', () => {
+    if (!lastRemoved) return;
+    const item = { ...lastRemoved };
+    delete item.index;
+    cartItems.splice(lastRemoved.index, 0, item);
+    lastRemoved = null;
+    document.getElementById('undoBar').classList.remove('visible');
+    clearTimeout(undoTimer);
+    renderCart();
+    showToast(`"${item.name}" restored!`);
+  });
+
+  // ─── PROMO ──────────────────────────────────────────────────────
+  document.getElementById('promoApply').addEventListener('click', () => {
+    const code = document.getElementById('promoInput').value.trim().toUpperCase();
+    if (code === 'VERVE10' || code === 'VIRTUE10' || code === 'VV10') {
+      promoActive = true;
+      document.getElementById('promoCode').textContent = code;
+      document.getElementById('promoTag').classList.add('visible');
+      document.getElementById('promoForm').style.display = 'none';
+      updateSummary();
+      showToast('🏷 Promo code applied! 10% off');
+    } else if (code === '') {
+      showToast('Please enter a promo code');
+    } else {
+      document.getElementById('promoInput').style.borderColor = 'var(--danger)';
+      setTimeout(() => { document.getElementById('promoInput').style.borderColor = ''; }, 1500);
+      showToast('❌ Invalid promo code');
+    }
+  });
+
+  document.getElementById('promoRemove').addEventListener('click', () => {
+    promoActive = false;
+    document.getElementById('promoTag').classList.remove('visible');
+    document.getElementById('promoForm').style.display = 'flex';
+    document.getElementById('promoInput').value = '';
+    updateSummary();
+    showToast('Promo code removed');
+  });
+
+  document.getElementById('promoInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('promoApply').click();
+  });
+
+  // ─── UPDATE CART ─────────────────────────────────────────────────
+  document.getElementById('updateCart').addEventListener('click', () => {
+    renderCart();
+    showToast('✓ Cart updated!');
+  });
+
+  // ─── CHECKOUT ───────────────────────────────────────────────────
+  document.getElementById('checkoutBtn').addEventListener('click', () => {
+    if (cartItems.length === 0) { showToast('Your cart is empty!'); return; }
+    showToast('Proceeding to checkout… 🚀');
+    const btn = document.getElementById('checkoutBtn');
+    btn.textContent = '✓ Redirecting…';
+    btn.style.background = 'var(--primary-dark)';
+    setTimeout(() => { btn.textContent = 'Proceed to Checkout →'; btn.style.background = ''; }, 2500);
+  });
+
+  // ─── ADD FROM RECOMMENDED ───────────────────────────────────────
+  function addRecommended(name, price, img, category) {
+    const existing = cartItems.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+      renderCart();
+      showToast(`"${name}" quantity updated!`);
+    } else {
+      cartItems.push({ id: nextId++, name, category, price, oldPrice: null, color: '#1a1a1a', colorName: 'Black', qty: 1, img });
+      renderCart();
+      showToast(`"${name}" added to cart!`);
+    }
+    // Bounce badge
+    const badge = document.getElementById('navCartCount');
+    badge.style.transform = 'scale(1.6)';
+    setTimeout(() => { badge.style.transform = 'scale(1)'; }, 300);
+  }
+
+  // ─── TOAST ──────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ─── SCROLL REVEAL ──────────────────────────────────────────────
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), idx * 100);
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rec-card').forEach(el => revealObs.observe(el));
+
+  // Animate shipping bar on load
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.width; });
+  }, 600);
+
+  // ─── CURSOR ─────────────────────────────────────────────────────
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2)'; cursor.style.background = 'var(--gold)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; cursor.style.background = 'var(--primary)'; });
+  });
+
+  // ─── MOBILE NAV ─────────────────────────────────────────────────
+  document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('mobileNav').classList.add('open'); });
+  document.getElementById('closeNav').addEventListener('click', () => { document.getElementById('mobileNav').classList.remove('open'); });
+
+  // ─── INIT ────────────────────────────────────────────────────────
+  renderCart();
+  setTimeout(() => { updateSummary(); }, 700); // animate shipping bar after paint
+  </script>
+</body>
+</html>

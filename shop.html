@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop – Virtue & Verve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/shop.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <span class="close-nav" id="closeNav">✕</span>
+    <a href="index.html">Home</a>
+    <a href="shop.html" style="color:var(--primary)">Shop</a>
+    <a href="#">Categories</a>
+    <a href="#">About</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">Virtue &amp; <span>Verve</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="shop.html" class="nav-cta">Shop Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" id="cartBtn" title="Cart">
+        <img src="./icons/cart.png" width="30px" height="30px" alt="" srcset=""><span class="cart-count" id="cartCount">0</span>
+      </button>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Shop</span>
+    </div>
+    <h1>Our <em>Collection</em></h1>
+    <p>Discover premium bags crafted for every woman, every occasion, every story.</p>
+    <div class="hero-tags">
+      <span class="hero-tag-pill">✦ New Arrivals</span>
+      <span class="hero-tag-pill">Free Delivery ₦20k+</span>
+      <span class="hero-tag-pill">Easy Returns</span>
+    </div>
+  </div>
+
+  <!-- SHOP LAYOUT -->
+  <div class="shop-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle">⚙ Filters</button>
+      <div class="sidebar-body" id="sidebarBody">
+
+        <!-- Categories -->
+        <div class="filter-section">
+          <div class="filter-title" data-filter="cat">
+            Categories <span class="toggle">›</span>
+          </div>
+          <div class="filter-body" id="filter-cat">
+            <div class="category-list">
+              <button class="cat-btn active" data-cat="all">All Bags <span class="cat-count-badge">24</span></button>
+              <button class="cat-btn" data-cat="handbag">Handbags <span class="cat-count-badge">8</span></button>
+              <button class="cat-btn" data-cat="tote">Tote Bags <span class="cat-count-badge">5</span></button>
+              <button class="cat-btn" data-cat="clutch">Clutches <span class="cat-count-badge">4</span></button>
+              <button class="cat-btn" data-cat="backpack">Backpacks <span class="cat-count-badge">4</span></button>
+              <button class="cat-btn" data-cat="crossbody">Crossbody <span class="cat-count-badge">3</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="filter-section">
+          <div class="filter-title" data-filter="price">
+            Price Range <span class="toggle">›</span>
+          </div>
+          <div class="filter-body" id="filter-price">
+            <div class="price-range">
+              <input type="range" class="price-slider" id="priceSlider" min="5000" max="100000" value="100000" step="1000"/>
+              <div class="price-labels">
+                <span>₦5,000</span>
+                <span id="priceVal">₦100,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colors -->
+        <div class="filter-section">
+          <div class="filter-title" data-filter="color">
+            Colors <span class="toggle">›</span>
+          </div>
+          <div class="filter-body" id="filter-color">
+            <div class="color-swatches">
+              <div class="swatch" style="background:#1a1a1a" title="Black" data-color="black"></div>
+              <div class="swatch" style="background:#8B4513" title="Brown" data-color="brown"></div>
+              <div class="swatch" style="background:#c9a96e" title="Tan" data-color="tan"></div>
+              <div class="swatch" style="background:#f5f5dc" title="Cream" style="border:1px solid #ddd" data-color="cream"></div>
+              <div class="swatch" style="background:#088178" title="Teal" data-color="teal"></div>
+              <div class="swatch" style="background:#e07b3d" title="Orange" data-color="orange"></div>
+              <div class="swatch" style="background:#8B0000" title="Red" data-color="red"></div>
+              <div class="swatch" style="background:#4a4a8a" title="Navy" data-color="navy"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="filter-section">
+          <div class="filter-title" data-filter="tags">
+            Style Tags <span class="toggle">›</span>
+          </div>
+          <div class="filter-body" id="filter-tags">
+            <div class="tag-filters">
+              <button class="tag-pill" data-tag="new">New In</button>
+              <button class="tag-pill" data-tag="sale">On Sale</button>
+              <button class="tag-pill" data-tag="trending">Trending</button>
+              <button class="tag-pill" data-tag="luxury">Luxury</button>
+              <button class="tag-pill" data-tag="casual">Casual</button>
+              <button class="tag-pill" data-tag="evening">Evening</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="clear-filters" id="clearFilters">Clear All Filters</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="shop-main">
+      <div class="shop-toolbar">
+        <p class="result-count">Showing <strong id="productCount">24</strong> products</p>
+        <div class="toolbar-right">
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Sort: Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A–Z</option>
+            <option value="new">Newest First</option>
+          </select>
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn" title="Grid view">⊞</button>
+            <button class="view-btn" id="listViewBtn" title="List view">☰</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="active-filters" id="activeFilters"></div>
+
+      <div class="products-grid" id="productsGrid"></div>
+
+      <div class="pagination" id="pagination">
+        <button class="page-btn prev-next">← Prev</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn prev-next">Next →</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-img">
+        <img id="modalImg" src="" alt=""/>
+      </div>
+      <div class="modal-body" style="position:relative">
+        <button class="modal-close" id="modalClose">✕</button>
+        <p class="modal-category" id="modalCat"></p>
+        <h2 class="modal-name" id="modalName"></h2>
+        <div class="modal-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count" style="font-size:0.78rem;color:var(--light)">(48 reviews)</span>
+        </div>
+        <p class="modal-price" id="modalPrice"></p>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-colors">
+          <label>Choose Color</label>
+          <div class="modal-swatches">
+            <div class="modal-swatch active" style="background:#1a1a1a"></div>
+            <div class="modal-swatch" style="background:#8B4513"></div>
+            <div class="modal-swatch" style="background:#c9a96e"></div>
+          </div>
+        </div>
+        <div class="modal-cta">
+          <button class="add-to-cart" id="modalAddToCart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">🛍️</span>
+    <span id="toastMsg">Added to cart!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Virtue &amp; <span>Verve</span></div>
+        <p class="footer-desc">Your go-to destination for premium, stylish bags at unbeatable prices. Fashion that speaks for itself.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#">📘</a>
+          <a class="social-btn" href="#">📸</a>
+          <a class="social-btn" href="#">🐦</a>
+          <a class="social-btn" href="#">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Handbags</a></li>
+          <li><a href="#">Tote Bags</a></li>
+          <li><a href="#">Clutches</a></li>
+          <li><a href="#">Backpacks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns & Exchange</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="font-size:0.83rem;margin-bottom:16px;line-height:1.7">Get style tips & exclusive deals straight to your inbox.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="your@email.com"/>
+          <button>→</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Virtue & Verve. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/shop.js"></script>
+</body>
+</html>
