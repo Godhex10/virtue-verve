@@ -18,11 +18,11 @@ if ($cat_result && $cat_result->num_rows > 0) {
 $where_clauses = [];
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     $cat_filter = $conn->real_escape_string($_GET['cat']);
-    $where_clauses[] = "category_slug = '$cat_filter'";
+    $where_clauses[] = "products.category_slug = '$cat_filter'";
 }
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search_filter = $conn->real_escape_string($_GET['search']);
-    $where_clauses[] = "(name LIKE '%$search_filter%' OR sku LIKE '%$search_filter%')";
+    $where_clauses[] = "(products.name LIKE '%$search_filter%' OR products.sku LIKE '%$search_filter%')";
 }
 
 $where_sql = "";
@@ -31,19 +31,23 @@ if (count($where_clauses) > 0) {
 }
 
 // 4. PREPARE CORE ORDER BY STRING SEQUENCING CONDITIONS
-$sort = "id DESC"; 
+$sort = "products.id DESC"; 
 if (isset($_GET['sort'])) {
     switch ($_GET['sort']) {
-        case 'name':       $sort = "name ASC"; break;
-        case 'price-asc':  $sort = "price ASC"; break;
-        case 'price-desc': $sort = "price DESC"; break;
-        case 'stock-asc':  $sort = "stock ASC"; break;
-        case 'new':        $sort = "id DESC"; break;
+        case 'name':       $sort = "products.name ASC"; break;
+        case 'price-asc':  $sort = "products.price ASC"; break;
+        case 'price-desc': $sort = "products.price DESC"; break;
+        case 'stock-asc':  $sort = "products.stock ASC"; break;
+        case 'new':        $sort = "products.id DESC"; break;
     }
 }
 
 // 5. FETCH THE FILTERED DATA RECORD PACKETS
-$prod_query = "SELECT * FROM products $where_sql ORDER BY $sort";
+$prod_query = "SELECT products.*, categories.name AS category_name 
+               FROM products 
+               LEFT JOIN categories ON products.category_slug = categories.slug 
+               $where_sql 
+               ORDER BY $sort";
 $prod_result = $conn->query($prod_query);
 $products_array = [];
 if ($prod_result && $prod_result->num_rows > 0) {
@@ -110,7 +114,7 @@ function getBadgeDetails($badge) {
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">Store</div>
-    <a class="nav-item" href="shop.html" target="_blank"><span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-label">View Store</span></a>
+    <a class="nav-item" href="../shop.php" target="_blank"><span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-label">View Store</span></a>
     <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span class="nav-label">Reviews</span><span class="nav-badge">7</span></a>
     <a class="nav-item" href="#"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span><span class="nav-label">Settings</span></a>
   </div>
@@ -237,13 +241,13 @@ function getBadgeDetails($badge) {
             foreach ($products_array as $row): 
               $st = getProductStatus($row['stock'], $row['status']);
               $bd = getBadgeDetails($row['badge'] ?? '');
-              $img_url = !empty($row['image']) && file_exists('../uploads/products/' . $row['image']) ? '../uploads/products/' . $row['image'] : 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70';
+              $img_url = !empty($row['image']) && file_exists('./uploads/products/' . $row['image']) ? $row['image'] : 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70';
             ?>
               <tr id="row-<?php echo $row['id']; ?>" style="animation-delay:<?php echo $idx * 0.03; ?>s">
                 <td><div class="custom-cb row-cb-select" data-id="<?php echo $row['id']; ?>">✓</div></td>
                 <td>
                   <div class="prod-cell">
-                    <div class="prod-thumb"><img src="<?php echo $img_url; ?>" alt="" loading="lazy"/></div>
+                    <div class="prod-thumb"><img src="./uploads/products/<?php echo $img_url; ?>" alt="" loading="lazy"/></div>
                     <div class="prod-info">
                       <div class="prod-name">
                         <?php echo htmlspecialchars($row['name']); ?>
@@ -255,7 +259,9 @@ function getBadgeDetails($badge) {
                     </div>
                   </div>
                 </td>
-                <td><span class="cat-pill"><?php echo htmlspecialchars($row['category_slug'] ?? 'General'); ?></span></td>
+                <td>
+                  <span class="cat-pill"><?php echo htmlspecialchars($row['category_name'] ?? 'General'); ?></span>
+                </td>
                 <td class="price-cell">
                   <?php if (!empty($row['old_price']) && $row['old_price'] > 0): ?>
                     <span class="price-old">₦<?php echo number_format($row['old_price'], 0); ?></span>
@@ -292,9 +298,8 @@ function getBadgeDetails($badge) {
                             data-desc="<?php echo htmlspecialchars($row['description'] ?? ''); ?>"
                             data-status="<?php echo htmlspecialchars($row['status']); ?>"
                             data-badge="<?php echo htmlspecialchars($row['badge'] ?? ''); ?>"
+                            data-colors="<?php echo htmlspecialchars($row['colors'] ?? ''); ?>"
                             data-image="<?php echo htmlspecialchars($row['image'] ?? ''); ?>"
-                            data-image2="<?php echo htmlspecialchars($row['image_2'] ?? ''); ?>"
-                            data-image3="<?php echo htmlspecialchars($row['image_3'] ?? ''); ?>"
                             style="background:none; border:none; cursor:pointer;">✏️</button>
                     <div class="row-btn" title="View" onclick="showToast('Viewing on store…')">👁</div>
                     <a href="backend/product_delete.php?id=<?php echo $row['id']; ?>" class="row-btn del" title="Delete" onclick="return confirm('Delete this permanent listing?');">🗑️</a>
@@ -334,14 +339,13 @@ function getBadgeDetails($badge) {
                         data-desc="<?php echo htmlspecialchars($row['description'] ?? ''); ?>"
                         data-status="<?php echo htmlspecialchars($row['status']); ?>"
                         data-badge="<?php echo htmlspecialchars($row['badge'] ?? ''); ?>"
-                        data-image="<?php echo htmlspecialchars($row['image'] ?? ''); ?>"
-                        data-image2="<?php echo htmlspecialchars($row['image_2'] ?? ''); ?>"
-                        data-image3="<?php echo htmlspecialchars($row['image_3'] ?? ''); ?>">✏️</button>
+                        data-colors="<?php echo htmlspecialchars($row['colors'] ?? ''); ?>"
+                        data-image="<?php echo htmlspecialchars($row['image'] ?? ''); ?>">✏️</button>
                 <a href="backend/product_delete.php?id=<?php echo $row['id']; ?>" class="grid-act-btn" title="Delete" onclick="return confirm('Delete this permanent listing?');">🗑️</a>
               </div>
             </div>
             <div class="grid-info">
-              <div class="grid-cat"><?php echo htmlspecialchars($row['category_slug'] ?? 'General'); ?></div>
+              <div class="grid-cat"><?php echo htmlspecialchars($row['category_name'] ?? 'General'); ?></div>
               <div class="grid-name"><?php echo htmlspecialchars($row['name']); ?></div>
               <div class="grid-row">
                 <span class="grid-price">₦<?php echo number_format($row['price'], 0); ?></span>
@@ -369,8 +373,6 @@ function getBadgeDetails($badge) {
     <form action="backend/product_save.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" id="productId" value="">
       <input type="hidden" name="existing_image" id="existingImage" value="">
-      <input type="hidden" name="existing_image_2" id="existingImage2" value="">
-      <input type="hidden" name="existing_image_3" id="existingImage3" value="">
 
       <div class="modal-head">
         <h2 class="modal-title" id="modalTitleText">Add New <em>Product</em></h2>
@@ -414,19 +416,21 @@ function getBadgeDetails($badge) {
           </div>
 
           <div class="field-group modal-full">
-            <label class="field-label">Primary Product Display Photo (Main View)</label>
-            <input class="field-input" name="image" id="newImage" type="file" accept="image/*" style="padding: 8px; font-family: var(--font-sans);"/>
+            <label class="field-label">Available Product Color Schemes</label>
+            <div class="color-picker-wrapper" style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+              <input type="color" id="colorPickerInput" style="border: 1px solid var(--border); background: none; width: 50px; height: 40px; padding: 0; border-radius: 6px; cursor: pointer; box-sizing: border-box;" value="#c9a96e">
+              <button type="button" id="addColorBtn" class="add-btn" style="padding: 0 16px; height: 40px; font-size: 0.85rem; border-radius: 6px; font-weight: 500; margin: 0;">+ Add Selected Color</button>
+            </div>
+            
+            <input type="hidden" name="colors" id="newColors" value="">
+            
+            <div id="colorSwatchesContainer" style="display: flex; flex-wrap: wrap; gap: 10px; min-height: 44px; padding: 8px 12px; border: 1px dashed var(--border); border-radius: 6px; align-items: center; background: rgba(255,255,255,0.02); box-sizing: border-box;"></div>
           </div>
 
-          <div class="field-group">
-            <label class="field-label">Additional Photo 2 (Angle/Side)</label>
-            <input class="field-input" name="image_2" id="newImage2" type="file" accept="image/*" style="padding: 8px; font-family: var(--font-sans);"/>
-          </div>
-
-          <div class="field-group">
-            <label class="field-label">Additional Photo 3 (Detail/Interior)</label>
-            <input class="field-input" name="image_3" id="newImage3" type="file" accept="image/*" style="padding: 8px; font-family: var(--font-sans);"/>
-            <small style="color: var(--light); font-size: 0.75rem; display: block; margin-top: 4px;">Supported: JPG, JPEG, PNG, WEBP.</small>
+          <div class="field-group modal-full">
+            <label class="field-label">Product Gallery Photos (Select one or multiple angles/colors)</label>
+            <input class="field-input" name="images[]" id="newImages" type="file" accept="image/*" multiple style="padding: 8px; font-family: var(--font-sans);"/>
+            <small style="color: var(--light); font-size: 0.75rem; display: block; margin-top: 4px;">Supported: JPG, JPEG, PNG, WEBP. You can highlight and upload multiple variants at once.</small>
           </div>
 
           <div class="field-group modal-full">
@@ -468,12 +472,81 @@ function getBadgeDetails($badge) {
 const modal = document.getElementById('addModalOverlay');
 const dimOverlay = document.getElementById('dimOverlay');
 
+// COLOR PICKER STATE CONFIGURATIONS
+const colorPickerInput = document.getElementById('colorPickerInput');
+const addColorBtn = document.getElementById('addColorBtn');
+const hiddenColorsInput = document.getElementById('newColors');
+const colorSwatchesContainer = document.getElementById('colorSwatchesContainer');
+let selectedColorsArray = [];
+
+function renderColorSwatches() {
+  colorSwatchesContainer.innerHTML = '';
+  if (selectedColorsArray.length === 0) {
+    colorSwatchesContainer.innerHTML = '<span style="color: var(--light); font-size: 0.8rem; font-style: italic; padding-left: 2px;">No color variants added yet.</span>';
+    hiddenColorsInput.value = '';
+    return;
+  }
+  
+  selectedColorsArray.forEach((hex, index) => {
+    const swatch = document.createElement('div');
+    swatch.style.position = 'relative';
+    swatch.style.width = '28px';
+    swatch.style.height = '28px';
+    swatch.style.borderRadius = '50%';
+    swatch.style.backgroundColor = hex;
+    swatch.style.border = '2px solid rgba(255,255,255,0.8)';
+    swatch.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    swatch.style.cursor = 'default';
+    swatch.title = hex;
+    
+    const removeBadge = document.createElement('span');
+    removeBadge.textContent = '✕';
+    removeBadge.style.position = 'absolute';
+    removeBadge.style.top = '-5px';
+    removeBadge.style.right = '-5px';
+    removeBadge.style.width = '14px';
+    removeBadge.style.height = '14px';
+    removeBadge.style.background = 'var(--danger)';
+    removeBadge.style.color = 'white';
+    removeBadge.style.fontSize = '8px';
+    removeBadge.style.fontWeight = 'bold';
+    removeBadge.style.borderRadius = '50%';
+    removeBadge.style.display = 'flex';
+    removeBadge.style.alignItems = 'center';
+    removeBadge.style.justifyContent = 'center';
+    removeBadge.style.border = '1px solid white';
+    removeBadge.style.cursor = 'pointer';
+    
+    removeBadge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectedColorsArray.splice(index, 1);
+      updateColorsState();
+    });
+    
+    swatch.appendChild(removeBadge);
+    colorSwatchesContainer.appendChild(swatch);
+  });
+}
+
+function updateColorsState() {
+  hiddenColorsInput.value = selectedColorsArray.join(',');
+  renderColorSwatches();
+}
+
+addColorBtn.addEventListener('click', () => {
+  const hexValue = colorPickerInput.value.toLowerCase();
+  if (!selectedColorsArray.includes(hexValue)) {
+    selectedColorsArray.push(hexValue);
+    updateColorsState();
+  } else {
+    showToast('Color already exists in this configuration array');
+  }
+});
+
 // RESET AND EXPAND OPEN TRIGGER LOGIC ON NEW ENTRY
 document.getElementById('openAddModal').addEventListener('click', () => {
   document.getElementById('productId').value = "";
   document.getElementById('existingImage').value = "";
-  document.getElementById('existingImage2').value = "";
-  document.getElementById('existingImage3').value = "";
   document.getElementById('newName').value = "";
   document.getElementById('newSku').value = "";
   document.getElementById('newPrice').value = "";
@@ -482,9 +555,10 @@ document.getElementById('openAddModal').addEventListener('click', () => {
   document.getElementById('newDesc').value = "";
   document.getElementById('newStatus').value = "active";
   document.getElementById('newBadge').value = "";
-  document.getElementById('newImage').value = "";
-  document.getElementById('newImage2').value = "";
-  document.getElementById('newImage3').value = "";
+  document.getElementById('newImages').value = "";
+  
+  selectedColorsArray = [];
+  updateColorsState();
   
   document.getElementById('modalTitleText').innerHTML = "Add New <em>Product</em>";
   modal.classList.add('open');
@@ -504,11 +578,16 @@ document.querySelectorAll('.edit-trigger-btn').forEach(btn => {
     document.getElementById('newDesc').value = btn.dataset.desc;
     document.getElementById('newStatus').value = btn.dataset.status;
     document.getElementById('newBadge').value = btn.dataset.badge;
-    
-    // Wire multi-image cache tokens
     document.getElementById('existingImage').value = btn.dataset.image || "";
-    document.getElementById('existingImage2').value = btn.dataset.image2 || "";
-    document.getElementById('existingImage3').value = btn.dataset.image3 || "";
+    
+    // Parse the comma-separated hex codes string back into the array state
+    const colorsStr = btn.dataset.colors || "";
+    if (colorsStr.trim() !== "") {
+      selectedColorsArray = colorsStr.split(',').map(c => c.trim().toLowerCase());
+    } else {
+      selectedColorsArray = [];
+    }
+    updateColorsState();
     
     document.getElementById('modalTitleText').innerHTML = "Edit <em>Product Listing</em>";
     modal.classList.add('open');

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details – Virtue & Verve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/product.css">
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <span class="close-nav" id="closeNav">✕</span>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="#">Categories</a>
+    <a href="#">About</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">Virtue &amp; <span>Verve</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="shop.html" class="nav-cta">Shop Now</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" id="cartBtn" title="Cart">
+        🛍️ <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="shop.html">Shop</a>
+      <span>/</span>
+      <a href="shop.html">Handbags</a>
+      <span>/</span>
+      <span>Milano Structured Bag</span>
+    </nav>
+  </div>
+
+  <!-- PRODUCT SECTION -->
+  <div class="product-section">
+
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="main-image-wrap" id="mainImgWrap">
+        <span class="img-badge" id="mainBadge">New</span>
+        <img class="main-img" id="mainImg"
+          src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=80"
+          alt="Milano Structured Bag"/>
+        <button class="wishlist-float" id="wishBtn" title="Add to Wishlist">♡</button>
+        <span class="zoom-hint">🔍 Click to zoom</span>
+      </div>
+
+      <div class="thumbnails">
+        <div class="thumb active" data-src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=80">
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&q=70" alt="View 1"/>
+        </div>
+        <div class="thumb" data-src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=700&q=80">
+          <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=200&q=70" alt="View 2"/>
+        </div>
+        <div class="thumb" data-src="https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=700&q=80">
+          <img src="https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=200&q=70" alt="View 3"/>
+        </div>
+        <div class="thumb" data-src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=700&q=80">
+          <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=200&q=70" alt="View 4"/>
+        </div>
+      </div>
+
+      <div class="share-row">
+        <span class="share-label">Share</span>
+        <button class="share-btn" title="WhatsApp">💬</button>
+        <button class="share-btn" title="Instagram">📸</button>
+        <button class="share-btn" title="Facebook">📘</button>
+        <button class="share-btn" title="Copy Link" id="copyLink">🔗</button>
+      </div>
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="product-info">
+      <p class="info-eyebrow">Handbag (category name)</p>
+
+      <h1 class="product-name">Milano <em>Structured</em> Bag</h1>
+
+      <div class="rating-row">
+        <span class="stars">★★★★★</span>
+        <span class="rating-num">4.9</span>
+        <span class="rating-sep">|</span>
+        <span class="rating-count">62 reviews</span>
+        <span class="rating-sep">|</span>
+        <span class="in-stock">In Stock</span>
+      </div>
+
+      <div class="price-block">
+        <span class="price-main" id="displayPrice">₦45,000</span>
+        <!-- <span class="price-old">₦60,000</span>
+        <span class="price-save">Save 25%</span> -->
+      </div>
+
+      <p style="font-size:0.9rem;color:var(--mid);line-height:1.8;margin-bottom:24px;animation:fadeUp 0.7s 0.52s both;display:block">
+        A statement-making structured handbag built for the confident, modern woman. Crafted with premium faux leather, magnetic snap closure, gold-tone hardware, and an adjustable shoulder strap. Spacious enough for your essentials, sleek enough to turn heads.
+      </p>
+
+      <div class="divider"></div>
+
+      <!-- Color -->
+      <div class="colors-section">
+        <p class="option-label">Color <span id="selectedColor">— Black</span></p>
+        <div class="color-swatches">
+          <div class="color-swatch active" style="background:#1a1a1a" data-color="Black" title="Black"></div>
+          <div class="color-swatch" style="background:#8B4513" data-color="Brown" title="Brown"></div>
+          <div class="color-swatch" style="background:#c9a96e" data-color="Tan" title="Tan"></div>
+          <div class="color-swatch" style="background:#fff8f0;border:1.5px solid #ddd" data-color="Cream" title="Cream"></div>
+          <div class="color-swatch" style="background:#088178" data-color="Teal" title="Teal"></div>
+          <div class="color-swatch" style="background:#8B0000" data-color="Burgundy" title="Burgundy"></div>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="qty-section">
+        <p class="option-label">Quantity</p>
+        <div class="qty-control">
+          <button class="qty-btn" id="qtyMinus">−</button>
+          <input class="qty-num" id="qtyNum" type="number" value="1" min="1" max="10" readonly/>
+          <button class="qty-btn" id="qtyPlus">+</button>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="cta-section">
+        <button class="btn-add-cart" id="addToCartBtn">🛍 Add to Cart</button>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <span class="t-icon">🚚</span>
+          <span class="t-title">Free Delivery</span>
+          <span class="t-sub">Orders above ₦20k</span>
+        </div>
+        <div class="trust-badge">
+          <span class="t-icon">🔄</span>
+          <span class="t-title">Easy Returns</span>
+          <span class="t-sub">7-day policy</span>
+        </div>
+        <div class="trust-badge">
+          <span class="t-icon">🔒</span>
+          <span class="t-title">Secure Payment</span>
+          <span class="t-sub">100% protected</span>
+        </div>
+      </div>
+
+      <!-- Accordion -->
+      <div class="accordion">
+        <div class="acc-item open">
+          <div class="acc-header">Product Details <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <ul>
+                <li>Premium faux leather exterior with soft microfibre lining</li>
+                <li>Magnetic snap top closure for easy access</li>
+                <li>Gold-tone hardware and zipper pulls</li>
+                <li>Two interior slip pockets + one zip pocket</li>
+                <li>Adjustable, detachable shoulder strap</li>
+                <li>Dust bag included</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="acc-item">
+          <div class="acc-header">Specifications <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <table class="spec-table">
+                <tr><td>Dimensions</td><td>30cm × 22cm × 12cm</td></tr>
+                <tr><td>Weight</td><td>0.65 kg</td></tr>
+                <tr><td>Material</td><td>Premium Faux Leather</td></tr>
+                <tr><td>Hardware</td><td>Gold-tone Zinc Alloy</td></tr>
+                <tr><td>Strap Drop</td><td>45–55cm (adjustable)</td></tr>
+                <tr><td>Closure</td><td>Magnetic Snap + Zip</td></tr>
+                <tr><td>Lining</td><td>Microfibre Satin</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header">Shipping & Returns <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <ul>
+                <li>Free delivery on orders above ₦20,000</li>
+                <li>Standard delivery: 2–4 business days</li>
+                <li>Express delivery: next business day (select cities)</li>
+                <li>Returns accepted within 7 days of delivery</li>
+                <li>Item must be unused, with original packaging</li>
+                <li>Contact us via WhatsApp to initiate returns</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header">Care Instructions <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <ul>
+                <li>Wipe clean with a soft, dry cloth</li>
+                <li>Avoid prolonged exposure to sunlight</li>
+                <li>Store in the dust bag when not in use</li>
+                <li>Keep away from sharp objects</li>
+                <li>Do not submerge in water</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS SECTION -->
+  <section class="reviews-section">
+    <div class="section-header" style="text-align:center">
+      <p class="section-eyebrow">What They Say</p>
+      <h2>Customer <em>Reviews</em></h2>
+    </div>
+    <div class="reviews-layout">
+      <div class="review-summary">
+        <div class="big-rating">4.9</div>
+        <div class="big-stars">★★★★★</div>
+        <p class="big-count">Based on 62 reviews</p>
+        <div class="rating-bars" id="ratingBars">
+          <div class="rating-bar-row"><span class="bar-label">5</span><div class="bar-track"><div class="bar-fill" data-width="85%"></div></div><span class="bar-count">53</span></div>
+          <div class="rating-bar-row"><span class="bar-label">4</span><div class="bar-track"><div class="bar-fill" data-width="10%"></div></div><span class="bar-count">6</span></div>
+          <div class="rating-bar-row"><span class="bar-label">3</span><div class="bar-track"><div class="bar-fill" data-width="3%"></div></div><span class="bar-count">2</span></div>
+          <div class="rating-bar-row"><span class="bar-label">2</span><div class="bar-track"><div class="bar-fill" data-width="1%"></div></div><span class="bar-count">1</span></div>
+          <div class="rating-bar-row"><span class="bar-label">1</span><div class="bar-track"><div class="bar-fill" data-width="0%"></div></div><span class="bar-count">0</span></div>
+        </div>
+      </div>
+
+      <div class="reviews-list">
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <div class="reviewer-avatar">👩🏾</div>
+              <div>
+                <div class="reviewer-name">Adaeze Okafor</div>
+                <div class="reviewer-date">April 28, 2025</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="review-stars">★★★★★</div>
+              <span class="verified">✓ Verified</span>
+            </div>
+          </div>
+          <p class="review-title">Absolutely stunning bag — worth every kobo!</p>
+          <p class="review-body">I received this bag within 2 days and I have not stopped getting compliments. The leather feels so premium, the gold hardware is beautiful, and it fits so much inside. I ordered in Black and it goes with literally everything. This is my third purchase from Virtue & Verve and they never disappoint!</p>
+          <p class="review-helpful">Was this helpful? <button class="helpful-btn">👍 Yes (14)</button><button class="helpful-btn">👎 No</button></p>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <div class="reviewer-avatar">👩🏽</div>
+              <div>
+                <div class="reviewer-name">Fatima Aliyu</div>
+                <div class="reviewer-date">April 15, 2025</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="review-stars">★★★★★</div>
+              <span class="verified">✓ Verified</span>
+            </div>
+          </div>
+          <p class="review-title">Looks even better in person!</p>
+          <p class="review-body">Ordered the Tan colour for my sister's birthday and she is obsessed. The packaging was beautiful too — felt like a real luxury unboxing experience. The bag is sturdy, well-stitched, and holds its shape perfectly. Will definitely be ordering for myself!</p>
+          <p class="review-helpful">Was this helpful? <button class="helpful-btn">👍 Yes (9)</button><button class="helpful-btn">👎 No</button></p>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer">
+              <div class="reviewer-avatar">👩🏿</div>
+              <div>
+                <div class="reviewer-name">Blessing Eze</div>
+                <div class="reviewer-date">March 30, 2025</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="review-stars">★★★★☆</div>
+              <span class="verified">✓ Verified</span>
+            </div>
+          </div>
+          <p class="review-title">Great quality, fast delivery!</p>
+          <p class="review-body">The bag is exactly as described and the quality is very impressive for the price. I use it daily for work and it still looks brand new after 3 weeks. I gave 4 stars only because I wished the strap was a little longer but overall I am very happy with my purchase!</p>
+          <p class="review-helpful">Was this helpful? <button class="helpful-btn">👍 Yes (5)</button><button class="helpful-btn">👎 No</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="related-section">
+    <div class="section-header" style="text-align:center">
+      <p class="section-eyebrow">You May Also Like</p>
+      <h2>Related <em>Products</em></h2>
+    </div>
+    <div class="related-grid">
+      <div class="related-card" onclick="window.location.href='product.html'">
+        <div class="related-img">
+          <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&q=80" alt="Cognac Satchel"/>
+        </div>
+        <div class="related-info">
+          <p class="related-cat">Handbag</p>
+          <h3 class="related-name">Cognac Leather Satchel</h3>
+          <div class="related-footer">
+            <span class="related-price">₦62,000</span>
+            <button class="related-add" onclick="event.stopPropagation();addToCart('Cognac Leather Satchel')">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="related-card" onclick="window.location.href='product.html'">
+        <div class="related-img">
+          <img src="https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=400&q=80" alt="Velvet Clutch"/>
+        </div>
+        <div class="related-info">
+          <p class="related-cat">Clutch</p>
+          <h3 class="related-name">Velvet Night Clutch</h3>
+          <div class="related-footer">
+            <span class="related-price">₦18,000</span>
+            <button class="related-add" onclick="event.stopPropagation();addToCart('Velvet Night Clutch')">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="related-card" onclick="window.location.href='product.html'">
+        <div class="related-img">
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80" alt="Leather Tote"/>
+        </div>
+        <div class="related-info">
+          <p class="related-cat">Tote Bag</p>
+          <h3 class="related-name">Minimal Leather Tote</h3>
+          <div class="related-footer">
+            <span class="related-price">₦38,000</span>
+            <button class="related-add" onclick="event.stopPropagation();addToCart('Minimal Leather Tote')">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="related-card" onclick="window.location.href='product.html'">
+        <div class="related-img">
+          <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&q=80" alt="Bamboo Bag"/>
+        </div>
+        <div class="related-info">
+          <p class="related-cat">Handbag</p>
+          <h3 class="related-name">Bamboo Handle Bag</h3>
+          <div class="related-footer">
+            <span class="related-price">₦24,000</span>
+            <button class="related-add" onclick="event.stopPropagation();addToCart('Bamboo Handle Bag')">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY BAR
+  <div class="sticky-bar" id="stickyBar">
+    <div class="sticky-product">
+      <div class="sticky-thumb">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&q=70" alt=""/>
+      </div>
+      <div>
+        <div class="sticky-name">Milano Structured Bag</div>
+        <div class="sticky-price">₦45,000</div>
+      </div>
+    </div>
+    <div class="sticky-cta">
+      <button class="sticky-btn" id="stickyAddBtn">Add to Cart</button>
+    </div>
+  </div> -->
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span>🛍️</span>
+    <span id="toastMsg">Added to cart!</span>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Virtue &amp; <span>Verve</span></div>
+        <p class="footer-desc">Your go-to destination for premium, stylish bags at unbeatable prices. Fashion that speaks for itself.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#">📘</a>
+          <a class="social-btn" href="#">📸</a>
+          <a class="social-btn" href="#">🐦</a>
+          <a class="social-btn" href="#">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Handbags</a></li>
+          <li><a href="#">Tote Bags</a></li>
+          <li><a href="#">Clutches</a></li>
+          <li><a href="#">Backpacks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns & Exchange</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="font-size:0.83rem;margin-bottom:16px;line-height:1.7">Get style tips & exclusive deals straight to your inbox.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="your@email.com"/>
+          <button>→</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Virtue & Verve. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/product.js"></script>
+</body>
+</html>

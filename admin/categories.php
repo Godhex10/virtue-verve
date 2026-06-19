@@ -35,8 +35,10 @@ $total_nav = $conn->query("SELECT COUNT(*) as total FROM categories WHERE show_i
 $total_products_query = $conn->query("SELECT COUNT(*) as total FROM products");
 $total_products = $total_products_query ? $total_products_query->fetch_assoc()['total'] : 0;
 
-// 5. Fetch Active Filter Dataset
-$sql = "SELECT * FROM categories" . $where_sql . $order_sql;
+// 5. Fetch Active Filter Dataset (UPDATED: Pulls live product count from products table)
+$sql = "SELECT categories.*, 
+               (SELECT COUNT(*) FROM products WHERE products.category_id = categories.id) AS product_count 
+        FROM categories" . $where_sql . $order_sql;
 $result = $conn->query($sql);
 $showing_count = $result ? $result->num_rows : 0;
 ?>
@@ -199,10 +201,16 @@ $showing_count = $result ? $result->num_rows : 0;
                   </td>
                   <td><span class="type-pill"><?php echo htmlspecialchars($row['type'] ?? 'Everyday'); ?></span></td>
                   <td>
+                    <!-- UPDATED: Table Progress Bar Logic -->
                     <div class="count-cell">
-                      <div class="count-num">0 products</div>
+                      <div class="count-num"><?php echo $row['product_count']; ?> products</div>
                       <div class="count-bar-track">
-                        <div class="count-bar-fill" style="width:0%"></div>
+                        <?php 
+                          // Cap full bar threshold at 20 items visually
+                          $max_threshold = 20;
+                          $fill_pct = min(($row['product_count'] / $max_threshold) * 100, 100);
+                        ?>
+                        <div class="count-bar-fill" style="width: <?php echo $fill_pct; ?>%"></div>
                       </div>
                     </div>
                   </td>
@@ -279,7 +287,8 @@ $showing_count = $result ? $result->num_rows : 0;
                 <div class="cat-grid-type"><?php echo htmlspecialchars($row['type'] ?? 'Everyday'); ?></div>
                 <div class="cat-grid-name">👜 <?php echo htmlspecialchars($row['name']); ?></div>
                 <div class="cat-grid-row">
-                  <span class="cat-grid-count">0 products</span>
+                  <!-- UPDATED: Grid view real-time label count -->
+                  <span class="cat-grid-count"><?php echo $row['product_count']; ?> products</span>
                 </div>
               </div>
             </div>
@@ -406,7 +415,6 @@ $showing_count = $result ? $result->num_rows : 0;
     document.getElementById('dimOverlay').addEventListener('click', closeModal);
 
     // Map Edit Data Values straight to Form Fields upon Row/Card Click Actions
-    // Find this block near the bottom of your file
     document.querySelectorAll('.edit-trigger-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.getElementById('categoryId').value = btn.dataset.id;
@@ -417,7 +425,7 @@ $showing_count = $result ? $result->num_rows : 0;
         document.getElementById('newStatus').value = btn.dataset.status;
         document.getElementById('newNav').value = btn.dataset.nav;
 
-        document.getElementById('existingImage').value = btn.dataset.image || ""; // ADD THIS LINE
+        document.getElementById('existingImage').value = btn.dataset.image || ""; 
 
         document.getElementById('modalTitle').innerHTML = "Edit <em>Category</em>";
         modal.classList.add('open');
