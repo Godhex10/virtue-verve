@@ -57,12 +57,19 @@ if (!empty($product['image'])) $images_gallery[] = $product['image'];
 if (!empty($product['image_2'])) $images_gallery[] = $product['image_2'];
 if (!empty($product['image_3'])) $images_gallery[] = $product['image_3'];
 
-// Safety placeholder fallback
 if (empty($images_gallery)) {
     $images_gallery[] = 'placeholder.jpg';
 }
 
 $color_swatches = !empty($product['colors']) ? explode(',', $product['colors']) : [];
+
+// Compute current cart total count for the header badge
+$initial_cart_count = 0;
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $initial_cart_count += $item['qty'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,8 +103,8 @@ $color_swatches = !empty($product['colors']) ? explode(',', $product['colors']) 
       <li><a href="shop.html" class="nav-cta">Shop Now</a></li>
     </ul>
     <div class="nav-right">
-      <button class="cart-btn" id="cartBtn" title="Cart">
-        🛍️ <span class="cart-count" id="cartCount">0</span>
+      <button class="cart-btn" onclick="window.location.href='cart.php'" id="cartBtn" title="Cart">
+        🛍️ <span class="cart-count" id="cartCount"><?php echo $initial_cart_count; ?></span>
       </button>
       <div class="hamburger" id="hamburger">
         <span></span><span></span><span></span>
@@ -211,7 +218,7 @@ $color_swatches = !empty($product['colors']) ? explode(',', $product['colors']) 
 
       <div class="cta-section">
         <?php if (isset($_SESSION['customer_id']) || isset($_SESSION['user_id'])): ?>
-          <button class="btn-add-cart" id="addToCartBtn" data-product-id="<?php echo $product['id']; ?>">🛍 Add to Cart</button>
+          <button class="btn-add-cart" id="addToCartBtn" data-product-id="<?php echo $product['id']; ?>" data-category="<?php echo htmlspecialchars(ucfirst($product['category_slug'])); ?>" data-name="<?php echo htmlspecialchars($product['name']); ?>" data-price="<?php echo $product['price']; ?>" data-img="./admin/uploads/products/<?php echo htmlspecialchars($images_gallery[0]); ?>">🛍 Add to Cart</button>
         <?php else: ?>
           <a href="login.php?redirect=<?php echo urlencode($_SERVER['REQUEST_URI']); ?>" class="btn-add-cart" style="display: flex; justify-content: center; align-items: center; text-decoration: none;">🔒 Log In to Purchase</a>
         <?php endif; ?>
@@ -348,5 +355,56 @@ $color_swatches = !empty($product['colors']) ? explode(',', $product['colors']) 
   </footer>
 
   <script src="./js/product.js"></script>
+  <script>
+    // Integration logic to pipe properties to the database backend cart session action
+    document.addEventListener('DOMContentLoaded', () => {
+      const addBtn = document.getElementById('addToCartBtn');
+      if (addBtn) {
+        addBtn.addEventListener('click', function() {
+          const productId = this.getAttribute('data-product-id');
+          const name = this.getAttribute('data-name');
+          const category = this.getAttribute('data-category');
+          const price = this.getAttribute('data-price');
+          const img = this.getAttribute('data-img');
+          const qty = parseInt(document.getElementById('qtyNum').value) || 1;
+          
+          // Detect selected layout swatch accent color
+          const activeSwatch = document.querySelector('.color-swatch.active');
+          const color = activeSwatch ? activeSwatch.getAttribute('data-color') : '#1a1a1a';
+          
+          const formData = new FormData();
+          formData.append('product_id', productId);
+formData.append('product_name', name);
+formData.append('product_category', category);
+formData.append('product_price', price);
+formData.append('product_img', img);
+formData.append('product_qty', qty);
+formData.append('product_color', color);
+
+          fetch('handle_cart_action.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              const badge = document.getElementById('cartCount');
+              if (badge) {
+                badge.textContent = data.total_items;
+                badge.style.transform = 'scale(1.4)';
+                setTimeout(() => badge.style.transform = 'scale(1)', 250);
+              }
+              // Display luxury toast validation alert
+              const toast = document.getElementById('toast');
+              document.getElementById('toastMsg').textContent = `"${name}" added to cart!`;
+              toast.classList.add('show');
+              setTimeout(() => toast.classList.remove('show'), 2800);
+            }
+          })
+          .catch(err => console.error('Error handling background cart sync processing:', err));
+        });
+      }
+    });
+  </script>
 </body>
 </html>

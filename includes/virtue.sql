@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2026 at 04:34 PM
+-- Generation Time: Jun 24, 2026 at 05:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -93,13 +93,25 @@ CREATE TABLE `coupons` (
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `status` enum('Pending','Processing','Delivered','Cancelled') DEFAULT 'Pending',
   `payment_status` enum('unpaid','paid') DEFAULT 'unpaid',
-  `paystack_reference` varchar(100) DEFAULT NULL,
   `shipping_address` text NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `fullname`, `phone`, `email`, `total_amount`, `status`, `payment_status`, `shipping_address`, `city`, `state`, `notes`, `created_at`) VALUES
+(1, 1, 'Prince Ebere', '09056058889', 'ugoprince738@gmail.com', 8500.00, 'Pending', 'unpaid', 'No 13 chairman street eruwen ikorodu lagos', 'eruwen', 'Lagos', 'please be fast', '2026-06-24 14:53:08');
 
 -- --------------------------------------------------------
 
@@ -111,9 +123,18 @@ CREATE TABLE `order_items` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `product_name` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `color` varchar(50) DEFAULT NULL,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `quantity`, `color`, `price`) VALUES
+(1, 1, 4, 'Totes', 2, '#c9a96e', 3000.00);
 
 -- --------------------------------------------------------
 
@@ -190,6 +211,13 @@ CREATE TABLE `users` (
   `address` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `created_at`) VALUES
+(1, 'Prince Ebere', 'ugoprince738@gmail.com', '$2y$10$XwbGDGj2XWsL5yx2IfnuUOPaovACjyB.sVZ2FXHkV4xyWrte6.gHK', '09056058889', NULL, '2026-06-22 13:11:07');
 
 --
 -- Indexes for dumped tables
@@ -287,13 +315,13 @@ ALTER TABLE `coupons`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -317,7 +345,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

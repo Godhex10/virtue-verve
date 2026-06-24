@@ -240,7 +240,7 @@ include './includes/db.php';
     </div>
     
     <div class="products-cta reveal">
-      <a href="./shop.html" class="btn-primary">View All Products →</a>
+      <a href="./products.php" class="btn-primary">View All Products →</a>
     </div>
   </section>
 

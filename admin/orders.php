@@ -1,63 +1,100 @@
 <?php
-// ── HARDCODED SAMPLE ORDERS DATA ─────────────────────────────────────────────
-$orders = [
-    [
-        'id' => 1090,
-        'oid' => '#VV-1090',
-        'customer' => ['name' => 'Adaeze Okafor', 'email' => 'ada@email.com', 'av' => '👩🏾'],
-        'items' => [
-            ['name' => 'Milano Structured Bag', 'img' => 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=100&q=60', 'price' => 45000, 'qty' => 1, 'color' => 'Black']
-        ],
-        'amount' => 45000,
-        'status' => 'delivered',
-        'payment' => 'paid',
-        'date' => 'Jun 14, 2026',
-        'city' => 'Lagos'
+include '../includes/db.php';
+$status_cfg = [
+    'pending' => [
+        'cls' => 'pill-pending',
+        'label' => 'Pending'
     ],
-    [
-        'id' => 1089,
-        'oid' => '#VV-1089',
-        'customer' => ['name' => 'Fatima Aliyu', 'email' => 'fatima@email.com', 'av' => '👩🏽'],
-        'items' => [
-            ['name' => 'Canvas Weekend Tote', 'img' => 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=100&q=60', 'price' => 16500, 'qty' => 1, 'color' => 'Tan']
-        ],
-        'amount' => 16500,
-        'status' => 'processing',
-        'payment' => 'paid',
-        'date' => 'Jun 12, 2026',
-        'city' => 'Abuja'
+    'processing' => [
+        'cls' => 'pill-processing',
+        'label' => 'Processing'
     ],
-    [
-        'id' => 1088,
-        'oid' => '#VV-1088',
-        'customer' => ['name' => 'Blessing Eze', 'email' => 'blessing@email.com', 'av' => '👩🏿'],
-        'items' => [
-            ['name' => 'Velvet Night Clutch', 'img' => 'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=100&q=60', 'price' => 18000, 'qty' => 2, 'color' => 'Teal']
-        ],
-        'amount' => 36000,
-        'status' => 'pending',
-        'payment' => 'pending',
-        'date' => 'Jun 10, 2026',
-        'city' => 'Port Harcourt'
+    'delivered' => [
+        'cls' => 'pill-delivered',
+        'label' => 'Delivered'
+    ],
+    'cancelled' => [
+        'cls' => 'pill-cancelled',
+        'label' => 'Cancelled'
     ]
 ];
 
-// Helper dictionaries mapping status/payment keys to their respective CSS classes
-$status_cfg = [
-    'delivered'  => ['cls' => 'pill-delivered',  'label' => 'Delivered'],
-    'processing' => ['cls' => 'pill-processing', 'label' => 'Processing'],
-    'pending'    => ['cls' => 'pill-pending',    'label' => 'Pending'],
-    'shipped'    => ['cls' => 'pill-shipped',    'label' => 'Shipped'],
-    'cancelled'  => ['cls' => 'pill-cancelled',  'label' => 'Cancelled'],
-    'refunded'   => ['cls' => 'pill-refunded',   'label' => 'Refunded'],
+$pay_cfg = [
+    'paid' => [
+        'cls' => 'pay-paid',
+        'label' => 'Paid'
+    ],
+    'unpaid' => [
+        'cls' => 'pay-pending',
+        'label' => 'Unpaid'
+    ]
 ];
 
-$pay_cfg = [
-    'paid'     => ['cls' => 'pay-paid',     'label' => 'Paid'],
-    'pending'  => ['cls' => 'pay-pending',  'label' => 'Unpaid'],
-    'failed'   => ['cls' => 'pay-failed',   'label' => 'Failed'],
-    'refunded' => ['cls' => 'pay-refunded', 'label' => 'Refunded'],
-];
+$orders = [];
+
+$query = "
+SELECT *
+FROM orders
+ORDER BY created_at DESC
+";
+
+$result = mysqli_query($conn, $query);
+
+while ($order = mysqli_fetch_assoc($result)) {
+
+    $items = [];
+
+    $item_query = "
+    SELECT *
+    FROM order_items
+    WHERE order_id = {$order['id']}
+    ";
+
+    $item_result = mysqli_query($conn, $item_query);
+
+    while ($item = mysqli_fetch_assoc($item_result)) {
+
+        $items[] = [
+            'name'  => $item['product_name'],
+            'img'   => '',
+            'price' => $item['price'],
+            'qty'   => $item['quantity'],
+            'color' => $item['color']
+        ];
+    }
+
+    $orders[] = [
+        'id' => $order['id'],
+
+        'oid' => '#VV-' . str_pad(
+            $order['id'],
+            4,
+            '0',
+            STR_PAD_LEFT
+        ),
+
+        'customer' => [
+            'name' => $order['fullname'],
+            'email' => $order['email'],
+            'av' => '👤'
+        ],
+
+        'items' => $items,
+
+        'amount' => $order['total_amount'],
+
+        'status' => strtolower($order['status']),
+
+        'payment' => strtolower($order['payment_status']),
+
+        'date' => date(
+            'M d, Y',
+            strtotime($order['created_at'])
+        ),
+
+        'city' => $order['city']
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -182,11 +219,9 @@ $pay_cfg = [
       <button class="tab active" data-status="all">All Orders <span class="tab-count" id="tc-all"><?php echo count($orders); ?></span></button>
       <button class="tab" data-status="pending">Pending <span class="tab-count" id="tc-pending"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'pending'; })); ?></span></button>
       <button class="tab" data-status="processing">Processing <span class="tab-count" id="tc-processing"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'processing'; })); ?></span></button>
-      <button class="tab" data-status="shipped">Shipped <span class="tab-count" id="tc-shipped"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'shipped'; })); ?></span></button>
+      
       <button class="tab" data-status="delivered">Delivered <span class="tab-count" id="tc-delivered"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'delivered'; })); ?></span></button>
       <button class="tab" data-status="cancelled">Cancelled <span class="tab-count" id="tc-cancelled"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'cancelled'; })); ?></span></button>
-      <button class="tab" data-status="refunded">Refunded <span class="tab-count" id="tc-refunded"><?php echo count(array_filter($orders, function($o) { return $o['status'] === 'refunded'; })); ?></span></button>
-    </div>
 
     <div class="toolbar">
       <div class="toolbar-left">
@@ -194,7 +229,6 @@ $pay_cfg = [
           <option value="all">All Payments</option>
           <option value="paid">Paid</option>
           <option value="pending">Unpaid</option>
-          <option value="refunded">Refunded</option>
         </select>
         <select class="filter-select" id="cityFilter">
           <option value="all">All Cities</option>
@@ -279,7 +313,12 @@ $pay_cfg = [
             <td style="font-size:.8rem"><?php echo htmlspecialchars($o['city']); ?></td>
             <td>
               <div class="row-actions">
-                <div class="row-btn" title="View">👁</div>
+                <div
+    class="row-btn view-order"
+    title="View"
+    data-id="<?php echo $o['id']; ?>">
+    👁
+</div>
                 <div class="row-btn" title="Print Invoice">🖨️</div>
                 <div class="row-btn danger" title="Cancel">❌</div>
               </div>
@@ -333,14 +372,12 @@ $pay_cfg = [
     <div class="drawer-body" id="drawerBody"></div>
     <div class="drawer-footer">
       <div class="status-select-wrap">
-        <select class="status-select" id="drawerStatusSel">
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
-          <option value="refunded">Refunded</option>
-        </select>
+<select class="status-select" id="drawerStatusSel">
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Delivered">Delivered</option>
+    <option value="Cancelled">Cancelled</option>
+</select>
         <button class="btn-update" id="drawerUpdateBtn">Update</button>
       </div>
       <button class="btn-print" onclick="showToast('🖨️ Opening print view…')">Print</button>
@@ -384,7 +421,12 @@ document.querySelectorAll('a,button,.nav-item,.kpi-card,.row-btn,.custom-cb,.tab
   el.addEventListener('mouseleave',()=>{cursor.style.transform='translate(-50%,-50%) scale(1)';cursor.style.background='var(--primary)';});
 });
 
-// ── FEEDBACK TOAST ─────────────────────────────────────────────────────────────
+
+</script>
+<script>
+
+// Existing code...
+
 function showToast(msg){
   const t=document.getElementById('toast');
   document.getElementById('toastMsg').textContent=msg;
@@ -392,6 +434,129 @@ function showToast(msg){
   clearTimeout(showToast._t);
   showToast._t=setTimeout(()=>t.classList.remove('show'),2800);
 }
+
+
+// ADD THIS BELOW
+
+let currentOrderId = null;
+
+document.querySelectorAll('.view-order').forEach(btn => {
+
+    btn.addEventListener('click', function () {
+
+        currentOrderId = this.dataset.id;
+
+        fetch('get_order_details.php?id=' + currentOrderId)
+        .then(res => res.json())
+        .then(data => {
+
+            document.getElementById('drawerOID').innerText =
+                '#VV-' +
+String(data.order.id)
+.padStart(4,'0');
+
+            document.getElementById('drawerDate').innerText =
+                data.order.created_at;
+
+            let html = `
+                <h3>Customer Details</h3>
+
+                <p><strong>Name:</strong> ${data.order.fullname}</p>
+                <p><strong>Email:</strong> ${data.order.email}</p>
+                <p><strong>Phone:</strong> ${data.order.phone}</p>
+
+                <p><strong>Address:</strong> ${data.order.shipping_address}</p>
+
+                <p><strong>City:</strong> ${data.order.city}</p>
+
+                <p><strong>State:</strong> ${data.order.state}</p>
+
+                <hr>
+
+                <h3>Products</h3>
+            `;
+
+            data.items.forEach(item => {
+
+                html += `
+                    <div style="margin-bottom:15px;">
+                        <strong>${item.product_name}</strong><br>
+                        Qty: ${item.quantity}<br>
+                        Color: ${item.color}<br>
+                        Price: ₦${item.price}
+                    </div>
+                `;
+            });
+
+            html += `
+                <hr>
+                <h3>Total: ₦${data.order.total_amount}</h3>
+            `;
+
+            document.getElementById('drawerBody').innerHTML = html;
+
+            document.getElementById('drawerOverlay')
+                .classList.add('open');
+        });
+    });
+});
+
+
+document.getElementById('drawerClose')
+.addEventListener('click', () => {
+
+    document.getElementById('drawerOverlay')
+    .classList.remove('open');
+
+});
+
+document.getElementById('drawerOverlay')
+.addEventListener('click', e => {
+
+    if(e.target.id === 'drawerOverlay'){
+        document.getElementById('drawerOverlay')
+        .classList.remove('open');
+    }
+
+});
+
+
+document.getElementById('drawerUpdateBtn')
+.addEventListener('click', () => {
+
+    const status =
+        document.getElementById('drawerStatusSel').value;
+
+    const formData = new FormData();
+
+    formData.append('order_id', currentOrderId);
+    formData.append('status', status);
+
+    fetch('update_order_status.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        if(data === 'success'){
+
+            showToast('Order updated');
+
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+
+        } else {
+
+            showToast('Update failed');
+
+        }
+
+    });
+
+});
+
 </script>
 </body>
 </html>
