@@ -1,33 +1,27 @@
 <?php
 include '../includes/db.php';
 $status_cfg = [
-    'pending' => [
-        'cls' => 'pill-pending',
-        'label' => 'Pending'
-    ],
-    'processing' => [
-        'cls' => 'pill-processing',
-        'label' => 'Processing'
-    ],
-    'delivered' => [
-        'cls' => 'pill-delivered',
-        'label' => 'Delivered'
-    ],
-    'cancelled' => [
-        'cls' => 'pill-cancelled',
-        'label' => 'Cancelled'
-    ]
+    // Lowercase variants
+    'pending'    => ['cls' => 'pill-pending',    'label' => 'Pending'],
+    'processing' => ['cls' => 'pill-processing', 'label' => 'Processing'],
+    'delivered'  => ['cls' => 'pill-delivered',  'label' => 'Delivered'],
+    'cancelled'  => ['cls' => 'pill-cancelled',  'label' => 'Cancelled'],
+    
+    // Capitalized variants (matching your database ENUM exactly)
+    'Pending'    => ['cls' => 'pill-pending',    'label' => 'Pending'],
+    'Processing' => ['cls' => 'pill-processing', 'label' => 'Processing'],
+    'Delivered'  => ['cls' => 'pill-delivered',  'label' => 'Delivered'],
+    'Cancelled'  => ['cls' => 'pill-cancelled',  'label' => 'Cancelled']
 ];
 
 $pay_cfg = [
-    'paid' => [
-        'cls' => 'pay-paid',
-        'label' => 'Paid'
-    ],
-    'unpaid' => [
-        'cls' => 'pay-pending',
-        'label' => 'Unpaid'
-    ]
+    // Lowercase variants
+    'paid'     => ['cls' => 'pay-paid',     'label' => 'Paid'],
+    'unpaid'   => ['cls' => 'pay-pending',  'label' => 'Unpaid'],
+    
+    // Capitalized variants
+    'Paid'     => ['cls' => 'pay-paid',     'label' => 'Paid'],
+    'Unpaid'   => ['cls' => 'pay-pending',  'label' => 'Unpaid']
 ];
 
 $orders = [];
@@ -63,36 +57,20 @@ while ($order = mysqli_fetch_assoc($result)) {
         ];
     }
 
-    $orders[] = [
-        'id' => $order['id'],
-
-        'oid' => '#VV-' . str_pad(
-            $order['id'],
-            4,
-            '0',
-            STR_PAD_LEFT
-        ),
-
+$orders[] = [
+        'id'       => $order['id'],
+        'oid'      => '#VV-' . str_pad($order['id'], 4, '0', STR_PAD_LEFT),
         'customer' => [
             'name' => $order['fullname'],
-            'email' => $order['email'],
-            'av' => '👤'
+            'email'=> $order['email'],
+            'av'   => '👤'
         ],
-
-        'items' => $items,
-
-        'amount' => $order['total_amount'],
-
-        'status' => strtolower($order['status']),
-
-        'payment' => strtolower($order['payment_status']),
-
-        'date' => date(
-            'M d, Y',
-            strtotime($order['created_at'])
-        ),
-
-        'city' => $order['city']
+        'items'    => $items,
+        'amount'   => $order['total_amount'],
+        'status'   => $order['status'], 
+        'payment'  => $order['payment_status'],
+        'date'     => date('M d, Y', strtotime($order['created_at'])),
+        'city'     => $order['city']
     ];
 }
 ?>
