@@ -348,11 +348,22 @@ document.addEventListener('click', e => {
   head.setAttribute('aria-expanded', open);
 });
 
+// Until the database is connected, orders, messages and sign-ups made here are left
+// in this browser for the admin to collect (see assets/js/admin/admin.js)
+function sendToAdmin(kind, row) {
+  try {
+    const box = JSON.parse(localStorage.getItem('vv_inbox')) || {};
+    (box[kind] = box[kind] || []).push(row);
+    localStorage.setItem('vv_inbox', JSON.stringify(box));
+  } catch { /* storage unavailable */ }
+}
+
 // Simple forms (contact, newsletter): thank the visitor and reset
 document.addEventListener('submit', e => {
   const form = e.target.closest('form[data-thanks]');
   if (!form) return;
   e.preventDefault();
+  if (form.dataset.inbox) sendToAdmin(form.dataset.inbox, { ...Object.fromEntries(new FormData(form)), created_at: new Date().toISOString() });
   const r = form.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + 40, 14);
   toast(form.dataset.thanks, 'envelope-open-text');

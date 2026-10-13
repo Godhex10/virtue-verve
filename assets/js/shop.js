@@ -80,6 +80,7 @@ group('#fTags', TAGS
 
 const priceInput = $('#fPrice'), sideSearch = $('#shopSearch'), sortSelect = $('#sortBy');
 priceInput.min = MIN_PRICE; priceInput.max = MAX_PRICE; priceInput.value = state.max;
+priceInput.step = MAX_PRICE - MIN_PRICE > 5000 ? 500 : 1; // sensible steps for large-number currencies
 priceInput.closest('.fgroup').hidden = MIN_PRICE === MAX_PRICE;
 $('#fPriceMin').textContent = money(MIN_PRICE);
 sideSearch.value = state.q;

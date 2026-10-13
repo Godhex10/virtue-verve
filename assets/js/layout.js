@@ -7,8 +7,8 @@
   const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const here = href => href === page ? ' class="current" aria-current="page"' : '';
   const gem = '<i class="fa-solid fa-gem"></i>';
-  const strip = ['Complimentary gift wrapping on every order', 'New in — The Emerald Edit', 'Carry your confidence']
-    .map(t => `<span>${t}</span>${gem}`).join('');
+  const safe = t => String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const strip = ANNOUNCE.map(t => `<span>${safe(t)}</span>${gem}`).join('');
   const colLink = c => `<a href="category.html?c=${c.id}">${c.label}</a>`;
   const cats = COLLECTIONS.filter(c => c.type === 'category'), edits = COLLECTIONS.filter(c => c.type === 'edit');
 

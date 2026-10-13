@@ -2,45 +2,52 @@
    Virtue & Verve — store data (edit this file to change the catalogue)
    ========================================================== */
 
-const CURRENCY = '$';
+let CURRENCY = '₦';
+
+// Raise this number whenever the starting catalogue below changes shape or prices.
+// Saved preview data from an older version is then ignored and started afresh.
+const DATA_VERSION = 2;
+
+// The scrolling line at the very top of every page
+const ANNOUNCE = ['Complimentary gift wrapping on every order', 'New in — The Emerald Edit', 'Carry your confidence'];
 
 // Each colour is [name, swatch hex, photo, colour family].
 // Give a product more than one colour and swatches appear on its card.
 const PRODUCTS = [
-  { id: 'seraphine', name: 'Seraphine', kind: 'Top-Handle', cat: 'top-handle', price: 189, tag: 'Bestseller', added: '2026-06-02',
+  { id: 'seraphine', name: 'Seraphine', kind: 'Top-Handle', cat: 'top-handle', price: 85000, tag: 'Bestseller', added: '2026-06-02',
     desc: 'Our signature. A structured top-handle in pebbled leather with a polished gold clasp — ladylike, but never shy.',
     colors: [['Verve Teal', '#0f7f86', 'assets/images/seraphine.jpg', 'Green']] },
-  { id: 'amara', name: 'Amara', kind: 'Tote', cat: 'tote', price: 165, tag: 'New', added: '2026-09-20',
+  { id: 'amara', name: 'Amara', kind: 'Tote', cat: 'tote', price: 72000, tag: 'New', added: '2026-09-20',
     desc: 'The carry-everything tote. Roomy enough for your laptop and your lipstick collection, in leather that only gets better with time.',
     colors: [['Caramel', '#b5651d', 'assets/images/amara.jpg', 'Brown']] },
-  { id: 'lola', name: 'Lola', kind: 'Crossbody', cat: 'crossbody', price: 129, added: '2026-05-11',
+  { id: 'lola', name: 'Lola', kind: 'Crossbody', cat: 'crossbody', price: 58000, added: '2026-05-11',
     desc: 'Quilted, curved and finished with a gold teardrop. Carry it by the handle or sling it on — made for brunch and everything after.',
     colors: [['Rosewater', '#d99a8f', 'assets/images/lola.jpg', 'Pink']] },
-  { id: 'belle', name: 'Belle', kind: 'Chain Clutch', cat: 'clutch', price: 98, tag: 'New', added: '2026-09-28',
+  { id: 'belle', name: 'Belle', kind: 'Chain Clutch', cat: 'clutch', price: 45000, tag: 'New', added: '2026-09-28',
     desc: 'A flap clutch with a delicate chain. Tuck it under your arm for dinner, drape it on your shoulder for dancing.',
     colors: [['Blush', '#f1b6c1', 'assets/images/belle.jpg', 'Pink']] },
-  { id: 'mimi', name: 'Mimi', kind: 'Pleated Wristlet', cat: 'clutch', price: 86, tag: 'Bestseller', added: '2026-07-15',
+  { id: 'mimi', name: 'Mimi', kind: 'Pleated Wristlet', cat: 'clutch', price: 38000, tag: 'Bestseller', added: '2026-07-15',
     desc: 'Small bag, big personality. A sculpted, pleated wristlet that fits your phone, your gloss and your best secrets.',
     colors: [['Vanilla', '#e9e4d6', 'assets/images/mimi-vanilla.jpg', 'Neutral'], ['Emerald', '#12a150', 'assets/images/mimi-emerald.jpg', 'Green']] },
-  { id: 'eden', name: 'Eden', kind: 'Weekend Tote', cat: 'tote', price: 210, added: '2026-04-03',
+  { id: 'eden', name: 'Eden', kind: 'Weekend Tote', cat: 'tote', price: 95000, added: '2026-04-03',
     desc: 'Your weekend-away companion. Heritage tweed trimmed in deep green leather, generously sized and ready whenever you are.',
     colors: [['Forest Tweed', '#1f5a3c', 'assets/images/eden.jpg', 'Green']] },
-  { id: 'nova', name: 'Nova', kind: 'Mini Top-Handle', cat: 'top-handle', price: 112, added: '2026-08-08',
+  { id: 'nova', name: 'Nova', kind: 'Mini Top-Handle', cat: 'top-handle', price: 52000, added: '2026-08-08',
     desc: 'The Seraphine’s little sister. All the polish in a palm-sized silhouette, with a turn-lock you’ll love to click.',
     colors: [['Blush', '#f0b4ae', 'assets/images/nova.jpg', 'Pink']] },
-  { id: 'cleo', name: 'Cleo', kind: 'Shoulder Bag', cat: 'crossbody', price: 138, added: '2026-08-21',
+  { id: 'cleo', name: 'Cleo', kind: 'Shoulder Bag', cat: 'crossbody', price: 62000, added: '2026-08-21',
     desc: 'Soft, slouchy and quietly chic. A buttery shoulder bag in a shade that goes with absolutely everything.',
     colors: [['Sand', '#e6c9a8', 'assets/images/cleo.jpg', 'Neutral']] },
-  { id: 'zuri', name: 'Zuri', kind: 'Box Clutch', cat: 'clutch', price: 124, tag: 'New', added: '2026-10-01',
+  { id: 'zuri', name: 'Zuri', kind: 'Box Clutch', cat: 'clutch', price: 55000, tag: 'New', added: '2026-10-01',
     desc: 'A jewel of a clutch. Textured emerald with a crystal-set gold clasp — the one that gets noticed across the room.',
     colors: [['Emerald', '#1c7a5c', 'assets/images/zuri.jpg', 'Green']] },
-  { id: 'sienna', name: 'Sienna', kind: 'Crossbody', cat: 'crossbody', price: 118, added: '2026-06-24',
+  { id: 'sienna', name: 'Sienna', kind: 'Crossbody', cat: 'crossbody', price: 54000, added: '2026-06-24',
     desc: 'The everyday one. A clean, curved flap in rich tan leather with an adjustable strap that sits just right on the hip.',
     colors: [['Tan', '#9c4f2c', 'assets/images/sienna.jpg', 'Brown']] },
-  { id: 'ines', name: 'Ines', kind: 'Woven Tote', cat: 'tote', price: 198, tag: 'Bestseller', added: '2026-07-30',
+  { id: 'ines', name: 'Ines', kind: 'Woven Tote', cat: 'tote', price: 89000, tag: 'Bestseller', added: '2026-07-30',
     desc: 'Hand-woven leather with a chunky gold chain. Soft enough to slouch, strong enough for everything you throw in it.',
     colors: [['Cognac', '#a0522d', 'assets/images/ines.jpg', 'Brown']] },
-  { id: 'harper', name: 'Harper', kind: 'Satchel', cat: 'top-handle', price: 176, added: '2026-05-29',
+  { id: 'harper', name: 'Harper', kind: 'Satchel', cat: 'top-handle', price: 78000, added: '2026-05-29',
     desc: 'A classic satchel with twin gold buckles. Smart enough for the office, relaxed enough for the weekend.',
     colors: [['Dove Grey', '#8e8a93', 'assets/images/harper.jpg', 'Grey']] }
 ];
@@ -73,8 +80,8 @@ const STORE = {
 };
 
 const DELIVERY = [
-  { id: 'standard', label: 'Standard delivery', note: '3 – 5 working days', price: 8 },
-  { id: 'express', label: 'Express delivery', note: '1 – 2 working days', price: 15 },
+  { id: 'standard', label: 'Standard delivery', note: '3 – 5 working days', price: 3500 },
+  { id: 'express', label: 'Express delivery', note: '1 – 2 working days', price: 6000 },
   { id: 'pickup', label: 'Collect in person', note: 'Ready within 24 hours', price: 0 }
 ];
 
@@ -116,3 +123,48 @@ const COLLECTIONS = [
   { id: 'emerald-edit', type: 'edit', label: 'The Emerald Edit', note: 'Our signature shade', img: 'assets/images/hero.jpg', family: 'Green',
     intro: 'Our signature green, from deep forest to bright emerald. One shade, every mood.', match: p => p.colors.some(c => c[3] === 'Green') }
 ];
+
+// ---------- Changes made in the admin ----------
+// Until the database is connected, the admin saves its changes in this browser.
+// If any are found, they replace the starting catalogue above, so edits made in
+// the admin show up on the shop (in the same browser).
+(function applyAdminData() {
+  let saved;
+  try { saved = JSON.parse(localStorage.getItem('vv_db')); } catch { saved = null; }
+  if (!saved || saved.version !== DATA_VERSION || !Array.isArray(saved.products) || !Array.isArray(saved.categories)) return;
+
+  const s = saved.settings || {};
+  if (s.currency) CURRENCY = s.currency;
+  Object.assign(STORE, {
+    preview: typeof s.preview === 'boolean' ? s.preview : STORE.preview,
+    email: s.email || STORE.email, whatsapp: s.whatsapp || STORE.whatsapp, instagram: s.instagram || STORE.instagram,
+    hours: s.hours || STORE.hours, returnDays: s.return_days ?? STORE.returnDays
+  });
+  const replace = (list, rows) => list.splice(0, list.length, ...rows);
+  if (Array.isArray(s.announcement) && s.announcement.length) replace(ANNOUNCE, s.announcement);
+
+  const options = (saved.delivery_options || []).filter(d => d.active !== false && d.label).sort((a, b) => a.sort - b.sort);
+  if (options.length) replace(DELIVERY, options.map(d => ({ id: d.id, label: d.label, note: d.note || '', price: Number(d.price) || 0 })));
+
+  const cats = saved.categories.filter(c => c.visible).sort((a, b) => a.sort - b.sort);
+  replace(CATEGORIES, cats.filter(c => c.kind === 'category')
+    .map(c => ({ cat: c.id, label: c.label, one: c.singular || c.label.toLowerCase(), note: c.note || '', img: c.image_url })));
+
+  replace(PRODUCTS, saved.products
+    .filter(p => p.active && p.colours.length && CATEGORIES.some(c => c.cat === p.category_id))
+    .sort((a, b) => a.sort - b.sort)
+    .map(p => {
+      SPECS[p.id] = [p.material, p.size, p.carry];
+      return { id: p.id, name: p.name, kind: p.kind, cat: p.category_id, price: Number(p.price) || 0, tag: p.tag || undefined,
+        added: p.created_at || '', desc: p.description || '', colors: p.colours.map(c => [c.name, c.hex, c.image_url, c.family]) };
+    }));
+
+  replace(COLLECTIONS, cats.map(c => ({
+    id: c.id, type: c.kind, label: c.label, note: c.note || '', img: c.image_url, intro: c.intro || '', family: c.rule && c.rule.family,
+    match: c.kind === 'category' ? p => p.cat === c.id
+      : c.rule && c.rule.tag ? p => p.tag === c.rule.tag
+      : c.rule && c.rule.family ? p => p.colors.some(col => col[3] === c.rule.family) : () => false
+  })));
+
+  replace(MOODS, MOODS.filter(m => PRODUCTS.some(p => p.id === m.id)));
+})();

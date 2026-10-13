@@ -72,6 +72,7 @@ if (!cart.length) {
       localStorage.setItem('vv_order', JSON.stringify(order));
       sessionStorage.removeItem('vv_note');
     } catch { /* storage unavailable */ }
+    sendToAdmin('orders', order);
     cart = [];
     store.set('vv_cart', cart);
     location.href = 'order.html';

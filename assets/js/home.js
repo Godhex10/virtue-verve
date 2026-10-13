@@ -55,7 +55,7 @@ moodInfo.addEventListener('click', e => {
   const b = e.target.closest('[data-mood-add]');
   if (b) { const m = MOODS[+b.dataset.moodAdd]; addToCart(m.id, m.color, 1, moodBag.firstElementChild); }
 });
-setMood(0);
+if (MOODS.length) setMood(0); else $('#moods').hidden = true;
 
 // ---------- Love notes slider ----------
 const track = $('#notesTrack'), dots = $('#notesDots'), noteCount = track.children.length;
@@ -74,6 +74,7 @@ showNote(0);
 // ---------- Newsletter ----------
 $('#clubForm').addEventListener('submit', e => {
   e.preventDefault();
+  sendToAdmin('subscribers', { email: $('input', e.target).value.trim().toLowerCase(), created_at: new Date().toISOString() });
   e.target.reset();
   const r = e.target.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, 16);
