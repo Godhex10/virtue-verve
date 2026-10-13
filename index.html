@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtue &amp; Verve — Bags with virtue, worn with verve</title>
+  <meta name="description" content="Virtue & Verve — beautifully made handbags, totes, clutches and crossbody bags for the woman who carries her whole world.">
+  <meta name="theme-color" content="#088178">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <svg viewBox="0 0 120 120" class="preloader-bag">
+      <path d="M42 50C42 18 78 18 78 50" />
+      <path d="M26 50H94Q100 50 101 56L107 96Q108 106 98 106H22Q12 106 13 96L19 56Q20 50 26 50Z" />
+      <path d="M54 76C46 68 50 61 60 68C70 61 74 68 66 76L60 82Z" class="preloader-heart" />
+    </svg>
+    <p class="preloader-name">Virtue <span>&amp;</span> Verve</p>
+  </div>
+
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Announcement -->
+  <div class="announce">
+    <div class="announce-track">
+      <span>Complimentary gift wrapping on every order</span><i class="fa-solid fa-gem"></i>
+      <span>New in — The Emerald Edit</span><i class="fa-solid fa-gem"></i>
+      <span>Carry your confidence</span><i class="fa-solid fa-gem"></i>
+      <span>Complimentary gift wrapping on every order</span><i class="fa-solid fa-gem"></i>
+      <span>New in — The Emerald Edit</span><i class="fa-solid fa-gem"></i>
+      <span>Carry your confidence</span><i class="fa-solid fa-gem"></i>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+      <a href="#top" class="logo" aria-label="Virtue and Verve home">Virtue <span>&amp;</span> Verve</a>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="#shop">Shop</a>
+        <a href="#collections">Collections</a>
+        <a href="#moods">Moods</a>
+        <a href="#story">Our Story</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="wishBtn" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="badge" id="wishCount" hidden>0</span>
+        </button>
+        <button class="icon-btn" id="cartBtn" aria-label="Open shopping bag">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartCount" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="blob blob-2" aria-hidden="true"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="script hero-hello">hello, gorgeous</p>
+          <h1 class="hero-title">
+            <span class="line"><span>Bags with <em>virtue</em>,</span></span>
+            <span class="line"><span>worn with <em class="gold">verve</em>.</span></span>
+          </h1>
+          <p class="hero-text">Beautifully made handbags for the woman who carries her whole world — and looks divine doing it.</p>
+          <div class="hero-cta">
+            <a href="#shop" class="btn btn-primary"><span>Shop the collection</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#moods" class="btn btn-ghost"><span>Find your mood</span></a>
+          </div>
+          <ul class="hero-notes">
+            <li><i class="fa-solid fa-gift"></i> Gift-wrapped with a bow</li>
+            <li><i class="fa-solid fa-heart"></i> Made to be loved for years</li>
+          </ul>
+        </div>
+
+        <div class="stage" id="stage">
+          <div class="arch-line" data-depth="6"></div>
+          <div class="arch" data-depth="12"><img src="images/hero.jpg" alt="Teal leather top-handle bag with a gold clasp"></div>
+          <div class="float float-a" data-depth="40"><img src="images/cat-clutch.jpg" alt="Emerald box clutch with a gold clasp"></div>
+          <div class="float float-b" data-depth="55"><img src="images/mimi-vanilla.jpg" alt="Cream pleated mini bag"></div>
+
+          <div class="ring" data-depth="30">
+            <svg viewBox="0 0 200 200">
+              <defs><path id="ringPath" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0"/></defs>
+              <text><textPath href="#ringPath" textLength="478">carry your confidence • virtue &amp; verve •</textPath></text>
+            </svg>
+            <i class="fa-solid fa-heart ring-heart"></i>
+          </div>
+
+          <div class="chip" data-depth="34">
+            <span class="chip-dot"><i class="fa-solid fa-gem"></i></span>
+            <div><strong>New in</strong><small>The Emerald Edit</small></div>
+          </div>
+
+          <svg class="spark s1" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+          <svg class="spark s2" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+          <svg class="spark s3" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+        </div>
+      </div>
+
+      <a href="#collections" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Totes</span><i class="fa-solid fa-gem"></i><span class="fill">Crossbody</span><i class="fa-solid fa-gem"></i><span>Clutches</span><i class="fa-solid fa-gem"></i><span class="fill">Top-handles</span><i class="fa-solid fa-gem"></i><span>Wristlets</span><i class="fa-solid fa-gem"></i>
+        <span>Totes</span><i class="fa-solid fa-gem"></i><span class="fill">Crossbody</span><i class="fa-solid fa-gem"></i><span>Clutches</span><i class="fa-solid fa-gem"></i><span class="fill">Top-handles</span><i class="fa-solid fa-gem"></i><span>Wristlets</span><i class="fa-solid fa-gem"></i>
+      </div>
+    </div>
+
+    <!-- Collections -->
+    <section class="section" id="collections">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="script">find your match</p>
+          <h2>Shop by <em>silhouette</em></h2>
+        </div>
+        <div class="cats" id="cats"></div>
+      </div>
+    </section>
+
+    <!-- Shop -->
+    <section class="section section-tint" id="shop">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="script">the collection</p>
+          <h2>Pieces she'll <em>never</em> put down</h2>
+        </div>
+        <div class="filters" id="filters" data-reveal>
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="tote">Totes</button>
+          <button class="filter" data-filter="top-handle">Top-handles</button>
+          <button class="filter" data-filter="crossbody">Crossbody</button>
+          <button class="filter" data-filter="clutch">Clutches</button>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+
+    <!-- Moods -->
+    <section class="moods" id="moods">
+      <div class="moods-glow" aria-hidden="true"></div>
+      <div class="container moods-grid">
+        <div class="moods-copy" data-reveal>
+          <p class="script">a bag for every mood</p>
+          <h2>Where are you <em>off to</em>, darling?</h2>
+          <div class="mood-tabs" id="moodTabs" role="tablist"></div>
+          <div class="mood-info" id="moodInfo"></div>
+        </div>
+        <div class="mood-stage" data-reveal>
+          <div class="mood-halo"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <div class="mood-bag" id="moodBag"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section class="section" id="story">
+      <div class="container story-grid">
+        <div class="story-art" data-reveal>
+          <div class="story-card story-card-1"><img src="images/story-1.jpg" alt="Smiling woman holding a tan leather tote" loading="lazy"></div>
+          <div class="story-card story-card-2"><img src="images/story-2.jpg" alt="Teal leather bag with everyday essentials" loading="lazy"></div>
+          <span class="story-stamp script">with love</span>
+        </div>
+        <div class="story-copy" data-reveal>
+          <p class="script">our story</p>
+          <h2>Virtue in the making.<br><em>Verve</em> in the wearing.</h2>
+          <p>Virtue &amp; Verve began with a simple belief: a bag should feel as good as it looks. Every piece is chosen for its shape, its stitching and the little thrill you get when you pick it up on the way out the door.</p>
+          <ul class="promises">
+            <li>
+              <span class="promise-icon"><i class="fa-solid fa-heart"></i></span>
+              <div><strong>Made to be loved</strong><small>Quality you can feel in every stitch.</small></div>
+            </li>
+            <li>
+              <span class="promise-icon"><i class="fa-solid fa-gift"></i></span>
+              <div><strong>Wrapped with a bow</strong><small>Every order arrives ready to gift.</small></div>
+            </li>
+            <li>
+              <span class="promise-icon"><i class="fa-solid fa-rotate-left"></i></span>
+              <div><strong>Easy exchanges</strong><small>Changed your mind? We'll sort it.</small></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Love notes -->
+    <section class="section section-tint" id="love">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="script">love notes</p>
+          <h2>From the girls who <em>carry</em> us</h2>
+        </div>
+        <div class="notes" data-reveal>
+          <div class="notes-track" id="notesTrack">
+            <figure class="note">
+              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <blockquote>"I've had three strangers stop me to ask where my bag is from. Three! It makes every outfit look intentional."</blockquote>
+              <figcaption><span class="avatar">A</span> Adaeze — Seraphine Top-Handle</figcaption>
+            </figure>
+            <figure class="note">
+              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <blockquote>"The packaging alone made me feel like a princess. Then I opened it and the bag was even prettier in person."</blockquote>
+              <figcaption><span class="avatar">T</span> Tolu — Belle Chain Clutch</figcaption>
+            </figure>
+            <figure class="note">
+              <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <blockquote>"Fits my laptop, my makeup bag and my entire life. And it still looks elegant. I'm obsessed."</blockquote>
+              <figcaption><span class="avatar">M</span> Maya — Amara Tote</figcaption>
+            </figure>
+          </div>
+          <div class="notes-dots" id="notesDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="club">
+      <div class="container">
+        <div class="club-card" data-reveal>
+          <svg class="spark c1" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+          <svg class="spark c2" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+          <p class="script">the verve club</p>
+          <h2>First dibs on every <em>new drop</em></h2>
+          <p>Join the list for early access, styling notes and little surprises.</p>
+          <form class="club-form" id="clubForm">
+            <input type="email" placeholder="Your email address" aria-label="Email address" required>
+            <button class="btn btn-gold" type="submit"><span>Join the club</span></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="#top" class="logo logo-light">Virtue <span>&amp;</span> Verve</a>
+        <p>Bags with virtue, worn with verve.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#shop">All bags</a><a href="#collections">Collections</a><a href="#moods">Shop by mood</a>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <a href="#">Delivery</a><a href="#">Exchanges</a><a href="#">Contact us</a>
+      </div>
+      <div>
+        <h4>Follow along</h4>
+        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a><a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a><a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+    <div class="container footer-base">
+      <span>© <span id="year"></span> Virtue &amp; Verve. All rights reserved.</span>
+      <span class="script">made with love <i class="fa-solid fa-heart"></i></span>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Shopping bag" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Your bag <span class="script">of joy</span></h3>
+      <button class="close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="subtotal"><span>Subtotal</span><strong id="subtotal"></strong></div>
+      <button class="btn btn-primary btn-block" id="checkout"><span>Checkout</span><i class="fa-solid fa-lock"></i></button>
+      <small><i class="fa-solid fa-gift"></i> Gift wrapping included, always.</small>
+    </div>
+  </aside>
+
+  <!-- Quick view -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-media" id="modalMedia"></div>
+      <div class="modal-info" id="modalInfo"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
