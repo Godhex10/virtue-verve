@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search — Virtue &amp; Verve</title>
+  <meta name="description" content="Search Virtue & Verve bags by name, colour or shape.">
+  <meta name="theme-color" content="#088178">
+  <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('vv_seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="search">
+  <!-- Header, footer, cart and pop-ups come from layout.js -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/layout.js"></script>
+
+  <main id="top">
+    <section class="page-banner">
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span>Search</span></nav>
+        <p class="script">looking for something?</p>
+        <h1 id="searchTitle">Search the <em>collection</em></h1>
+        <form class="search search-big" action="search.html" role="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" name="q" id="pageSearch" placeholder="Try “green clutch” or “tote”" aria-label="Search bags">
+          <button class="btn btn-primary" type="submit"><span>Search</span></button>
+        </form>
+        <p class="banner-text" id="searchCount">Search by name, colour or shape.</p>
+        <div class="pills" id="searchPills"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head" id="searchMore">
+          <p class="script">a little inspiration</p>
+          <h2 id="moreTitle"></h2>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/search.js"></script>
+</body>
+</html>

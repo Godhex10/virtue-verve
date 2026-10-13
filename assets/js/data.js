@@ -1,0 +1,118 @@
+/* ==========================================================
+   Virtue & Verve — store data (edit this file to change the catalogue)
+   ========================================================== */
+
+const CURRENCY = '$';
+
+// Each colour is [name, swatch hex, photo, colour family].
+// Give a product more than one colour and swatches appear on its card.
+const PRODUCTS = [
+  { id: 'seraphine', name: 'Seraphine', kind: 'Top-Handle', cat: 'top-handle', price: 189, tag: 'Bestseller', added: '2026-06-02',
+    desc: 'Our signature. A structured top-handle in pebbled leather with a polished gold clasp — ladylike, but never shy.',
+    colors: [['Verve Teal', '#0f7f86', 'assets/images/seraphine.jpg', 'Green']] },
+  { id: 'amara', name: 'Amara', kind: 'Tote', cat: 'tote', price: 165, tag: 'New', added: '2026-09-20',
+    desc: 'The carry-everything tote. Roomy enough for your laptop and your lipstick collection, in leather that only gets better with time.',
+    colors: [['Caramel', '#b5651d', 'assets/images/amara.jpg', 'Brown']] },
+  { id: 'lola', name: 'Lola', kind: 'Crossbody', cat: 'crossbody', price: 129, added: '2026-05-11',
+    desc: 'Quilted, curved and finished with a gold teardrop. Carry it by the handle or sling it on — made for brunch and everything after.',
+    colors: [['Rosewater', '#d99a8f', 'assets/images/lola.jpg', 'Pink']] },
+  { id: 'belle', name: 'Belle', kind: 'Chain Clutch', cat: 'clutch', price: 98, tag: 'New', added: '2026-09-28',
+    desc: 'A flap clutch with a delicate chain. Tuck it under your arm for dinner, drape it on your shoulder for dancing.',
+    colors: [['Blush', '#f1b6c1', 'assets/images/belle.jpg', 'Pink']] },
+  { id: 'mimi', name: 'Mimi', kind: 'Pleated Wristlet', cat: 'clutch', price: 86, tag: 'Bestseller', added: '2026-07-15',
+    desc: 'Small bag, big personality. A sculpted, pleated wristlet that fits your phone, your gloss and your best secrets.',
+    colors: [['Vanilla', '#e9e4d6', 'assets/images/mimi-vanilla.jpg', 'Neutral'], ['Emerald', '#12a150', 'assets/images/mimi-emerald.jpg', 'Green']] },
+  { id: 'eden', name: 'Eden', kind: 'Weekend Tote', cat: 'tote', price: 210, added: '2026-04-03',
+    desc: 'Your weekend-away companion. Heritage tweed trimmed in deep green leather, generously sized and ready whenever you are.',
+    colors: [['Forest Tweed', '#1f5a3c', 'assets/images/eden.jpg', 'Green']] },
+  { id: 'nova', name: 'Nova', kind: 'Mini Top-Handle', cat: 'top-handle', price: 112, added: '2026-08-08',
+    desc: 'The Seraphine’s little sister. All the polish in a palm-sized silhouette, with a turn-lock you’ll love to click.',
+    colors: [['Blush', '#f0b4ae', 'assets/images/nova.jpg', 'Pink']] },
+  { id: 'cleo', name: 'Cleo', kind: 'Shoulder Bag', cat: 'crossbody', price: 138, added: '2026-08-21',
+    desc: 'Soft, slouchy and quietly chic. A buttery shoulder bag in a shade that goes with absolutely everything.',
+    colors: [['Sand', '#e6c9a8', 'assets/images/cleo.jpg', 'Neutral']] },
+  { id: 'zuri', name: 'Zuri', kind: 'Box Clutch', cat: 'clutch', price: 124, tag: 'New', added: '2026-10-01',
+    desc: 'A jewel of a clutch. Textured emerald with a crystal-set gold clasp — the one that gets noticed across the room.',
+    colors: [['Emerald', '#1c7a5c', 'assets/images/zuri.jpg', 'Green']] },
+  { id: 'sienna', name: 'Sienna', kind: 'Crossbody', cat: 'crossbody', price: 118, added: '2026-06-24',
+    desc: 'The everyday one. A clean, curved flap in rich tan leather with an adjustable strap that sits just right on the hip.',
+    colors: [['Tan', '#9c4f2c', 'assets/images/sienna.jpg', 'Brown']] },
+  { id: 'ines', name: 'Ines', kind: 'Woven Tote', cat: 'tote', price: 198, tag: 'Bestseller', added: '2026-07-30',
+    desc: 'Hand-woven leather with a chunky gold chain. Soft enough to slouch, strong enough for everything you throw in it.',
+    colors: [['Cognac', '#a0522d', 'assets/images/ines.jpg', 'Brown']] },
+  { id: 'harper', name: 'Harper', kind: 'Satchel', cat: 'top-handle', price: 176, added: '2026-05-29',
+    desc: 'A classic satchel with twin gold buckles. Smart enough for the office, relaxed enough for the weekend.',
+    colors: [['Dove Grey', '#8e8a93', 'assets/images/harper.jpg', 'Grey']] }
+];
+
+const CATEGORIES = [
+  { cat: 'tote', label: 'Totes', one: 'tote', note: 'Carry it all', img: 'assets/images/amara.jpg' },
+  { cat: 'top-handle', label: 'Top-handles', one: 'top-handle', note: 'Polished & poised', img: 'assets/images/nova.jpg' },
+  { cat: 'crossbody', label: 'Crossbody', one: 'crossbody bag', note: 'Hands-free', img: 'assets/images/sienna.jpg' },
+  { cat: 'clutch', label: 'Clutches', one: 'clutch', note: 'After dark', img: 'assets/images/zuri.jpg' }
+];
+
+// Swatch shown for each colour family in the shop filters
+const FAMILIES = { Green: '#088178', Brown: '#a8632a', Neutral: '#e9e0cf', Pink: '#eab0b6', Grey: '#9a9aa3' };
+
+const MOODS = [
+  { label: 'Brunch', id: 'lola', color: 0, line: 'Mimosas at eleven. The Lola keeps your hands free for the important things.' },
+  { label: 'Boss day', id: 'seraphine', color: 0, line: 'Walk in like you own the room. The Seraphine does half the talking for you.' },
+  { label: 'Date night', id: 'zuri', color: 0, line: 'Lipstick, keys, a little mystery. The Zuri carries exactly enough.' },
+  { label: 'Getaway', id: 'eden', color: 0, line: 'Out of office, into the weekend. The Eden packs for wherever you’re headed.' }
+];
+
+// ---------- Store details (placeholders — replace with her real details) ----------
+const STORE = {
+  preview: true, // set to false at launch to hide every "preview" note on the site
+  email: 'hello@yourstore.com',
+  whatsapp: '+000 000 000 0000',
+  instagram: '@yourhandle',
+  hours: 'Monday to Saturday, 9am – 6pm',
+  returnDays: 14
+};
+
+const DELIVERY = [
+  { id: 'standard', label: 'Standard delivery', note: '3 – 5 working days', price: 8 },
+  { id: 'express', label: 'Express delivery', note: '1 – 2 working days', price: 15 },
+  { id: 'pickup', label: 'Collect in person', note: 'Ready within 24 hours', price: 0 }
+];
+
+const PAYMENTS = [
+  { id: 'card', label: 'Card', icon: 'credit-card', note: 'Pay by debit or credit card on our secure payment partner’s page.' },
+  { id: 'transfer', label: 'Bank transfer', icon: 'building-columns', note: 'We’ll send our account details with your order confirmation.' },
+  { id: 'cod', label: 'Pay on delivery', icon: 'hand-holding-dollar', note: 'Pay when your bag arrives.' }
+];
+
+// Product details shown on each product page: [material, size, carry]
+const SPECS = {
+  seraphine: ['Pebbled leather, gold-tone hardware', '26 × 19 × 10 cm', 'Top handle, detachable shoulder strap'],
+  amara: ['Full-grain leather, unlined', '34 × 36 × 12 cm', 'Twin shoulder handles'],
+  lola: ['Quilted vegan leather, gold-tone hardware', '22 × 17 × 9 cm', 'Top handle, adjustable crossbody strap'],
+  belle: ['Smooth leather, gunmetal chain', '23 × 15 × 6 cm', 'Chain shoulder strap, tucks away as a clutch'],
+  mimi: ['Sculpted pleated shell, satin lining', '19 × 17 × 12 cm', 'Wrist handle'],
+  eden: ['Wool tweed with leather trim', '40 × 32 × 16 cm', 'Twin handles, fits on the shoulder'],
+  nova: ['Smooth leather, turn-lock clasp', '18 × 13 × 7 cm', 'Top handle, detachable chain'],
+  cleo: ['Soft nappa leather', '25 × 15 × 11 cm', 'Adjustable shoulder strap'],
+  zuri: ['Textured leather, crystal-set clasp', '21 × 11 × 5 cm', 'Hand-held, optional chain inside'],
+  sienna: ['Grained leather, magnetic flap', '24 × 17 × 8 cm', 'Adjustable crossbody strap'],
+  ines: ['Hand-woven leather, gold-tone chain', '38 × 30 × 14 cm', 'Chain and leather shoulder strap'],
+  harper: ['Pebbled leather, twin buckles', '28 × 21 × 10 cm', 'Top handle, detachable strap']
+};
+
+// ---------- Collections (each one gets its own page: category.html?c=<id>) ----------
+const INTROS = {
+  tote: 'Room for the laptop, the lunch and the just-in-case. Totes that carry your whole day and still look composed.',
+  'top-handle': 'Structured, ladylike and a little bit grand. The bags you hold, not just carry.',
+  crossbody: 'Hands free, heart full. Easy shapes that sit just right and go everywhere.',
+  clutch: 'Small, striking and made for the evening. Just enough room for what matters.'
+};
+const COLLECTIONS = [
+  ...CATEGORIES.map(c => ({ id: c.cat, type: 'category', label: c.label, note: c.note, img: c.img, intro: INTROS[c.cat], match: p => p.cat === c.cat })),
+  { id: 'new-in', type: 'edit', label: 'New in', note: 'Fresh arrivals', img: 'assets/images/belle.jpg',
+    intro: 'The latest pieces to land. Be the first to carry them.', match: p => p.tag === 'New' },
+  { id: 'bestsellers', type: 'edit', label: 'Bestsellers', note: 'Most loved', img: 'assets/images/ines.jpg',
+    intro: 'The ones that keep selling out. Tried, tested and adored.', match: p => p.tag === 'Bestseller' },
+  { id: 'emerald-edit', type: 'edit', label: 'The Emerald Edit', note: 'Our signature shade', img: 'assets/images/hero.jpg', family: 'Green',
+    intro: 'Our signature green, from deep forest to bright emerald. One shade, every mood.', match: p => p.colors.some(c => c[3] === 'Green') }
+];

@@ -6,63 +6,19 @@
   <title>Virtue &amp; Verve — Bags with virtue, worn with verve</title>
   <meta name="description" content="Virtue & Verve — beautifully made handbags, totes, clutches and crossbody bags for the woman who carries her whole world.">
   <meta name="theme-color" content="#088178">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('vv_seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
+<body data-page="home">
 
-  <!-- Preloader -->
-  <div class="preloader" id="preloader" aria-hidden="true">
-    <svg viewBox="0 0 120 120" class="preloader-bag">
-      <path d="M42 50C42 18 78 18 78 50" />
-      <path d="M26 50H94Q100 50 101 56L107 96Q108 106 98 106H22Q12 106 13 96L19 56Q20 50 26 50Z" />
-      <path d="M54 76C46 68 50 61 60 68C70 61 74 68 66 76L60 82Z" class="preloader-heart" />
-    </svg>
-    <p class="preloader-name">Virtue <span>&amp;</span> Verve</p>
-  </div>
-
-  <div class="cursor-ring" aria-hidden="true"></div>
-
-  <!-- Announcement -->
-  <div class="announce">
-    <div class="announce-track">
-      <span>Complimentary gift wrapping on every order</span><i class="fa-solid fa-gem"></i>
-      <span>New in — The Emerald Edit</span><i class="fa-solid fa-gem"></i>
-      <span>Carry your confidence</span><i class="fa-solid fa-gem"></i>
-      <span>Complimentary gift wrapping on every order</span><i class="fa-solid fa-gem"></i>
-      <span>New in — The Emerald Edit</span><i class="fa-solid fa-gem"></i>
-      <span>Carry your confidence</span><i class="fa-solid fa-gem"></i>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-      <a href="#top" class="logo" aria-label="Virtue and Verve home">Virtue <span>&amp;</span> Verve</a>
-      <nav class="nav" id="nav" aria-label="Main">
-        <a href="#shop">Shop</a>
-        <a href="#collections">Collections</a>
-        <a href="#moods">Moods</a>
-        <a href="#story">Our Story</a>
-      </nav>
-      <div class="header-actions">
-        <button class="icon-btn" id="wishBtn" aria-label="Wishlist">
-          <i class="fa-regular fa-heart"></i>
-          <span class="badge" id="wishCount" hidden>0</span>
-        </button>
-        <button class="icon-btn" id="cartBtn" aria-label="Open shopping bag">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span class="badge" id="cartCount" hidden>0</span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <!-- Header, footer, cart and pop-ups come from layout.js -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/layout.js"></script>
 
   <main id="top">
 
@@ -81,7 +37,7 @@
           </h1>
           <p class="hero-text">Beautifully made handbags for the woman who carries her whole world — and looks divine doing it.</p>
           <div class="hero-cta">
-            <a href="#shop" class="btn btn-primary"><span>Shop the collection</span><i class="fa-solid fa-arrow-right"></i></a>
+            <a href="shop.html" class="btn btn-primary"><span>Shop the collection</span><i class="fa-solid fa-arrow-right"></i></a>
             <a href="#moods" class="btn btn-ghost"><span>Find your mood</span></a>
           </div>
           <ul class="hero-notes">
@@ -92,9 +48,9 @@
 
         <div class="stage" id="stage">
           <div class="arch-line" data-depth="6"></div>
-          <div class="arch" data-depth="12"><img src="images/hero.jpg" alt="Teal leather top-handle bag with a gold clasp"></div>
-          <div class="float float-a" data-depth="40"><img src="images/cat-clutch.jpg" alt="Emerald box clutch with a gold clasp"></div>
-          <div class="float float-b" data-depth="55"><img src="images/mimi-vanilla.jpg" alt="Cream pleated mini bag"></div>
+          <div class="arch" data-depth="12"><img src="assets/images/hero.jpg" alt="Teal leather top-handle bag with a gold clasp"></div>
+          <div class="float float-a" data-depth="40"><img src="assets/images/cat-clutch.jpg" alt="Emerald box clutch with a gold clasp"></div>
+          <div class="float float-b" data-depth="55"><img src="assets/images/mimi-vanilla.jpg" alt="Cream pleated mini bag"></div>
 
           <div class="ring" data-depth="30">
             <svg viewBox="0 0 200 200">
@@ -152,6 +108,7 @@
           <button class="filter" data-filter="clutch">Clutches</button>
         </div>
         <div class="grid" id="grid"></div>
+        <div class="more" data-reveal><a href="shop.html" class="btn btn-ghost"><span>View all bags</span><i class="fa-solid fa-arrow-right"></i></a></div>
       </div>
     </section>
 
@@ -176,8 +133,8 @@
     <section class="section" id="story">
       <div class="container story-grid">
         <div class="story-art" data-reveal>
-          <div class="story-card story-card-1"><img src="images/story-1.jpg" alt="Smiling woman holding a tan leather tote" loading="lazy"></div>
-          <div class="story-card story-card-2"><img src="images/story-2.jpg" alt="Teal leather bag with everyday essentials" loading="lazy"></div>
+          <div class="story-card story-card-1"><img src="assets/images/story-1.jpg" alt="Smiling woman holding a tan leather tote" loading="lazy"></div>
+          <div class="story-card story-card-2"><img src="assets/images/story-2.jpg" alt="Teal leather bag with everyday essentials" loading="lazy"></div>
           <span class="story-stamp script">with love</span>
         </div>
         <div class="story-copy" data-reveal>
@@ -250,58 +207,7 @@
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div>
-        <a href="#top" class="logo logo-light">Virtue <span>&amp;</span> Verve</a>
-        <p>Bags with virtue, worn with verve.</p>
-      </div>
-      <div>
-        <h4>Shop</h4>
-        <a href="#shop">All bags</a><a href="#collections">Collections</a><a href="#moods">Shop by mood</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="#">Delivery</a><a href="#">Exchanges</a><a href="#">Contact us</a>
-      </div>
-      <div>
-        <h4>Follow along</h4>
-        <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a><a href="#"><i class="fa-brands fa-tiktok"></i> TikTok</a><a href="#"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-      </div>
-    </div>
-    <div class="container footer-base">
-      <span>© <span id="year"></span> Virtue &amp; Verve. All rights reserved.</span>
-      <span class="script">made with love <i class="fa-solid fa-heart"></i></span>
-    </div>
-  </footer>
-
-  <!-- Cart drawer -->
-  <div class="overlay" id="overlay"></div>
-  <aside class="drawer" id="drawer" aria-label="Shopping bag" aria-hidden="true">
-    <div class="drawer-head">
-      <h3>Your bag <span class="script">of joy</span></h3>
-      <button class="close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="drawer-body" id="cartItems"></div>
-    <div class="drawer-foot">
-      <div class="subtotal"><span>Subtotal</span><strong id="subtotal"></strong></div>
-      <button class="btn btn-primary btn-block" id="checkout"><span>Checkout</span><i class="fa-solid fa-lock"></i></button>
-      <small><i class="fa-solid fa-gift"></i> Gift wrapping included, always.</small>
-    </div>
-  </aside>
-
-  <!-- Quick view -->
-  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <button class="close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-      <div class="modal-media" id="modalMedia"></div>
-      <div class="modal-info" id="modalInfo"></div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast" role="status"></div>
-
-  <script src="script.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/home.js"></script>
 </body>
 </html>

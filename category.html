@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection — Virtue &amp; Verve</title>
+  <meta name="description" content="Shop Virtue & Verve bags by shape and by edit.">
+  <meta name="theme-color" content="#088178">
+  <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('vv_seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="category">
+  <!-- Header, footer, cart and pop-ups come from layout.js -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/layout.js"></script>
+
+  <main id="top">
+    <section class="page-banner cat-banner">
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <div class="container cat-banner-grid">
+        <div>
+          <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><a href="shop.html">Shop</a><i class="fa-solid fa-chevron-right"></i><span id="crumbHere"></span></nav>
+          <p class="script" id="shopEyebrow">the collection</p>
+          <h1 id="shopTitle"></h1>
+          <p class="banner-text" id="shopIntro"></p>
+        </div>
+        <div class="banner-art">
+          <div class="banner-photo" id="bannerPhoto"></div>
+          <svg class="spark b1" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+          <svg class="spark b2" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+        </div>
+      </div>
+      <div class="container"><div class="pills" id="colPills"></div></div>
+    </section>
+
+    <section class="shop">
+      <div class="container shop-layout">
+        <aside class="shop-side" id="shopSide" aria-label="Filters">
+          <div class="side-head">
+            <h3>Filters</h3>
+            <button class="close" data-close aria-label="Close filters"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <label class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="shopSearch" placeholder="Search these bags" aria-label="Search these bags">
+          </label>
+          <div class="fgroup"><h4>Category</h4><div id="fCats"></div></div>
+          <div class="fgroup"><h4>Colour</h4><div id="fColors"></div></div>
+          <div class="fgroup">
+            <h4>Price</h4>
+            <input type="range" id="fPrice" step="1" aria-label="Maximum price">
+            <div class="price-row"><span id="fPriceMin"></span><b id="fPriceOut"></b></div>
+          </div>
+          <div class="fgroup"><h4>Highlights</h4><div id="fTags"></div></div>
+          <button class="btn btn-primary btn-block side-apply" data-close><span>Show <span id="sideCount"></span></span></button>
+        </aside>
+
+        <div class="shop-main">
+          <div class="toolbar">
+            <button class="filter-toggle" id="filterToggle"><i class="fa-solid fa-sliders"></i>Filters<span class="badge" id="filterBadge" hidden>0</span></button>
+            <p class="result-count" id="resultCount"></p>
+            <label class="sort">
+              <span>Sort by</span>
+              <span class="select">
+                <select id="sortBy" aria-label="Sort bags">
+                  <option value="featured">Featured</option>
+                  <option value="newest">Newest</option>
+                  <option value="price-asc">Price: low to high</option>
+                  <option value="price-desc">Price: high to low</option>
+                  <option value="name">Name: A to Z</option>
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
+              </span>
+            </label>
+          </div>
+          <div class="chips" id="chips"></div>
+          <div class="grid grid-3" id="grid"></div>
+          <div class="empty-shop" id="emptyShop" hidden>
+            <div class="empty-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <h3>No bags match that</h3>
+            <p>Try loosening a filter or two — the right one is in here somewhere.</p>
+            <button class="btn btn-primary" id="emptyClear"><span>Clear filters</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="perks">
+      <div class="container perks-grid">
+        <div data-reveal><i class="fa-solid fa-gift"></i><strong>Wrapped with a bow</strong><small>Every order arrives ready to gift.</small></div>
+        <div data-reveal style="--d:.1s"><i class="fa-solid fa-heart"></i><strong>Made to be loved</strong><small>Quality you can feel in every stitch.</small></div>
+        <div data-reveal style="--d:.2s"><i class="fa-solid fa-rotate-left"></i><strong>Easy exchanges</strong><small>Changed your mind? We'll sort it.</small></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/shop.js"></script>
+</body>
+</html>

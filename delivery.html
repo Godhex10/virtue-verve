@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery & returns — Virtue &amp; Verve</title>
+  <meta name="description" content="Virtue & Verve delivery options, timings, exchanges and returns.">
+  <meta name="theme-color" content="#088178">
+  <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('vv_seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="delivery">
+  <!-- Header, footer, cart and pop-ups come from layout.js -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/layout.js"></script>
+
+  <main id="top">
+    <section class="page-banner">
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="blob blob-1" aria-hidden="true"></div>
+      <svg class="spark b1" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+      <svg class="spark b2" viewBox="0 0 24 24"><path d="M12 0c1 7 4 10 12 12-8 2-11 5-12 12-1-7-4-10-12-12 8-2 11-5 12-12Z"/></svg>
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span>Delivery &amp; returns</span></nav>
+        <p class="script">the practical bit</p>
+        <h1>Delivery &amp; <em>returns</em></h1>
+        <p class="banner-text">How your bag gets to you, and what to do if it isn't quite right.</p>
+      </div>
+    </section>
+
+    <section class="section tight">
+      <div class="container doc-layout">
+        <nav class="toc" aria-label="On this page">
+          <h4>On this page</h4>
+          <a href="#delivery">Delivery options</a>
+          <a href="#processing">Packing & dispatch</a>
+          <a href="#tracking">Tracking your order</a>
+          <a href="#returns">Exchanges & returns</a>
+          <a href="#how">How to exchange</a>
+          <a href="#gift">Gift wrapping</a>
+        </nav>
+        <article class="doc">
+          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> The timings, prices and policies on this page are sample wording to be confirmed.</span></p>
+
+          <h2 id="delivery"><i class="fa-solid fa-truck-fast"></i>Delivery options</h2>
+          <p>Choose the option that suits you at checkout.</p>
+          <div class="table-wrap"><table class="dtable">
+            <thead><tr><th>Option</th><th>Arrives in</th><th>Cost</th></tr></thead>
+            <tbody data-delivery-table></tbody>
+          </table></div>
+
+          <h2 id="processing"><i class="fa-solid fa-box-open"></i>Packing &amp; dispatch</h2>
+          <p>Orders placed before 2pm on a working day are packed the same day. Orders placed later, or on Sundays and public holidays, are packed the next working day.</p>
+          <p>Delivery times start from the day your order leaves us.</p>
+
+          <h2 id="tracking"><i class="fa-solid fa-location-dot"></i>Tracking your order</h2>
+          <p>As soon as your order is on its way we'll send you a message with your tracking details. If anything looks delayed, <a href="contact.html">get in touch</a> with your order number and we'll chase it for you.</p>
+
+          <h2 id="returns"><i class="fa-solid fa-rotate-left"></i>Exchanges &amp; returns</h2>
+          <p>We want you to love your bag. If you don't, you can exchange it within <strong><span data-store="returnDays"></span> days</strong> of receiving it.</p>
+          <ul>
+            <li>The bag must be unused, with its tags, dust bag and original packaging.</li>
+            <li>Exchange for a different colour, a different bag or store credit.</li>
+            <li>If your bag arrives damaged or faulty, tell us within 48 hours and we'll replace it or refund you in full.</li>
+          </ul>
+
+          <h2 id="how"><i class="fa-solid fa-list-check"></i>How to exchange</h2>
+          <ol>
+            <li><a href="contact.html">Contact us</a> with your order number and what you'd like instead.</li>
+            <li>We'll confirm the exchange and send you the return details.</li>
+            <li>Send the bag back. Once it arrives and we've checked it, your new bag is on its way.</li>
+          </ol>
+
+          <h2 id="gift"><i class="fa-solid fa-gift"></i>Gift wrapping</h2>
+          <p>Every order is wrapped with a bow at no extra cost. Add a gift note in your bag before checkout and we'll handwrite it and tuck it inside. Prices are never included in the parcel.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

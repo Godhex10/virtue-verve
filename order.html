@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order confirmed — Virtue &amp; Verve</title>
+  <meta name="description" content="Your Virtue & Verve order confirmation.">
+  <meta name="theme-color" content="#088178">
+  <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('vv_seen')) document.documentElement.classList.add('seen'); } catch (e) {}</script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23088178'/%3E%3Cpath d='M22 28c0-14 20-14 20 0' fill='none' stroke='%23c9a96e' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='14' y='27' width='36' height='24' rx='6' fill='%23c9a96e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="order">
+  <!-- Header, footer, cart and pop-ups come from layout.js -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/layout.js"></script>
+
+  <main id="top">
+    <section class="page-banner slim">
+      <div class="container">
+        <ol class="steps">
+          <li class="done"><span><i class="fa-solid fa-check"></i></span>Bag</li>
+          <li class="done"><span><i class="fa-solid fa-check"></i></span>Details</li>
+          <li class="now"><span>3</span>Confirmation</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section tight">
+      <div class="container" id="orderBody">
+        <div class="confirm">
+          <svg class="tick" id="orderTick" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36"/><path d="M25 41l10 10 20-22"/></svg>
+          <p class="script">it's on its way to being yours</p>
+          <h1 id="orderHello">Thank you</h1>
+          <p class="banner-text">Your order is in and we're getting it wrapped. Keep your order number handy in case you need to reach us.</p>
+          <div class="order-meta">
+            <div><small>Order number</small><strong id="orderNumber"></strong></div>
+            <div><small>Placed on</small><strong id="orderDate"></strong></div>
+          </div>
+          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> This order is saved only in this browser. Nothing was charged or sent.</span></p>
+        </div>
+
+        <div class="order-grid">
+          <div class="summary">
+            <h3>What you ordered</h3>
+            <div id="orderLines"></div>
+            <div class="sum-row"><span>Subtotal</span><b id="sumSubtotal"></b></div>
+            <div class="sum-row"><span>Delivery</span><b id="sumDelivery"></b></div>
+            <div class="sum-row"><span>Gift wrapping</span><span>Complimentary</span></div>
+            <div class="sum-row total"><span>Total</span><b id="sumTotal"></b></div>
+          </div>
+          <div class="summary">
+            <h3>Where it's going</h3>
+            <dl class="order-info">
+              <dt><i class="fa-solid fa-location-dot"></i>Deliver to</dt><dd id="orderTo"></dd>
+              <dt><i class="fa-solid fa-address-card"></i>Contact</dt><dd id="orderContact"></dd>
+              <dt><i class="fa-solid fa-truck-fast"></i>Delivery</dt><dd id="orderDelivery"></dd>
+              <dt><i class="fa-solid fa-wallet"></i>Payment</dt><dd id="orderPayment"></dd>
+            </dl>
+            <div id="orderNoteWrap" hidden><h4 class="mini-head"><i class="fa-solid fa-gift"></i>Gift note</h4><p class="gift-note" id="orderNote"></p></div>
+          </div>
+        </div>
+
+        <div class="confirm-cta">
+          <a class="btn btn-primary" href="shop.html"><span>Continue shopping</span><i class="fa-solid fa-arrow-right"></i></a>
+          <a class="btn btn-ghost" href="contact.html"><span>Need help?</span></a>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="empty-shop" id="orderEmpty" hidden>
+          <div class="empty-icon"><i class="fa-solid fa-receipt"></i></div>
+          <h3>No recent order here</h3>
+          <p>If you've just ordered on another device, your details are safe with us.</p>
+          <a class="btn btn-primary" href="shop.html"><span>Shop all bags</span><i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script src="assets/js/order.js"></script>
+</body>
+</html>
