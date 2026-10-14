@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="order">
-  <!-- Header, footer, cart and pop-ups come from layout.js -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <!-- Header, footer, cart and pop-ups are added by assets/js/layout.js, which boot.js loads -->
 
   <main id="top">
     <section class="page-banner slim">
@@ -41,7 +39,7 @@
             <div><small>Order number</small><strong id="orderNumber"></strong></div>
             <div><small>Placed on</small><strong id="orderDate"></strong></div>
           </div>
-          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> This order is saved only in this browser. Nothing was charged or sent.</span></p>
+          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> Your order was recorded, but nothing was charged. Payments connect at launch.</span></p>
         </div>
 
         <div class="order-grid">
@@ -82,7 +80,6 @@
     </section>
   </main>
 
-  <script src="assets/js/script.js"></script>
-  <script src="assets/js/order.js"></script>
+  <script src="assets/js/boot.js" data-page="order.js"></script>
 </body>
 </html>

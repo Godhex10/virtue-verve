@@ -366,3 +366,31 @@ select { -webkit-appearance: none; appearance: none; background-image: url("data
   .card, .table-wrap { box-shadow: none; border: 1px solid #ddd; }
   body { background: #fff; }
 }
+
+/* ---------- Photo strip (several photos per colour in the bag editor) ---------- */
+.colour-row { display: block; }
+.photos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.photo, .photo-add { position: relative; width: 74px; height: 74px; border-radius: 10px; overflow: hidden; }
+.photo { background: var(--mist); box-shadow: 0 0 0 1px rgba(201, 169, 110, .5); }
+.photo.main { box-shadow: 0 0 0 2px var(--teal); }
+.photo-main { position: absolute; left: 0; right: 0; bottom: 0; padding: 2px; background: var(--teal); color: #fff; font-size: .56rem; letter-spacing: .14em; text-transform: uppercase; text-align: center; }
+.photo-btn { position: absolute; top: 4px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .94); font-size: .6rem; opacity: 0; transition: opacity .2s, background .2s, color .2s; }
+.photo:hover .photo-btn, .photo-btn:focus-visible { opacity: 1; }
+.photo-btn.del { right: 4px; color: var(--bad); }
+.photo-btn.del:hover { background: var(--bad); color: #fff; }
+.photo-btn.star { left: 4px; color: var(--gold-deep); }
+.photo-btn.star:hover { background: var(--gold); color: #fff; }
+.photo-add { aspect-ratio: auto; }
+@media (hover: none) { .photo-btn { opacity: 1; } }
+
+/* ---------- Delivery zones (settings) ---------- */
+.zone { padding: 12px; margin-bottom: 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(243, 249, 247, .5); }
+.zone-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+.zone-head h3 { font-size: 1.2rem; }
+.zone-head small { color: var(--muted); }
+.zone-head small i { color: var(--gold-deep); margin-right: 5px; }
+.zone-add { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: .86rem; }
+.regions { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
+.check { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; font-size: .92rem; cursor: pointer; }
+.check input { margin-top: 3px; accent-color: var(--teal); }
+.check small { display: block; font-size: .74rem; color: var(--muted); }

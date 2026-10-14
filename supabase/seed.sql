@@ -40,27 +40,36 @@ on conflict (id) do update set name = excluded.name, kind = excluded.kind, categ
 
 -- ---------- Colours (one row per colour of each bag, with its photo and stock) ----------
 delete from public.product_colours where product_id in ('seraphine', 'amara', 'lola', 'belle', 'mimi', 'eden', 'nova', 'cleo', 'zuri', 'sienna', 'ines', 'harper');
-insert into public.product_colours (product_id, name, hex, family, image_url, stock, sort) values
-  ('seraphine', 'Verve Teal', '#0f7f86', 'Green', 'assets/images/seraphine.jpg', 10, 1),
-  ('amara', 'Caramel', '#b5651d', 'Brown', 'assets/images/amara.jpg', 10, 1),
-  ('lola', 'Rosewater', '#d99a8f', 'Pink', 'assets/images/lola.jpg', 10, 1),
-  ('belle', 'Blush', '#f1b6c1', 'Pink', 'assets/images/belle.jpg', 10, 1),
-  ('mimi', 'Vanilla', '#e9e4d6', 'Neutral', 'assets/images/mimi-vanilla.jpg', 10, 1),
-  ('mimi', 'Emerald', '#12a150', 'Green', 'assets/images/mimi-emerald.jpg', 10, 2),
-  ('eden', 'Forest Tweed', '#1f5a3c', 'Green', 'assets/images/eden.jpg', 10, 1),
-  ('nova', 'Blush', '#f0b4ae', 'Pink', 'assets/images/nova.jpg', 10, 1),
-  ('cleo', 'Sand', '#e6c9a8', 'Neutral', 'assets/images/cleo.jpg', 10, 1),
-  ('zuri', 'Emerald', '#1c7a5c', 'Green', 'assets/images/zuri.jpg', 10, 1),
-  ('sienna', 'Tan', '#9c4f2c', 'Brown', 'assets/images/sienna.jpg', 10, 1),
-  ('ines', 'Cognac', '#a0522d', 'Brown', 'assets/images/ines.jpg', 10, 1),
-  ('harper', 'Dove Grey', '#8e8a93', 'Grey', 'assets/images/harper.jpg', 10, 1);
+insert into public.product_colours (product_id, name, hex, family, images, stock, sort) values
+  ('seraphine', 'Verve Teal', '#0f7f86', 'Green', array['assets/images/seraphine.jpg', 'assets/images/seraphine-detail.jpg'], 10, 1),
+  ('amara', 'Caramel', '#b5651d', 'Brown', array['assets/images/amara.jpg', 'assets/images/amara-detail.jpg'], 10, 1),
+  ('lola', 'Rosewater', '#d99a8f', 'Pink', array['assets/images/lola.jpg', 'assets/images/lola-detail.jpg'], 10, 1),
+  ('belle', 'Blush', '#f1b6c1', 'Pink', array['assets/images/belle.jpg', 'assets/images/belle-detail.jpg'], 10, 1),
+  ('mimi', 'Vanilla', '#e9e4d6', 'Neutral', array['assets/images/mimi-vanilla.jpg', 'assets/images/mimi-vanilla-detail.jpg'], 10, 1),
+  ('mimi', 'Emerald', '#12a150', 'Green', array['assets/images/mimi-emerald.jpg', 'assets/images/mimi-emerald-detail.jpg'], 10, 2),
+  ('eden', 'Forest Tweed', '#1f5a3c', 'Green', array['assets/images/eden.jpg', 'assets/images/eden-detail.jpg'], 10, 1),
+  ('nova', 'Blush', '#f0b4ae', 'Pink', array['assets/images/nova.jpg', 'assets/images/nova-detail.jpg'], 10, 1),
+  ('cleo', 'Sand', '#e6c9a8', 'Neutral', array['assets/images/cleo.jpg', 'assets/images/cleo-detail.jpg'], 10, 1),
+  ('zuri', 'Emerald', '#1c7a5c', 'Green', array['assets/images/zuri.jpg', 'assets/images/zuri-detail.jpg'], 10, 1),
+  ('sienna', 'Tan', '#9c4f2c', 'Brown', array['assets/images/sienna.jpg', 'assets/images/sienna-detail.jpg'], 10, 1),
+  ('ines', 'Cognac', '#a0522d', 'Brown', array['assets/images/ines.jpg', 'assets/images/ines-detail.jpg'], 10, 1),
+  ('harper', 'Dove Grey', '#8e8a93', 'Grey', array['assets/images/harper.jpg', 'assets/images/harper-detail.jpg'], 10, 1);
 
--- ---------- Delivery options ----------
-insert into public.delivery_options (id, label, note, price, sort) values
-  ('standard', 'Standard delivery', '3 – 5 working days', 3500, 1),
-  ('express', 'Express delivery', '1 – 2 working days', 6000, 2),
-  ('pickup', 'Collect in person', 'Ready within 24 hours', 0, 3)
-on conflict (id) do update set label = excluded.label, note = excluded.note, price = excluded.price, sort = excluded.sort;
+-- ---------- Delivery zones (which states each covers) and their options ----------
+insert into public.delivery_zones (id, label, regions, sort) values
+  ('lagos', 'Lagos', array['Lagos'], 1),
+  ('nigeria', 'Rest of Nigeria', array['Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT (Abuja)', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'], 2),
+  ('international', 'Outside Nigeria', array['Outside Nigeria'], 3)
+on conflict (id) do update set label = excluded.label, regions = excluded.regions, sort = excluded.sort;
+
+insert into public.delivery_options (id, zone_id, label, note, price, sort) values
+  ('lagos-standard', 'lagos', 'Standard delivery', '1 – 2 working days', 3500, 1),
+  ('lagos-express', 'lagos', 'Same-day delivery', 'Order before 12pm', 6000, 2),
+  ('lagos-pickup', 'lagos', 'Collect in person', 'Ready within 24 hours', 0, 3),
+  ('ng-standard', 'nigeria', 'Standard delivery', '3 – 5 working days', 6500, 4),
+  ('ng-express', 'nigeria', 'Express delivery', '1 – 2 working days', 12000, 5),
+  ('intl-standard', 'international', 'International delivery', '7 – 14 working days', 45000, 6)
+on conflict (id) do update set zone_id = excluded.zone_id, label = excluded.label, note = excluded.note, price = excluded.price, sort = excluded.sort;
 
 -- ---------- Store details (placeholders: replace in the admin) ----------
 insert into public.settings (key, value) values

@@ -62,14 +62,23 @@ create table if not exists public.product_colours (
   name text not null,                          -- 'Verve Teal'
   hex text not null,                           -- swatch colour
   family text,                                 -- for the colour filter: Green, Brown, Neutral...
-  image_url text not null,
+  images text[] not null default '{}',         -- photos of this colour; the first is the main one
   stock int not null default 0 check (stock >= 0),
   sort int not null default 0
 );
 create index if not exists product_colours_product_idx on public.product_colours (product_id);
 
+-- Each zone covers a list of states; each delivery option belongs to one zone
+create table if not exists public.delivery_zones (
+  id text primary key,
+  label text not null,                         -- 'Lagos', 'Rest of Nigeria'
+  regions text[] not null default '{}',        -- the states it covers, e.g. {'Lagos'}
+  sort int not null default 0
+);
+
 create table if not exists public.delivery_options (
   id text primary key,
+  zone_id text not null references public.delivery_zones (id) on update cascade on delete cascade,
   label text not null,
   note text,
   price numeric(10, 2) not null default 0 check (price >= 0),
@@ -96,6 +105,8 @@ create table if not exists public.orders (
   delivery_label text not null,
   delivery_note text,
   delivery_price numeric(10, 2) not null default 0,
+  delivery_zone text,                          -- e.g. 'Rest of Nigeria'
+  delivery_region text,                        -- the state the customer chose
   payment_method text not null,
   payment_reference text,                      -- filled in by the payment provider later
   subtotal numeric(10, 2) not null default 0,
@@ -146,6 +157,7 @@ alter table public.admins enable row level security;
 alter table public.categories enable row level security;
 alter table public.products enable row level security;
 alter table public.product_colours enable row level security;
+alter table public.delivery_zones enable row level security;
 alter table public.delivery_options enable row level security;
 alter table public.settings enable row level security;
 alter table public.orders enable row level security;
@@ -157,7 +169,7 @@ alter table public.subscribers enable row level security;
 do $$
 declare t text;
 begin
-  foreach t in array array['admins', 'categories', 'products', 'product_colours', 'delivery_options',
+  foreach t in array array['admins', 'categories', 'products', 'product_colours', 'delivery_zones', 'delivery_options',
                            'settings', 'orders', 'order_items', 'messages', 'subscribers']
   loop
     execute format('drop policy if exists "Admins manage %1$s" on public.%1$I', t);
@@ -178,6 +190,10 @@ drop policy if exists "Anyone reads colours of active products" on public.produc
 create policy "Anyone reads colours of active products" on public.product_colours
   for select to anon, authenticated
   using (exists (select 1 from public.products p where p.id = product_id and p.active));
+
+drop policy if exists "Anyone reads delivery zones" on public.delivery_zones;
+create policy "Anyone reads delivery zones" on public.delivery_zones
+  for select to anon, authenticated using (true);
 
 drop policy if exists "Anyone reads active delivery options" on public.delivery_options;
 create policy "Anyone reads active delivery options" on public.delivery_options
@@ -217,6 +233,7 @@ declare
   item jsonb;
   line record;
   ship record;
+  area record;
   v_qty int;
   v_subtotal numeric(10, 2) := 0;
   v_order_id uuid;
@@ -239,6 +256,12 @@ begin
     raise exception 'Please choose a delivery option';
   end if;
 
+  -- The option must belong to the zone that covers the customer's state
+  select * into area from delivery_zones where id = ship.zone_id;
+  if not (coalesce(payload ->> 'region', '') = any (area.regions)) then
+    raise exception 'That delivery option isn''t available for %', coalesce(nullif(payload ->> 'region', ''), 'your area');
+  end if;
+
   select coalesce(array_agg(trim(a)), '{}') into v_address
   from jsonb_array_elements_text(coalesce(payload -> 'address', '[]'::jsonb)) a
   where trim(a) <> '';
@@ -249,10 +272,10 @@ begin
   end loop;
 
   insert into orders (number, first_name, last_name, email, phone, address,
-                      delivery_label, delivery_note, delivery_price, payment_method, gift_note)
+                      delivery_label, delivery_note, delivery_price, delivery_zone, delivery_region, payment_method, gift_note)
   values (v_number, left(trim(cust ->> 'first_name'), 100), left(trim(cust ->> 'last_name'), 100),
           left(trim(cust ->> 'email'), 320), left(cust ->> 'phone', 40), v_address,
-          ship.label, ship.note, ship.price,
+          ship.label, ship.note, ship.price, area.label, payload ->> 'region',
           left(coalesce(payload ->> 'payment_method', 'Card'), 40), left(payload ->> 'gift_note', 240))
   returning id into v_order_id;
 
@@ -263,7 +286,7 @@ begin
       raise exception 'Please check the quantities in your bag';
     end if;
 
-    select pc.id as colour_id, pc.name as colour, pc.stock, pc.image_url,
+    select pc.id as colour_id, pc.name as colour, pc.stock, pc.images[1] as image_url,
            p.id as product_id, p.name, p.kind, p.price
       into line
       from product_colours pc

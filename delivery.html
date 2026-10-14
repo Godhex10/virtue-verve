@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="delivery">
-  <!-- Header, footer, cart and pop-ups come from layout.js -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <!-- Header, footer, cart and pop-ups are added by assets/js/layout.js, which boot.js loads -->
 
   <main id="top">
     <section class="page-banner">
@@ -48,9 +46,9 @@
           <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> The timings, prices and policies on this page are sample wording to be confirmed.</span></p>
 
           <h2 id="delivery"><i class="fa-solid fa-truck-fast"></i>Delivery options</h2>
-          <p>Choose the option that suits you at checkout.</p>
+          <p>Delivery prices depend on where you are. Choose your state at checkout and you'll see the options for it.</p>
           <div class="table-wrap"><table class="dtable">
-            <thead><tr><th>Option</th><th>Arrives in</th><th>Cost</th></tr></thead>
+            <thead><tr><th>Where</th><th>Option</th><th>Arrives in</th><th>Cost</th></tr></thead>
             <tbody data-delivery-table></tbody>
           </table></div>
 
@@ -83,6 +81,6 @@
     </section>
   </main>
 
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/boot.js"></script>
 </body>
 </html>

@@ -33,7 +33,7 @@
           <td>${fmtDate(o.created_at)}<small>${ago(o.created_at)}</small></td>
           <td>${esc(o.first_name)} ${esc(o.last_name)}<small>${esc(o.email)}</small></td>
           <td>${o.items.reduce((n, i) => n + i.qty, 0)}<small>${esc(o.items.map(i => i.name).join(', '))}</small></td>
-          <td>${esc(o.payment_method)}<small>${esc(o.delivery_label)}</small></td>
+          <td>${esc(o.payment_method)}<small>${esc(o.delivery_zone ? `${o.delivery_zone} · ${o.delivery_label}` : o.delivery_label)}</small></td>
           <td>${statusBadge(o.status)}</td>
           <td class="num"><strong>${money(o.total)}</strong></td>
         </tr>`).join('')}</tbody></table></div>`

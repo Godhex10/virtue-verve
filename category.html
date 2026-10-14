@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="category">
-  <!-- Header, footer, cart and pop-ups come from layout.js -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <!-- Header, footer, cart and pop-ups are added by assets/js/layout.js, which boot.js loads -->
 
   <main id="top">
     <section class="page-banner cat-banner">
@@ -100,7 +98,6 @@
     </section>
   </main>
 
-  <script src="assets/js/script.js"></script>
-  <script src="assets/js/shop.js"></script>
+  <script src="assets/js/boot.js" data-page="shop.js"></script>
 </body>
 </html>

@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="checkout">
-  <!-- Header, footer, cart and pop-ups come from layout.js -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <!-- Header, footer, cart and pop-ups are added by assets/js/layout.js, which boot.js loads -->
 
   <main id="top">
     <section class="page-banner slim">
@@ -51,9 +49,9 @@
                 <label class="field wide">Address<input name="address" autocomplete="address-line1" required></label>
                 <label class="field wide">Apartment, suite, landmark <small>(optional)</small><input name="address2" autocomplete="address-line2"></label>
                 <label class="field">City<input name="city" autocomplete="address-level2" required></label>
-                <label class="field">State / region<input name="region" autocomplete="address-level1" required></label>
+                <label class="field">State<select name="region" id="regionSelect" autocomplete="address-level1" required></select></label>
                 <label class="field">Postcode <small>(optional)</small><input name="postcode" autocomplete="postal-code"></label>
-                <label class="field">Country<input name="country" autocomplete="country-name" required></label>
+                <label class="field" id="countryField" hidden>Country<input name="country" autocomplete="country-name"></label>
               </div>
             </div>
 
@@ -65,7 +63,7 @@
             <div class="panel">
               <h3><span class="panel-n">4</span>Payment</h3>
               <div class="radios" id="paymentOptions"></div>
-              <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> No payment is taken and no order is sent. Card payments connect to a payment provider at launch.</span></p>
+              <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> Orders are recorded, but no payment is taken yet. Card payments connect to a payment provider at launch.</span></p>
             </div>
 
             <div class="panel">
@@ -98,7 +96,6 @@
     </section>
   </main>
 
-  <script src="assets/js/script.js"></script>
-  <script src="assets/js/checkout.js"></script>
+  <script src="assets/js/boot.js" data-page="checkout.js"></script>
 </body>
 </html>

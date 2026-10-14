@@ -73,7 +73,7 @@
               <dt>Email</dt><dd><a class="link" href="mailto:${esc(order.email)}?subject=${encodeURIComponent('Your Virtue & Verve order ' + order.number)}">${esc(order.email)}</a></dd>
               <dt>Phone</dt><dd>${esc(order.phone || '—')}</dd>
               <dt>Deliver to</dt><dd>${order.address.map(esc).join('<br>')}</dd>
-              <dt>Delivery</dt><dd>${esc(order.delivery_label)}<br><small style="color:var(--muted)">${esc(order.delivery_note || '')}</small></dd>
+              <dt>Delivery</dt><dd>${esc(order.delivery_label)}${order.delivery_zone ? ` · ${esc(order.delivery_zone)}` : ''}<br><small style="color:var(--muted)">${esc(order.delivery_note || '')}</small></dd>
               <dt>Payment</dt><dd>${esc(order.payment_method)}</dd>
             </dl>
           </div>

@@ -16,7 +16,7 @@ if (!bag) {
 } else {
   const cat = CATEGORIES.find(c => c.cat === bag.cat);
   const [material, size, carry] = SPECS[bag.id] || [];
-  let colour = bag.colors[+query.get('colour')] ? +query.get('colour') : 0, qty = 1;
+  let colour = bag.colors[+query.get('colour')] ? +query.get('colour') : 0, qty = 1, shot = 0; // shot = which photo of this colour
 
   document.title = `${bag.name} ${bag.kind} — Virtue & Verve`;
   $('#crumbs').innerHTML = `<a href="index.html">Home</a>${icon('chevron-right')}<a href="category.html?c=${cat.cat}">${cat.label}</a>${icon('chevron-right')}<span>${bag.name}</span>`;
@@ -33,8 +33,7 @@ if (!bag) {
         ${bag.tag ? `<span class="tag${bag.tag === 'New' ? ' new' : ''}">${bag.tag}</span>` : ''}
         <img id="mainPhoto" src="" alt="">
       </div>
-      ${bag.colors.length > 1 ? `<div class="thumbs" id="thumbs">${bag.colors.map((c, i) =>
-        `<button class="thumb" data-color="${i}" aria-label="${c[0]}"><img src="${c[2]}" alt=""></button>`).join('')}</div>` : ''}
+      <div class="thumbs" id="thumbs"></div>
     </div>
 
     <div class="pdp-info">
@@ -55,7 +54,7 @@ if (!bag) {
 
       <ul class="perk-list">
         <li>${icon('gift')}Gift-wrapped with a bow, always</li>
-        <li>${icon('truck-fast')}${DELIVERY[0].label} in ${DELIVERY[0].note}</li>
+        <li>${icon('truck-fast')}Delivery across Nigeria and beyond</li>
         <li>${icon('rotate-left')}Exchanges within ${STORE.returnDays} days</li>
       </ul>
 
@@ -73,20 +72,25 @@ if (!bag) {
   const mainPhoto = $('#mainPhoto'), main = $('#galleryMain'), wishToggle = $('#wishToggle');
 
   const paint = () => {
-    const [name, , src] = bag.colors[colour];
-    mainPhoto.src = src;
+    const [name] = bag.colors[colour], shots = photosOf(bag, colour);
+    if (shot >= shots.length) shot = 0;
+    if (mainPhoto.getAttribute('src') !== shots[shot]) {
+      mainPhoto.src = shots[shot];
+      mainPhoto.classList.remove('swap'); void mainPhoto.offsetWidth; mainPhoto.classList.add('swap');
+    }
+    $('#thumbs').innerHTML = shots.length > 1 ? shots.map((src, i) =>
+      `<button class="thumb${i === shot ? ' active' : ''}" data-shot="${i}" aria-label="Photo ${i + 1} of ${shots.length}"><img src="${src}" alt=""></button>`).join('') : '';
     mainPhoto.alt = `${bag.name} ${bag.kind} in ${name}`;
-    mainPhoto.classList.remove('swap'); void mainPhoto.offsetWidth; mainPhoto.classList.add('swap');
     $('#colourName').textContent = name;
     $('#colourPick').innerHTML = swatchesHTML(bag, colour);
-    $$('.thumb').forEach((t, i) => t.classList.toggle('active', i === colour));
     $('#qtyBox').innerHTML = qtyHTML(qty);
     $('#addLabel').textContent = `Add to bag — ${money(bag.price * qty)}`;
   };
 
   pdp.addEventListener('click', e => {
-    const pick = e.target.closest('.swatch, .thumb'), step = e.target.closest('#qtyBox [data-step]');
-    if (pick) { colour = +pick.dataset.color; paint(); }
+    const pick = e.target.closest('.swatch'), thumb = e.target.closest('.thumb'), step = e.target.closest('#qtyBox [data-step]');
+    if (pick) { colour = +pick.dataset.color; shot = 0; paint(); }
+    else if (thumb) { shot = +thumb.dataset.shot; paint(); }
     else if (step) { qty = Math.max(1, qty + +step.dataset.step); paint(); }
     else if (e.target.closest('#addBtn')) addToCart(bag.id, colour, qty, mainPhoto);
     else if (e.target.closest('#wishToggle')) toggleWish(bag, wishToggle);

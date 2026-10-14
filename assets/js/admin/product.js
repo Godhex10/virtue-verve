@@ -8,7 +8,8 @@
   const all = await api.list('products');
   const categories = (await api.list('categories')).filter(c => c.kind === 'category').sort((a, b) => a.sort - b.sort);
   const families = Object.keys(FAMILIES);
-  const blankColour = () => ({ id: uid(), name: '', hex: '#088178', family: families[0], image_url: '', stock: 0 });
+  const MAX_PHOTOS = 6; // per colour
+  const blankColour = () => ({ id: uid(), name: '', hex: '#088178', family: families[0], images: [], image_url: '', stock: 0 });
 
   const p = id ? await api.get('products', id) : {
     id: '', name: '', kind: '', category_id: categories[0] ? categories[0].id : '', price: '', tag: '', description: '',
@@ -40,7 +41,7 @@
         </div>
 
         <div class="card">
-          <div class="card-head"><div><h2>Colours, photos and stock</h2><small>Each colour has its own photo and its own stock count</small></div>
+          <div class="card-head"><div><h2>Colours, photos and stock</h2><small>Each colour has its own photos (up to ${MAX_PHOTOS}) and its own stock count</small></div>
             <button type="button" class="btn btn-ghost btn-sm" id="addColour">${icon('plus')}Add colour</button></div>
           <div id="colours"></div>
         </div>
@@ -76,17 +77,27 @@
     </form>`;
 
   const form = $('#form'), coloursBox = $('#colours');
+  // The first photo is the main one: it is what the shop's cards, the cart and orders show
+  const sync = c => { c.image_url = c.images[0] || ''; };
 
   function renderColours() {
     coloursBox.innerHTML = p.colours.map((c, i) => `
       <div class="colour-row" data-i="${i}">
-        ${dropHTML(c.image_url, 'data-photo')}
         <div class="colour-fields">
           <label class="field">Colour name<input data-f="name" value="${esc(c.name)}" placeholder="Verve Teal"></label>
           <label class="field">Swatch<input data-f="hex" type="color" value="${esc(c.hex)}"></label>
           <label class="field">Colour group<select data-f="family">${options(families.map(f => [f, f]), c.family)}</select></label>
           <label class="field">In stock<input data-f="stock" type="number" min="0" step="1" value="${esc(c.stock)}"></label>
           <button type="button" class="icon-btn danger" data-remove title="Remove colour" aria-label="Remove colour" ${p.colours.length < 2 ? 'disabled' : ''}>${icon('trash-can', 'regular')}</button>
+        </div>
+        <div class="photos">
+          ${c.images.map((src, n) => `
+            <div class="photo${n ? '' : ' main'}" data-n="${n}">
+              <img src="${esc(asset(src))}" alt="">
+              ${n ? `<button type="button" class="photo-btn star" data-main title="Make this the main photo" aria-label="Make this the main photo">${icon('star')}</button>` : '<span class="photo-main">Main</span>'}
+              <button type="button" class="photo-btn del" data-unphoto title="Remove photo" aria-label="Remove photo">${icon('xmark')}</button>
+            </div>`).join('')}
+          ${c.images.length < MAX_PHOTOS ? `<label class="drop photo-add"><span>${icon('plus')}${c.images.length ? 'Add more' : 'Add photos'}</span><input type="file" accept="image/*" multiple data-photo></label>` : ''}
         </div>
       </div>`).join('');
   }
@@ -104,6 +115,7 @@
         <div class="preview-dots">${p.colours.length > 1 ? p.colours.map(c => `<span class="dot" style="--c:${esc(c.hex)}"></span>`).join('') : ''}</div>
       </div>`;
   }
+  const redraw = () => { renderColours(); renderPreview(); };
 
   // Typing in a colour row updates that colour straight away
   coloursBox.addEventListener('input', e => {
@@ -112,29 +124,39 @@
     p.colours[+row.dataset.i][field] = field === 'stock' ? Math.max(0, parseInt(e.target.value, 10) || 0) : e.target.value;
     renderPreview();
   });
+
+  // Choosing files adds them to that colour, up to the limit
   coloursBox.addEventListener('change', async e => {
     if (!e.target.matches('[data-photo]')) return;
     const c = p.colours[+e.target.closest('.colour-row').dataset.i];
-    try {
-      c.image_url = await readPhoto(e.target.files[0]);
-      renderColours();
-      renderPreview();
-    } catch (err) { toast(err.message, 'triangle-exclamation'); }
+    const files = [...e.target.files], room = MAX_PHOTOS - c.images.length;
+    if (files.length > room) toast(`Only ${MAX_PHOTOS} photos per colour — added the first ${room}`, 'circle-info');
+    for (const file of files.slice(0, room)) {
+      try { c.images.push(await readPhoto(file)); }
+      catch (err) { toast(err.message, 'triangle-exclamation'); }
+    }
+    sync(c);
+    redraw();
   });
+
   coloursBox.addEventListener('click', e => {
-    if (!e.target.closest('[data-remove]')) return;
-    p.colours.splice(+e.target.closest('.colour-row').dataset.i, 1);
-    renderColours();
-    renderPreview();
+    const row = e.target.closest('.colour-row');
+    if (!row) return;
+    const c = p.colours[+row.dataset.i], photo = e.target.closest('.photo');
+    if (e.target.closest('[data-remove]')) p.colours.splice(+row.dataset.i, 1);
+    else if (photo && e.target.closest('[data-unphoto]')) c.images.splice(+photo.dataset.n, 1);
+    else if (photo && e.target.closest('[data-main]')) c.images.unshift(...c.images.splice(+photo.dataset.n, 1));
+    else return;
+    sync(c);
+    redraw();
   });
-  $('#addColour').addEventListener('click', () => { p.colours.push(blankColour()); renderColours(); renderPreview(); });
+  $('#addColour').addEventListener('click', () => { p.colours.push(blankColour()); redraw(); });
   form.addEventListener('input', renderPreview);
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.reportValidity()) return;
-    const missing = p.colours.find(c => !c.name.trim() || !c.image_url);
-    if (missing) return toast('Each colour needs a name and a photo', 'triangle-exclamation');
+    if (p.colours.some(c => !c.name.trim() || !c.images.length)) return toast('Each colour needs a name and at least one photo', 'triangle-exclamation');
 
     const f = form.elements;
     Object.assign(p, {
@@ -142,6 +164,7 @@
       tag: f.tag.value, description: f.description.value.trim(), material: f.material.value.trim(), size: f.size.value.trim(),
       carry: f.carry.value.trim(), active: f.active.checked
     });
+    p.colours.forEach(sync);
     if (!id) { // a new bag gets a web address made from its name
       let fresh = slug(p.name) || 'bag', n = 2;
       while (all.some(x => x.id === fresh)) fresh = `${slug(p.name) || 'bag'}-${n++}`;
@@ -162,6 +185,5 @@
     location.href = 'products.html';
   });
 
-  renderColours();
-  renderPreview();
+  redraw();
 })();

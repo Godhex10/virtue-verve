@@ -12,8 +12,10 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const money = n => CURRENCY + n.toLocaleString();
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const product = id => PRODUCTS.find(p => p.id === id);
+const zoneOf = region => ZONES.find(z => z.regions.includes(region)); // which delivery zone a state is in
 const productURL = (p, c = 0) => `product.html?id=${p.id}${c ? `&colour=${c}` : ''}`;
 const icon = (name, style = 'solid') => `<i class="fa-${style} fa-${name}"></i>`;
+const photosOf = (p, c) => [p.colors[c][2], ...(p.colors[c][4] || [])]; // main photo first
 const photo = (p, c, cls = '') => `<img class="${cls}" src="${p.colors[c][2]}" alt="${p.name} ${p.kind} in ${p.colors[c][0]}" loading="lazy">`;
 const store = {
   get(key) { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } },
@@ -351,6 +353,15 @@ document.addEventListener('click', e => {
 // Until the database is connected, orders, messages and sign-ups made here are left
 // in this browser for the admin to collect (see assets/js/admin/admin.js)
 function sendToAdmin(kind, row) {
+  if (typeof LIVE !== 'undefined' && LIVE) {
+    const insert = kind === 'messages'
+      ? sb.from('messages').insert({ name: row.name, email: row.email, topic: row.topic || null, order_number: row.order || null, message: row.message })
+      : kind === 'subscribers' ? sb.from('subscribers').insert({ email: row.email }) : null;
+    if (insert) insert.then(({ error }) => {
+      if (error && error.code !== '23505') { console.error(error); toast('Sorry, that didn’t go through — please try again', 'circle-exclamation'); }
+    }); // 23505 = already on the newsletter, which is fine
+    return;
+  }
   try {
     const box = JSON.parse(localStorage.getItem('vv_inbox')) || {};
     (box[kind] = box[kind] || []).push(row);
@@ -373,7 +384,8 @@ document.addEventListener('submit', e => {
 // Fill in store details and delivery prices wherever a page asks for them
 $$('[data-store]').forEach(el => { el.textContent = STORE[el.dataset.store]; });
 $$('[data-delivery-table]').forEach(el => {
-  el.innerHTML = DELIVERY.map(d => `<tr><td><strong>${d.label}</strong></td><td>${d.note}</td><td>${d.price ? money(d.price) : 'Free'}</td></tr>`).join('');
+  el.innerHTML = ZONES.map(z => DELIVERY.filter(d => d.zone === z.id).map((d, i) =>
+    `<tr>${i ? '' : `<td rowspan="${DELIVERY.filter(x => x.zone === z.id).length}"><strong>${esc(z.label)}</strong></td>`}<td>${esc(d.label)}</td><td>${esc(d.note)}</td><td>${d.price ? money(d.price) : 'Free'}</td></tr>`).join('')).join('');
 });
 if (!STORE.preview) $$('[data-preview]').forEach(el => el.remove());
 

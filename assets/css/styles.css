@@ -889,3 +889,17 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 
 /* Let grid columns shrink on narrow screens instead of pushing the page wider */
 .pdp > *, .cart-layout > *, .checkout-layout > *, .contact-grid > *, .doc-layout > *, .shop-layout > * { min-width: 0; }
+
+/* ---------- Delivery by location (checkout) ---------- */
+.field select { -webkit-appearance: none; appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23088178' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center / 10px; padding-right: 36px; cursor: pointer; }
+.delivery-hint, .delivery-zone { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--mist); color: var(--muted); font-size: .92rem; }
+.delivery-hint i, .delivery-zone i { color: var(--gold-deep); }
+.delivery-hint a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
+.delivery-zone { padding: 0 2px 4px; background: none; }
+.delivery-zone b { font-weight: 500; color: var(--teal-deep); }
+.tried #deliveryOptions .delivery-hint { box-shadow: 0 0 0 1px #b8563f; }
+.dtable td[rowspan] { vertical-align: top; background: rgba(243, 249, 247, .6); }
+
+/* ---------- Loading the catalogue (boot.js adds .ready to <html>) ---------- */
+body > main { transition: opacity .35s ease; }
+.js:not(.ready) body > main { opacity: 0; }

@@ -6,50 +6,51 @@ let CURRENCY = '₦';
 
 // Raise this number whenever the starting catalogue below changes shape or prices.
 // Saved preview data from an older version is then ignored and started afresh.
-const DATA_VERSION = 2;
+const DATA_VERSION = 4;
 
 // The scrolling line at the very top of every page
 const ANNOUNCE = ['Complimentary gift wrapping on every order', 'New in — The Emerald Edit', 'Carry your confidence'];
 
-// Each colour is [name, swatch hex, photo, colour family].
+// Each colour is [name, swatch hex, main photo, colour family, extra photos, database id].
+// The main photo is the one on the cards; the extras appear in the gallery on the bag's page.
 // Give a product more than one colour and swatches appear on its card.
 const PRODUCTS = [
   { id: 'seraphine', name: 'Seraphine', kind: 'Top-Handle', cat: 'top-handle', price: 85000, tag: 'Bestseller', added: '2026-06-02',
     desc: 'Our signature. A structured top-handle in pebbled leather with a polished gold clasp — ladylike, but never shy.',
-    colors: [['Verve Teal', '#0f7f86', 'assets/images/seraphine.jpg', 'Green']] },
+    colors: [['Verve Teal', '#0f7f86', 'assets/images/seraphine.jpg', 'Green', ['assets/images/seraphine-detail.jpg']]] },
   { id: 'amara', name: 'Amara', kind: 'Tote', cat: 'tote', price: 72000, tag: 'New', added: '2026-09-20',
     desc: 'The carry-everything tote. Roomy enough for your laptop and your lipstick collection, in leather that only gets better with time.',
-    colors: [['Caramel', '#b5651d', 'assets/images/amara.jpg', 'Brown']] },
+    colors: [['Caramel', '#b5651d', 'assets/images/amara.jpg', 'Brown', ['assets/images/amara-detail.jpg']]] },
   { id: 'lola', name: 'Lola', kind: 'Crossbody', cat: 'crossbody', price: 58000, added: '2026-05-11',
     desc: 'Quilted, curved and finished with a gold teardrop. Carry it by the handle or sling it on — made for brunch and everything after.',
-    colors: [['Rosewater', '#d99a8f', 'assets/images/lola.jpg', 'Pink']] },
+    colors: [['Rosewater', '#d99a8f', 'assets/images/lola.jpg', 'Pink', ['assets/images/lola-detail.jpg']]] },
   { id: 'belle', name: 'Belle', kind: 'Chain Clutch', cat: 'clutch', price: 45000, tag: 'New', added: '2026-09-28',
     desc: 'A flap clutch with a delicate chain. Tuck it under your arm for dinner, drape it on your shoulder for dancing.',
-    colors: [['Blush', '#f1b6c1', 'assets/images/belle.jpg', 'Pink']] },
+    colors: [['Blush', '#f1b6c1', 'assets/images/belle.jpg', 'Pink', ['assets/images/belle-detail.jpg']]] },
   { id: 'mimi', name: 'Mimi', kind: 'Pleated Wristlet', cat: 'clutch', price: 38000, tag: 'Bestseller', added: '2026-07-15',
     desc: 'Small bag, big personality. A sculpted, pleated wristlet that fits your phone, your gloss and your best secrets.',
-    colors: [['Vanilla', '#e9e4d6', 'assets/images/mimi-vanilla.jpg', 'Neutral'], ['Emerald', '#12a150', 'assets/images/mimi-emerald.jpg', 'Green']] },
+    colors: [['Vanilla', '#e9e4d6', 'assets/images/mimi-vanilla.jpg', 'Neutral', ['assets/images/mimi-vanilla-detail.jpg']], ['Emerald', '#12a150', 'assets/images/mimi-emerald.jpg', 'Green', ['assets/images/mimi-emerald-detail.jpg']]] },
   { id: 'eden', name: 'Eden', kind: 'Weekend Tote', cat: 'tote', price: 95000, added: '2026-04-03',
     desc: 'Your weekend-away companion. Heritage tweed trimmed in deep green leather, generously sized and ready whenever you are.',
-    colors: [['Forest Tweed', '#1f5a3c', 'assets/images/eden.jpg', 'Green']] },
+    colors: [['Forest Tweed', '#1f5a3c', 'assets/images/eden.jpg', 'Green', ['assets/images/eden-detail.jpg']]] },
   { id: 'nova', name: 'Nova', kind: 'Mini Top-Handle', cat: 'top-handle', price: 52000, added: '2026-08-08',
     desc: 'The Seraphine’s little sister. All the polish in a palm-sized silhouette, with a turn-lock you’ll love to click.',
-    colors: [['Blush', '#f0b4ae', 'assets/images/nova.jpg', 'Pink']] },
+    colors: [['Blush', '#f0b4ae', 'assets/images/nova.jpg', 'Pink', ['assets/images/nova-detail.jpg']]] },
   { id: 'cleo', name: 'Cleo', kind: 'Shoulder Bag', cat: 'crossbody', price: 62000, added: '2026-08-21',
     desc: 'Soft, slouchy and quietly chic. A buttery shoulder bag in a shade that goes with absolutely everything.',
-    colors: [['Sand', '#e6c9a8', 'assets/images/cleo.jpg', 'Neutral']] },
+    colors: [['Sand', '#e6c9a8', 'assets/images/cleo.jpg', 'Neutral', ['assets/images/cleo-detail.jpg']]] },
   { id: 'zuri', name: 'Zuri', kind: 'Box Clutch', cat: 'clutch', price: 55000, tag: 'New', added: '2026-10-01',
     desc: 'A jewel of a clutch. Textured emerald with a crystal-set gold clasp — the one that gets noticed across the room.',
-    colors: [['Emerald', '#1c7a5c', 'assets/images/zuri.jpg', 'Green']] },
+    colors: [['Emerald', '#1c7a5c', 'assets/images/zuri.jpg', 'Green', ['assets/images/zuri-detail.jpg']]] },
   { id: 'sienna', name: 'Sienna', kind: 'Crossbody', cat: 'crossbody', price: 54000, added: '2026-06-24',
     desc: 'The everyday one. A clean, curved flap in rich tan leather with an adjustable strap that sits just right on the hip.',
-    colors: [['Tan', '#9c4f2c', 'assets/images/sienna.jpg', 'Brown']] },
+    colors: [['Tan', '#9c4f2c', 'assets/images/sienna.jpg', 'Brown', ['assets/images/sienna-detail.jpg']]] },
   { id: 'ines', name: 'Ines', kind: 'Woven Tote', cat: 'tote', price: 89000, tag: 'Bestseller', added: '2026-07-30',
     desc: 'Hand-woven leather with a chunky gold chain. Soft enough to slouch, strong enough for everything you throw in it.',
-    colors: [['Cognac', '#a0522d', 'assets/images/ines.jpg', 'Brown']] },
+    colors: [['Cognac', '#a0522d', 'assets/images/ines.jpg', 'Brown', ['assets/images/ines-detail.jpg']]] },
   { id: 'harper', name: 'Harper', kind: 'Satchel', cat: 'top-handle', price: 78000, added: '2026-05-29',
     desc: 'A classic satchel with twin gold buckles. Smart enough for the office, relaxed enough for the weekend.',
-    colors: [['Dove Grey', '#8e8a93', 'assets/images/harper.jpg', 'Grey']] }
+    colors: [['Dove Grey', '#8e8a93', 'assets/images/harper.jpg', 'Grey', ['assets/images/harper-detail.jpg']]] }
 ];
 
 const CATEGORIES = [
@@ -79,10 +80,27 @@ const STORE = {
   returnDays: 14
 };
 
+// Where she delivers. Every state belongs to one zone, and each zone has its own options.
+// The customer picks their state at checkout and sees only that zone's options.
+const REGIONS = ['Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta',
+  'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT (Abuja)', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi',
+  'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe',
+  'Zamfara', 'Outside Nigeria'];
+
+const ZONES = [
+  { id: 'lagos', label: 'Lagos', regions: ['Lagos'] },
+  { id: 'nigeria', label: 'Rest of Nigeria', regions: REGIONS.filter(r => r !== 'Lagos' && r !== 'Outside Nigeria') },
+  { id: 'international', label: 'Outside Nigeria', regions: ['Outside Nigeria'] }
+];
+
+// Prices and timings are placeholders — replace with her real ones
 const DELIVERY = [
-  { id: 'standard', label: 'Standard delivery', note: '3 – 5 working days', price: 3500 },
-  { id: 'express', label: 'Express delivery', note: '1 – 2 working days', price: 6000 },
-  { id: 'pickup', label: 'Collect in person', note: 'Ready within 24 hours', price: 0 }
+  { id: 'lagos-standard', zone: 'lagos', label: 'Standard delivery', note: '1 – 2 working days', price: 3500 },
+  { id: 'lagos-express', zone: 'lagos', label: 'Same-day delivery', note: 'Order before 12pm', price: 6000 },
+  { id: 'lagos-pickup', zone: 'lagos', label: 'Collect in person', note: 'Ready within 24 hours', price: 0 },
+  { id: 'ng-standard', zone: 'nigeria', label: 'Standard delivery', note: '3 – 5 working days', price: 6500 },
+  { id: 'ng-express', zone: 'nigeria', label: 'Express delivery', note: '1 – 2 working days', price: 12000 },
+  { id: 'intl-standard', zone: 'international', label: 'International delivery', note: '7 – 14 working days', price: 45000 }
 ];
 
 const PAYMENTS = [
@@ -124,13 +142,11 @@ const COLLECTIONS = [
     intro: 'Our signature green, from deep forest to bright emerald. One shade, every mood.', match: p => p.colors.some(c => c[3] === 'Green') }
 ];
 
-// ---------- Changes made in the admin ----------
-// Until the database is connected, the admin saves its changes in this browser.
-// If any are found, they replace the starting catalogue above, so edits made in
-// the admin show up on the shop (in the same browser).
-(function applyAdminData() {
-  let saved;
-  try { saved = JSON.parse(localStorage.getItem('vv_db')); } catch { saved = null; }
+// ---------- The real catalogue ----------
+// The lists above are the starting catalogue. applyCatalogue() replaces them with
+// the real one: from the database (boot.js calls it), or in preview mode from what
+// the admin saved in this browser (see the bottom of this file).
+function applyCatalogue(saved) {
   if (!saved || saved.version !== DATA_VERSION || !Array.isArray(saved.products) || !Array.isArray(saved.categories)) return;
 
   const s = saved.settings || {};
@@ -143,8 +159,10 @@ const COLLECTIONS = [
   const replace = (list, rows) => list.splice(0, list.length, ...rows);
   if (Array.isArray(s.announcement) && s.announcement.length) replace(ANNOUNCE, s.announcement);
 
+  const zones = (saved.delivery_zones || []).sort((a, b) => a.sort - b.sort);
+  if (zones.length) replace(ZONES, zones.map(z => ({ id: z.id, label: z.label, regions: z.regions || [] })));
   const options = (saved.delivery_options || []).filter(d => d.active !== false && d.label).sort((a, b) => a.sort - b.sort);
-  if (options.length) replace(DELIVERY, options.map(d => ({ id: d.id, label: d.label, note: d.note || '', price: Number(d.price) || 0 })));
+  if (options.length) replace(DELIVERY, options.map(d => ({ id: d.id, zone: d.zone, label: d.label, note: d.note || '', price: Number(d.price) || 0 })));
 
   const cats = saved.categories.filter(c => c.visible).sort((a, b) => a.sort - b.sort);
   replace(CATEGORIES, cats.filter(c => c.kind === 'category')
@@ -156,7 +174,10 @@ const COLLECTIONS = [
     .map(p => {
       SPECS[p.id] = [p.material, p.size, p.carry];
       return { id: p.id, name: p.name, kind: p.kind, cat: p.category_id, price: Number(p.price) || 0, tag: p.tag || undefined,
-        added: p.created_at || '', desc: p.description || '', colors: p.colours.map(c => [c.name, c.hex, c.image_url, c.family]) };
+        added: p.created_at || '', desc: p.description || '', colors: p.colours.map(c => {
+          const photos = c.images && c.images.length ? c.images : [c.image_url];
+          return [c.name, c.hex, photos[0], c.family, photos.slice(1), c.id];
+        }) };
     }));
 
   replace(COLLECTIONS, cats.map(c => ({
@@ -167,4 +188,11 @@ const COLLECTIONS = [
   })));
 
   replace(MOODS, MOODS.filter(m => PRODUCTS.some(p => p.id === m.id)));
-})();
+}
+
+// Preview mode (no database): use what the admin saved in this browser
+if (typeof LIVE === 'undefined' || !LIVE) {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem('vv_db')); } catch { /* storage unavailable */ }
+  applyCatalogue(saved);
+}

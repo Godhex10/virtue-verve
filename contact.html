@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body data-page="contact">
-  <!-- Header, footer, cart and pop-ups come from layout.js -->
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/layout.js"></script>
+  <!-- Header, footer, cart and pop-ups are added by assets/js/layout.js, which boot.js loads -->
 
   <main id="top">
     <section class="page-banner">
@@ -46,7 +44,7 @@
           <h3 class="sub-head">Quick answers</h3>
           <div class="acc">
             <button class="acc-head" aria-expanded="false">How long does delivery take?<i class="fa-solid fa-plus"></i></button>
-            <div class="acc-body"><div><p>Standard delivery takes 3 to 5 working days and express takes 1 to 2. You choose at checkout. <a class="text-link" href="delivery.html">See delivery details</a></p></div></div>
+            <div class="acc-body"><div><p>It depends on where you are: Lagos orders usually arrive in 1 to 2 working days, and the rest of Nigeria in 3 to 5. Choose your state at checkout to see your options. <a class="text-link" href="delivery.html">See delivery details</a></p></div></div>
           </div>
           <div class="acc">
             <button class="acc-head" aria-expanded="false">Can I exchange a bag?<i class="fa-solid fa-plus"></i></button>
@@ -76,12 +74,12 @@
             <label class="field wide">Your message<textarea name="message" rows="5" required></textarea></label>
           </div>
           <button class="btn btn-primary" type="submit"><span>Send message</span><i class="fa-solid fa-paper-plane"></i></button>
-          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> Messages go to the admin in this browser only until the database is connected. The contact details above are placeholders.</span></p>
+          <p class="preview-note" data-preview><i class="fa-solid fa-circle-info"></i><span><b>Preview.</b> The contact details above are placeholders until she adds her real ones in the admin.</span></p>
         </form>
       </div>
     </section>
   </main>
 
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/boot.js"></script>
 </body>
 </html>

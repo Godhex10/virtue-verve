@@ -113,7 +113,7 @@
   // ---------- Draw the bar chart ----------
   const chart = $('#chart'), W = 680, H = 240, pad = { l: 46, r: 6, t: 12, b: 28 };
   const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b, band = iw / DAYS, bw = band - 6;
-  const peak = Math.max(...days.map(d => d.value), 1);
+  const peak = Math.max(...days.map(d => d.value), 10000);
   // A round step that gives at most four gridlines, whatever the currency's scale
   const unit = 10 ** Math.floor(Math.log10(peak / 4));
   const step = [1, 2, 2.5, 5, 10].map(m => m * unit).find(s => peak / s <= 4);
