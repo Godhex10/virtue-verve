@@ -903,3 +903,12 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 /* ---------- Loading the catalogue (boot.js adds .ready to <html>) ---------- */
 body > main { transition: opacity .35s ease; }
 .js:not(.ready) body > main { opacity: 0; }
+
+/* ---------- Online payment (confirmation page) ---------- */
+.pay-box { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 14px; margin-top: 18px; padding: 14px 18px; border-radius: 16px; text-align: left; box-shadow: 0 0 0 1px rgba(201, 169, 110, .45); background: #fff; }
+.pay-box > i { font-size: 1.2rem; color: var(--gold-deep); }
+.pay-box strong { font-weight: 500; color: var(--ink); }
+.pay-box div { flex: 1; min-width: 220px; color: var(--muted); }
+.pay-box.paid { background: rgba(31, 122, 77, .08); box-shadow: 0 0 0 1px rgba(31, 122, 77, .35); }
+.pay-box.paid > i { color: #1f7a4d; }
+.pay-box.checking > i { animation: spin 1s linear infinite; color: var(--teal); }

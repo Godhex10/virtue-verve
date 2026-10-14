@@ -104,7 +104,7 @@ const DELIVERY = [
 ];
 
 const PAYMENTS = [
-  { id: 'card', label: 'Card', icon: 'credit-card', note: 'Pay by debit or credit card on our secure payment partner’s page.' },
+  { id: 'card', label: 'Pay online', icon: 'credit-card', note: 'Card, bank transfer or USSD — paid securely through Paystack.' },
   { id: 'transfer', label: 'Bank transfer', icon: 'building-columns', note: 'We’ll send our account details with your order confirmation.' },
   { id: 'cod', label: 'Pay on delivery', icon: 'hand-holding-dollar', note: 'Pay when your bag arrives.' }
 ];

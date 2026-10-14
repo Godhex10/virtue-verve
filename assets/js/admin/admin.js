@@ -109,7 +109,7 @@ function seed() {
     delivery_options: DELIVERY.map((d, i) => ({ ...d, sort: i + 1, active: true })),
     settings: {
       currency: CURRENCY, email: STORE.email, whatsapp: STORE.whatsapp, instagram: STORE.instagram, hours: STORE.hours,
-      return_days: STORE.returnDays, preview: STORE.preview, announcement: [...ANNOUNCE]
+      return_days: STORE.returnDays, preview: STORE.preview, announcement: [...ANNOUNCE], bank: ''
     }
   };
 }

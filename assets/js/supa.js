@@ -30,7 +30,7 @@ const fromDb = {
     const v = Object.fromEntries((rows || []).map(r => [r.key, r.value])), c = v.contact || {};
     return {
       currency: v.currency || '₦', email: c.email || '', whatsapp: c.whatsapp || '', instagram: c.instagram || '',
-      hours: c.hours || '', return_days: v.return_days ?? 14, preview: v.preview !== false, announcement: v.announcement || []
+      hours: c.hours || '', return_days: v.return_days ?? 14, preview: v.preview !== false, announcement: v.announcement || [], bank: v.bank || ''
     };
   }
 };
@@ -41,7 +41,8 @@ const toDbSettings = s => [
   { key: 'contact', value: { email: s.email, whatsapp: s.whatsapp, instagram: s.instagram, hours: s.hours } },
   { key: 'return_days', value: Number(s.return_days) || 0 },
   { key: 'announcement', value: s.announcement || [] },
-  { key: 'preview', value: !!s.preview }
+  { key: 'preview', value: !!s.preview },
+  { key: 'bank', value: s.bank || '' }
 ];
 
 // Everything the shop needs to draw itself, in one go

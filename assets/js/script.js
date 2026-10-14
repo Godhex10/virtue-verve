@@ -369,6 +369,16 @@ function sendToAdmin(kind, row) {
   } catch { /* storage unavailable */ }
 }
 
+// Opens Paystack's payment page for an order (the server functions live in /api/pay)
+async function startPayment(number, email) {
+  const unavailable = 'Online payment isn’t available right now. Your order is saved — please try again shortly or contact us.';
+  try {
+    const res = await fetch('/api/pay/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ number, email }) });
+    const out = await res.json().catch(() => ({}));
+    return res.ok && out.url ? out : { error: out.error || unavailable };
+  } catch { return { error: unavailable }; }
+}
+
 // Simple forms (contact, newsletter): thank the visitor and reset
 document.addEventListener('submit', e => {
   const form = e.target.closest('form[data-thanks]');

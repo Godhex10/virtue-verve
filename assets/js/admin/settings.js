@@ -20,6 +20,8 @@
             <label class="field">When you reply<input name="hours" value="${esc(settings.hours)}"></label>
             <label class="field">Currency symbol<input name="currency" value="${esc(settings.currency)}" maxlength="4" required></label>
             <label class="field">Exchange window (days)<input name="return_days" type="number" min="0" step="1" value="${esc(settings.return_days)}" required></label>
+            <label class="field wide">Bank transfer details <small>(emailed to customers who choose bank transfer)</small>
+              <textarea name="bank" rows="3" placeholder="Bank name&#10;Account name&#10;Account number">${esc(settings.bank || '')}</textarea></label>
           </div>
           <div class="form-foot"><button class="btn btn-primary" type="submit">${icon('check')}Save details</button></div>
         </form>

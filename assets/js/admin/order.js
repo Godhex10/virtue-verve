@@ -74,7 +74,9 @@
               <dt>Phone</dt><dd>${esc(order.phone || '—')}</dd>
               <dt>Deliver to</dt><dd>${order.address.map(esc).join('<br>')}</dd>
               <dt>Delivery</dt><dd>${esc(order.delivery_label)}${order.delivery_zone ? ` · ${esc(order.delivery_zone)}` : ''}<br><small style="color:var(--muted)">${esc(order.delivery_note || '')}</small></dd>
-              <dt>Payment</dt><dd>${esc(order.payment_method)}</dd>
+              <dt>Payment</dt><dd>${esc(order.payment_method)}${order.paid_at
+                ? `<br><span class="badge ok">${icon('circle-check')}Paid online ${fmtDate(order.paid_at, true)}</span><br><small style="color:var(--muted)">Paystack ref ${esc(order.payment_reference || '')}</small>`
+                : order.payment_method === 'Pay online' ? `<br><span class="badge low">${icon('clock')}Not paid yet</span>` : ''}</dd>
             </dl>
           </div>
           <div class="card no-print">

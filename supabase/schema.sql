@@ -108,7 +108,8 @@ create table if not exists public.orders (
   delivery_zone text,                          -- e.g. 'Rest of Nigeria'
   delivery_region text,                        -- the state the customer chose
   payment_method text not null,
-  payment_reference text,                      -- filled in by the payment provider later
+  payment_reference text,                      -- Paystack's reference, filled in when paid
+  paid_at timestamptz,                         -- when Paystack confirmed the payment
   subtotal numeric(10, 2) not null default 0,
   total numeric(10, 2) not null default 0,
   gift_note text,

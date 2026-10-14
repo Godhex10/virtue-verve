@@ -118,12 +118,22 @@ if (!cart.length) {
       order.delivery.price = Number(placed.delivery_price);
       try { localStorage.removeItem('vv_catalogue'); } catch { /* storage unavailable */ } // stock has changed
     } else sendToAdmin('orders', order);
+    order.payOnline = LIVE && f.payment === 'card';
     try {
       localStorage.setItem('vv_order', JSON.stringify(order));
       sessionStorage.removeItem('vv_note');
     } catch { /* storage unavailable */ }
     cart = [];
     store.set('vv_cart', cart);
+
+    // Paying online: off to Paystack, which sends her back to order.html afterwards
+    if (order.payOnline) {
+      $('#placeLabel').textContent = 'Opening secure payment…';
+      const pay = await startPayment(order.number, f.email);
+      if (pay.url) { location.href = pay.url; return; }
+      order.payError = pay.error; // the confirmation page offers to try again
+      try { localStorage.setItem('vv_order', JSON.stringify(order)); } catch { /* storage unavailable */ }
+    }
     location.href = 'order.html';
   });
 }
